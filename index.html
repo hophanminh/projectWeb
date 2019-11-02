@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <!--font awesome-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script src="./javascript.js"></script>
 
 </head>
 <body>
@@ -17,7 +18,7 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="navbar-collapse justify-content-between" id="navbarNavDropdown">
+        <div class="navbar-collapse justify-content-between">
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="#">
@@ -31,35 +32,42 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Pricing</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <li class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
                         Menu
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <div class="dropdown-menu dropright">
                         <h5 class="dropdown-header"> Điện tử</h5>
                         <a class="dropdown-item" href="#">Điện thoại di động</a>
                         <a class="dropdown-item" href="#">Máy tính xách tay</a>
+                        <div class="dropdown-divider"></div>
 
-                        <h5 class="dropdown-header"> Điện tử 2</h5>       
-                        <div class="dropdown-item dropdown-submenu dropright">
-                                <a class=" dropdown-item dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Quần áo
-                                </a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Christmas</a>
-                                    <a class="dropdown-item" href="#">Tết</a>
-                                </div>
-                            </div>
+                        <h5 class="dropdown-header"> Điện tử 2</h5>
+                        <a class="dropdown-item dropdown-toggle dropdown-submenu" href="#" data-toggle="dropdown">
+                                Quần áo
+                        </a>
+                        <div class="dropdown-menu sub">
+                            <a class="dropdown-item" href="#">Christmas</a>
+                            <a class="dropdown-item" href="#">Tết</a>
+                        </div>
 
+                        <div class="dropdown-divider"></div>
+                        <h5 class="dropdown-header">Devices</h5>
+                        <a class="dropdown-item dropdown-toggle dropdown-submenu" href="#" data-toggle="dropdown">
+                                Laptop
+                        </a>
+                        <div class="dropdown-menu sub">
+                            <a class="dropdown-item" href="#">Asus</a>
+                            <a class="dropdown-item" href="#">Dell</a>
                         </div>
                     </div>
                 </li>
-            </ul>
-            <form class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
+            </ul>    
         </div>
+        <form class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
     </nav>
 
     <div class="container mt-10">
