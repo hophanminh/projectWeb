@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <!--font awesome-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script src="./javascript.js"></script>
 
 </head>
 <body>
@@ -18,7 +19,7 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="navbar-collapse justify-content-between" id="navbarNavDropdown">
+        <div class="navbar-collapse justify-content-between">
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="#">
@@ -32,34 +33,110 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Pricing</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <li class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
                         Menu
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <div class="dropdown-menu dropright">
                         <h5 class="dropdown-header"> Điện tử</h5>
                         <a class="dropdown-item" href="#">Điện thoại di động</a>
                         <a class="dropdown-item" href="#">Máy tính xách tay</a>
+                        <div class="dropdown-divider"></div>
 
-                        <h5 class="dropdown-header"> Điện tử 2</h5>       
-                        
+                        <h5 class="dropdown-header"> Điện tử 2</h5>
+                        <a class="dropdown-item dropdown-toggle dropdown-submenu" href="#" data-toggle="dropdown">
+                                Quần áo
+                        </a>
+                        <div class="dropdown-menu" id="sub">
+                            <a class="dropdown-item" href="#">Christmas</a>
+                            <a class="dropdown-item" href="#">Tết</a>
+                        </div>
 
+                        <div class="dropdown-divider"></div>
+                        <h5 class="dropdown-header">Devices</h5>
+                        <a class="dropdown-item dropdown-toggle dropdown-submenu" href="#" data-toggle="dropdown">
+                                Laptop
+                        </a>
+                        <div class="dropdown-menu sub" id="sub">
+                            <a class="dropdown-item" href="#">Asus</a>
+                            <a class="dropdown-item" href="#">Dell</a>
                         </div>
                     </div>
                 </li>
-            </ul>
-            <form class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
+            </ul>    
         </div>
+        <form class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
     </nav>
 
-    <div class="container mt-10">
+    <div class="container">
         <div>
-
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat vero suscipit sit sint maxime quos accusamus totam dolore maiores fugiat omnis qui aut, aliquid impedit sequi inventore in ipsa. Nam.
+            </p>
         </div>
-        <div class="card-deck">
+        <div class="row d-flex justify-content-center mt-mb-10">
+            <div class="col-5">  
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="card w-30">
+                                <img class="card-img-top" src="..." alt="Card image cap">
+                                <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                </div>
+                                <div class="card-footer">
+                                <small class="text-muted">Last updated 3 mins ago</small>
+                                </div>
+                            </div>                
+                        </div>
+                        <div class="carousel-item">
+                            <div class="card">
+                                <img class="card-img-top" src="..." alt="Card image cap">
+                                <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                </div>
+                                <div class="card-footer">
+                                <small class="text-muted">Last updated 3 mins ago</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="card">
+                                <img class="card-img-top" src="..." alt="Card image cap">
+                                <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                </div>
+                                <div class="card-footer">
+                                <small class="text-muted">Last updated 3 mins ago</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>  
+        </div>
+
+
+        <div class="card-deck mt-10">
                 <div class="card">
                     <img class="card-img-top" src="..." alt="Card image cap">
                     <div class="card-body">
