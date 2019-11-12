@@ -10,3 +10,7 @@
       display: none;
       background-color: rgb(214, 213, 213);
   }
+
+label{margin-left: 20px;}
+#datepicker{width:180px; margin: 0 20px 20px 20px;}
+#datepicker > span:hover{cursor: pointer;}
