@@ -1,3 +1,16 @@
+
+  .question{
+      padding: 5px;
+      text-align: left;
+      background-color: rgb(92, 88, 88);
+  }
+
+  .answer{
+      padding: 5px;
+      display: none;
+      background-color: rgb(214, 213, 213);
+  }
+
 label{margin-left: 20px;}
 #datepicker{width:180px; margin: 0 20px 20px 20px;}
 #datepicker > span:hover{cursor: pointer;}
