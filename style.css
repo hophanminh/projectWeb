@@ -115,3 +115,10 @@ i.fa-search {
     font-size: 1.2em;
     transition: all 1s;
 }
+.rounded-right-button{
+    border-radius: 0px 3px 3px 0px !important;
+}
+ul li a img{
+    width: 60px !important;
+    height: 60px !important;
+}
