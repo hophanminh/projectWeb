@@ -11,12 +11,12 @@
 }
 
 label {
-    margin-left: 20px;
+    margin-left: 0px;
 }
 
 #datepicker {
     width: 180px;
-    margin: 0 20px 20px 20px;
+    margin: 3px;
 }
 
 #datepicker>span:hover {
