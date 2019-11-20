@@ -218,15 +218,21 @@
                     <hr>
                     <p class="card-text"> Bạn muốn đấu giá bao nhiêu tiền??</p>
                     <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">$</span>
+                        <div class="input-group">
+                            <div class="col-auto">
+                                <label class="sr-only" for="inlineFormInputGroup">Username</label>
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                    <div class="input-group-text">$</div>
+                                    </div>
+                                    <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Dollars">
+                                    <button type="button" class="btn btn-danger m-0 rounded-right-button btn-sm">
+                                        <i class="fa fa-gavel" aria-hidden="true"> Bid </i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <span><input type="text" class="form-control rounded-0" aria-label="Amount (to the nearest dollar)"></span>
-                    
-                        <button type="button" class="btn btn-danger rounded-right-button">
-                            Bid
-                            <i class="fa fa-gavel" aria-hidden="true"></i>
-                        </button>
+                        
                     </div>
                     
                     <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
