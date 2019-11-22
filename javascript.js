@@ -45,6 +45,11 @@ var x = setInterval(function() {
 }, 1000);
 
 function showPic(x){
-  var list = ["./img/3abc0846001087.5844de310acef.png","./img/3c4bc546001087.5912db5e71955.png","./img/4d1d2446001087.58b405aad82fc.png"]
+  var list = ["./img/old_phone2.jpg",
+              "./img/old_phone3.jpg",
+              "./img/old_phone4.jpeg",
+              "./img/old_phone4.jpg",
+              "./img/old_phone6.jpg",
+              "./img/old_phone.jpg",]
   document.getElementById("show").src=list[x];
 }
