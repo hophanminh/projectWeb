@@ -43,3 +43,8 @@ var x = setInterval(function() {
     document.getElementById("demo").innerHTML = "EXPIRED";
   }
 }, 1000);
+
+function showPic(x){
+  var list = ["./img/3abc0846001087.5844de310acef.png","./img/3c4bc546001087.5912db5e71955.png","./img/4d1d2446001087.58b405aad82fc.png"]
+  document.getElementById("show").src=list[x];
+}

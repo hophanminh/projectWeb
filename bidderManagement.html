@@ -21,38 +21,42 @@
 <body>
     <!-- Nav bar-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top mb-10">
-        <a class="navbar-brand" href="#">Auction</a>
+        <a class="navbar-brand" href="./homeUser.html">Auction</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
         </button>
         <div class="navbar-collapse justify-content-between">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="./index.html">
+                    <a class="nav-link" href="./homeUser.html">
                         <span><i class="fa fa-home"></i></span> Home
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
-                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Menu
-                        </a>
+                        Categories    
+                    </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="#">Quần áo</a></li>
+                        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="./listProduct.html">Clothes</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Christmas</a></li>
+                                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="./listProduct.html">Tet</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="./listProduct.html">Old</a></li>
+                                        <li><a class="dropdown-item" href="./listProduct.html">Fashion</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
                         <li><a class="dropdown-item" href="#">Gia dụng</a></li>
                         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Điện thoại</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Apple</a></li>
-                                <li><a class="dropdown-item" href="#">Samsung</a></li>
+                                <li><a class="dropdown-item" href="./listProduct.html">Apple</a></li>
+                                <li><a class="dropdown-item" href="./listProduct.html">Samsung</a></li>
                                 <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Xiaomi</a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Xiaomi Mi 9</a></li>
-                                        <li><a class="dropdown-item" href="#">Xiaomi Mi 10</a></li>
+                                        <li><a class="dropdown-item" href="./listProduct.html">Xiaomi Mi 9</a></li>
+                                        <li><a class="dropdown-item" href="./listProduct.html">Xiaomi Mi 10</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -60,11 +64,18 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="./login.html" class="nav-link"> Log in</a>
+                    <a class="nav-link" href="./listProduct.html">List Product</a>
                 </li>
                 <li class="nav-item">
-                    <a href="./signUp.html" class="nav-link">Sign up</a>
+                    <a href="./watchList.html" class="nav-link">Watch List</a>
                 </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a href="./homeGuess.html" class="nav-link"> Sign out</a>
+                </li>
+                
                 <li class="nav-item">
                     <form class="search" action="">
                         <input class="search" type="search">
