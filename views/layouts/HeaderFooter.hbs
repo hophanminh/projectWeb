@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1712592-1712617</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>{{title}}</title>
+    <link rel="stylesheet" type="text/css" href="/css/{{style}}">
     <!--Boostrap 4-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <!-- font awesome-->
@@ -13,23 +13,23 @@
     <!-- Bootstrap core CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/css/mdb.min.css" rel="stylesheet">
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/css/mdb.min.css" rel="stylesheet">  -->
     <!-- cdn code.jquery-->
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
 </head>
 
 <body>
+
     <!-- Nav bar-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top mb-10">
-        <a class="navbar-brand" href="./homeUser.html">Auction</a>
+        <a class="navbar-brand" href="./homeGuess.html">Auction</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+          <span class="navbar-toggler-icon"></span>
         </button>
         <div class="navbar-collapse justify-content-between">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="./homeUser.html">
+                    <a class="nav-link" href="./homeGuess.html">
                         <span><i class="fa fa-home"></i></span> Home
                     </a>
                 </li>
@@ -71,14 +71,7 @@
                     <a class="nav-link" href="./listProduct.html">List Product</a>
                 </li>
                 <li class="nav-item">
-                    <a href="./watchList.html" class="nav-link">Watch List</a>
-                </li>
-                <li class="nav-item">
-                    <a href="./bidderProfile.html" class="nav-link">Profile</a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="./homeGuess.html" class="nav-link"> Sign out</a>
+                    <a href="./login.html" class="nav-link"> Log in</a>
                 </li>
 
                 <li class="nav-item">
@@ -91,105 +84,10 @@
         </div>
         </div>
     </nav>
-
-    <div class="container">
-        <!--Contact-->
-        <section class="mb-4">
-
-            <!--Section heading-->
-            <h2 class="h1-responsive font-weight-bold text-center my-4">Contact us</h2>
-            <!--Section description-->
-            <p class="text-center w-responsive mx-auto mb-5">Do you have any questions? Please do not hesitate to contact us directly. Our team will come back to you within a matter of hours to help you.</p>
-
-            <div class="row">
-
-                <!--Grid column-->
-                <div class="col-md-9 mb-md-0 mb-5">
-                    <form id="contact-form" name="contact-form" action="mail.php" method="POST">
-
-                        <!--Grid row-->
-                        <div class="row">
-
-                            <!--Grid column-->
-                            <div class="col-md-6">
-                                <div class="md-form mb-0">
-                                    <input type="text" id="name" name="name" class="form-control">
-                                    <label for="name" class="">Your name</label>
-                                </div>
-                            </div>
-                            <!--Grid column-->
-
-                            <!--Grid column-->
-                            <div class="col-md-6">
-                                <div class="md-form mb-0">
-                                    <input type="text" id="email" name="email" class="form-control">
-                                    <label for="email" class="">Your email</label>
-                                </div>
-                            </div>
-                            <!--Grid column-->
-
-                        </div>
-                        <!--Grid row-->
-
-                        <!--Grid row-->
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="md-form mb-0">
-                                    <input type="text" id="subject" name="subject" class="form-control">
-                                    <label for="subject" class="">Subject</label>
-                                </div>
-                            </div>
-                        </div>
-                        <!--Grid row-->
-
-                        <!--Grid row-->
-                        <div class="row">
-
-                            <!--Grid column-->
-                            <div class="col-md-12">
-
-                                <div class="md-form">
-                                    <textarea type="text" id="message" name="message" rows="2" class="form-control md-textarea"></textarea>
-                                    <label for="message">Your message</label>
-                                </div>
-
-                            </div>
-                        </div>
-                        <!--Grid row-->
-
-                    </form>
-
-                    <div class="text-center text-md-left">
-                        <a class="btn btn-primary" onclick="document.getElementById('contact-form').submit();">Send</a>
-                    </div>
-                    <div class="status"></div>
-                </div>
-                <!--Grid column-->
-
-                <!--Grid column-->
-                <div class="col-md-3 text-center">
-                    <ul class="list-unstyled mb-0">
-                        <li><i class="fa fa-map-marker fa-2x"></i>
-                            <p>Location</p>
-                        </li>
-
-                        <li><i class="fa fa-phone mt-4 fa-2x"></i>
-                            <p>Phone number</p>
-                        </li>
-
-                        <li><i class="fa fa-envelope mt-4 fa-2x"></i>
-                            <p>email@gmail.com</p>
-                        </li>
-                    </ul>
-                </div>
-                <!--Grid column-->
-
-            </div>
-        </section>
-    </div>
+    
+    {{{body}}}
 
     <hr>
-    <!-- Footer -->
     <footer class="page-footer font-small mdb-color lighten-3 pt-4">
 
         <!-- Footer Links -->
@@ -265,6 +163,7 @@
         </div>
 
     </footer>
+    <!-- Footer -->
 
     <!-- JS -->
     <!-- JQuery -->
@@ -278,7 +177,7 @@
     <!-- sweetalter2-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8.18.6/dist/sweetalert2.all.min.js"></script>
     <!--file js -->
-    <script src="./javascript.js"></script>
+    <script src="js/javascript.js"></script>
 
 </body>
 

@@ -1,0 +1,87 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-7 order-md-1 md-4">
+            <div class="row">
+                <img src="img/logo.jpg" class="rounded-circle my-4" id="avatar" sizes="50%">
+                <span id="username_profile" class="d-flex align-items-end">ntn9999</span>
+            </div>
+            <ul class="list-group mb-2">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Merit point: <span class="badge badge-primary badge-pill">3000</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Wallet: <span class="badge badge-primary badge-pill">$3000</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Số lượt đã đấu giá: <span class="badge badge-primary badge-pill">3000</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Số lượt đấu giá thành công: <span class="badge badge-primary badge-pill">3000</span>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-5 order-md-2 mb-4">
+            <form class="needs-validation" novalidate="">
+                <div class="mb-1 mt-5">
+                    <label for="username">Username</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="username" placeholder="Username" value="Nguyễn Thành Ngôn" readonly>
+                        <div class="invalid-feedback" style="width: 100%;">
+                            Your username is required.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-1">
+                    <label for="email">Email <span class="text-muted">(Optional)</span></label>
+                    <input type="email" class="form-control" id="email" placeholder="you@example.com" value="ntn@gmail.com" readonly>
+                    <div class="invalid-feedback">
+                        Please enter a valid email address for shipping updates.
+                    </div>
+                </div>
+
+                <div class="mb-1">
+                    <label for="address">Address</label>
+                    <input type="text" class="form-control" id="address" placeholder="1234 Main St" value="HCMUS" readonly>
+                    <div class="invalid-feedback">
+                        Please enter your shipping address.
+                    </div>
+                </div>
+
+                <div class="mb-1">
+                    <label for="phone-number">Phone number</label>
+                    <input type="text" class="form-control" id="address" value="0123456789" readonly>
+                    <div class="invalid-feedback">
+                        Please enter your contact number.
+                    </div>
+                </div>
+
+                <div class="mb-1">
+                    <label for="country">Country</label>
+                    <select class="custom-select d-block w-100" id="country" disabled>
+                    <option selected>Vietnam</option>
+                    <option>US</option>
+                    <option>UK</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Please select a valid country.
+                    </div>
+                </div>
+                <div class="mb-1">
+                    <label for="state">Province</label>
+                    <select class="custom-select d-block w-100" id="state" required="" disabled>
+                    <option selected>Đồng Nai</option>
+                    <option>TP.HCM</option>
+                    <option>Hà Nội</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Please provide a valid state.
+                    </div>
+                </div>
+                <hr class="mb-4">
+
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Edit</button>
+            </form>
+        </div>
+    </div>
+</div>
