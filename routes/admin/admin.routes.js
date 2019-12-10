@@ -4,15 +4,49 @@ const adminModel = require('../../models/admin.model');
 const router = express.Router();
 
 router.get('/', async(req,res)=>{
-    const rows = await adminModel.all();
+    const rowsSeller = await adminModel.allSeller();
+    const rowsBidder = await adminModel.allBidder();
+
     res.render('adminViews/Management',{
-        seller: rows,
-        empty: rows.length === 0,
+        seller: rowsSeller,
+        bidder: rowsBidder,
+        emptySeller: rowsSeller.length === 0,
+        emptyBidder: rowsBidder.length === 0,
         title: 'Management',
         style: 'style.css'
     })
 })
 
+// router.get('/sellerDetail/:id',(req,res)=>{
+//     const rows = await adminModel.getSeller(req.params.id);
+//     res.render('adminViews/sellerDetail',{
+//         seller: rows,
+//         title: 'Seller Detail',
+//         style: 'style.css'
+//     })
+// })
+
+router.get('/sellerDetail/:id',async(req,res)=>{
+    const rows = await adminModel.sellerDetail(req.params.id);
+    console.log(rows);
+    res.render('adminViews/sellerDetail',{
+        seller: rows,
+        title: 'Seller Detail',
+        style: 'management.css',
+        empty: rows.length === 0,
+        seller: rows[0]
+
+    })
+})
+
+router.post('/deleteSeller',async(req,res)=>{
+
+    console.log(req.body.SellerID);
+    const result = await adminModel.deleteSeller(req.body.SellerID);
+    console.log(result);
+    res.redirect('/admin');
+    // res.send('deleted');
+})
 
 // Add admin mai mot lam
 // router.get('/addAdmin',(req,res)=>{

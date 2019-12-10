@@ -1,4 +1,5 @@
 const express = require('express');
+const productModel = require('../models/product.model');
 
 const router = express.Router();
 
@@ -29,17 +30,35 @@ router.get('/signUp',(req,res)=>{
         style: 'style.css'
     })
 })
-router.get('/listProduct',(req,res)=>{
-    res.render('listProduct',{
-        title: 'List Product',
-        style: 'style.css'
-    })
-})
 
 router.get('/contact',(req,res)=>{
     res.render('contact',{
         title: 'contact',
         style: 'style.css'
+    })
+})
+
+router.get('/listProduct',async (req,res)=>{
+    const rows = await productModel.all();
+    console.log(rows),
+    res.render('listProduct',{
+        products: rows,
+        empty: rows.length === 0,
+        title: 'List Product',
+        style: 'style.css',
+        js: 'product.js'
+    })
+})
+
+router.get('/product/:id',async (req,res)=>{
+    const rows = await productModel.single(res.param.id);
+    console.log(rows);
+    res.render('listProduct',{
+        products: rows,
+        empty: rows.length ===0,
+        title: 'List Product',
+        style: 'style.css',
+        js: 'product.js'
     })
 })
 

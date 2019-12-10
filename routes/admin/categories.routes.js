@@ -1,44 +1,47 @@
 const express = require('express');
+const time = require('moment');
 // const adminModel = require('../../models/admin.model');
 const categoryModal = require('../../models/categories.model');
 
 const router = express.Router();
 
-
-router.get('/addCategories',(req,res)=>{
-    res.render('adminViews/addCategories',{
+router.get('/addItem',(req,res)=>{
+    res.render('adminViews/addItem',{
         title: 'Add categories',
         style: 'style.css'
     })
 })
 
 router.post('/addCategories',async (req,res)=>{
-    const entity ={
-        ItemID: 99,
-        Title: req.body.Username,
-        TinyDes: '123',
-        FullDes: '1',
-        Condition: 'Fair',
-        Category: 'Beverages',
-        StartBidAmount: 40,
-        AuctionStart: '1963-11-06 16:15:07.900',
-        AuctionEnd: '1998-04-29 17:44:41.850',
-        SellerID: 3,
+    var startDate= new Date();
+    var endDate = startDate;
+    const entity = {
+        Title: req.body.Title,
+        TinyDes: req.body.TinyDes,
+        FullDes: req.body.FullDes,
+        Condition: req.body.Condition,
+        Category: req.body.Category,
+        StartBidAmount: req.body.StartBidAmount,
+        AuctionStart: startDate, // Auto: Done
+        AuctionEnd: endDate, // Auto: Done
+        SellerID: 3, // auto
         ShipPrice: 10,
-        BidderID: 3,
+        BidderID: 3, //Auto
         AccountType: 'Mastercard',
         AccountNo: 'JEMO',
-        Lowestprice: '10'
+        Lowestprice: req.body.LowestPrice,
     }
     console.log(entity);
 
     const result = await categoryModal.add(entity);
     //console.log(result);
-    res.render('adminViews/addCategories',{
+    res.render('adminViews/addItem',{
         title: 'Add categories',
-        style: 'style.css'
+        style: 'style.css',
+        js: 'addCategory.js'
     })
 })
+
 
 router.get('/err', (req, res) => {
 

@@ -29,7 +29,13 @@
         <div class="col-9">
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="list-upgrade" role="tabpanel" aria-labelledby="list-upgrade">
+                    {{#if this.emptyBidder}}
+                    <div class="card-body">
+                        <p class="card-text"> No data available</p>
+                    </div>
+                    {{else}}
                     <p class="h2 d-flex justify-content-center">Danh sách yêu cầu nâng cấp từ Bidder thành Seller</p>
+
                     <table class="table table-hover">
                         <thead>
                             <tr>
@@ -42,12 +48,13 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {{#each this.bidder}}
                             <tr>
-                                <th scope="row">1</th>
-                                <td>Pierre Glover</td>
-                                <td>pierreglover@gmail.com</td>
-                                <td>60</td>
-                                <td>32</td>
+                                <th scope="row">*</th>
+                                <td>{{Fname}}</td>
+                                <td>{{Email}}</td>
+                                <td>{{Point}}</td>
+                                <td>34</td>
                                 <td>
                                     <button type="button" class="btn btn-success">
                                         <i class="fa fa-check" aria-hidden="true"></i>
@@ -57,41 +64,13 @@
                                     </button>
                                 </td>
                             </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Hilton West</td>
-                                <td>hiltonwest@gmail.com</td>
-                                <td>60</td>
-                                <td>32</td>
-                                <td>
-                                    <button type="button" class="btn btn-success">
-                                        <i class="fa fa-check" aria-hidden="true"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-danger">
-                                        <i class="fa fa-times" aria-hidden="true"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Presley Tillman</td>
-                                <td>presleytillman@gmail.com</td>
-                                <td>60</td>
-                                <td>32</td>
-                                <td>
-                                    <button type="button" class="btn btn-success">
-                                        <i class="fa fa-check" aria-hidden="true"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-danger">
-                                        <i class="fa fa-times" aria-hidden="true"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                            {{/each}}
                         </tbody>
                     </table>
+                    {{/if}}
                 </div>
                 <div class="tab-pane fade" id="list-seller" role="tabpanel" aria-labelledby="list-seller">
-                    {{#if this.empty}}
+                    {{#if this.emptySeller}}
                     <div class="card-body">
                         <p class="card-text">
                             No data available
@@ -112,18 +91,22 @@
                         </thead>
                         <tbody>
                             {{#each this.seller }}
+                            <form action="/admin/deleteSeller" method="POST">
                             <tr>
                                 <th scope="row">*</th>
-                                <td>{{SellerID}}</td>
+                                <td class='text-center'>        
+                                    <input class="form-control border-0 bg-white" name="SellerID" readonly value="{{SellerID}}">
+                                </td>
                                 <td>{{Username}}</td>
                                 <td>{{Point}}</td>
                                 <td>32</td>
                                 <td>
-                                    <button type="button" class="btn btn-danger">
-                                        <i class="fa fa-arrow-down" aria-hidden="true"></i>
-                                    </button>
+                                <button type="submit" class="btn btn-danger">
+                                <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                                </button>
                                 </td>
                             </tr>
+                            </form>
                             {{/each}}
                         </tbody>
                     </table>

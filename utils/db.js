@@ -19,4 +19,5 @@ const mysql_query = util.promisify(pool.query).bind(pool);
 module.exports = {
     load: sql => mysql_query(sql),
     add: (tableName,entity) => mysql_query(`insert into ${tableName} set ?`,entity),
+    delete: (tableName,entity) => mysql_query(`delete from ${tableName} where ?`,entity),
 };

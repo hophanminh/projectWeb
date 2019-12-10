@@ -1,0 +1,143 @@
+{{!-- <div class="container">
+    <div class="card">
+        <div class="card-header">
+            Add categories
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                <div class="form-group">
+                    <label for="Title">Title</label>
+                    <input type="text" name="Title" class="form-control" id="Title" placeholder="Sam sung" autofocus>
+                    
+                    <label for="TinyDes">Short description</label>
+                    <textarea class="form-control" id="TinyDes" name="TinyDes" placeholder="Short description" required></textarea>
+                    
+                    <label for="FullDes">Full description</label>
+                    <textarea class="form-control" id="FullDes" name="FullDes" placeholder="Full description" required></textarea>
+                    
+                        <label for="Condition">Condition</label>
+                        <select class="custom-select my-1 mr-sm-2 col-2" id="Condition" name="Condition">
+                        <option selected>Choose...</option>
+                        <option value="Excellent">Excellent</option>
+                        <option value="Good">Good</option>
+                        <option value="Fair">Fair</option>
+                        <option value="Poor">Poor</option>
+                        </select>
+                        
+                        <label for="Category">Categories</label>
+                        <input type="text" name="Category" class="form-control col-2" id="Category" placeholder="Phone" >
+                        
+                        <label for="StartBidAmount">Name categories</label>
+                        <input type="text" name="StartBidAmount" class="form-control" id="StartBidAmount" placeholder="Sam sung" >
+                    
+                    <label for="ShipPrice">Name categories</label>
+                    <input type="text" name="ShipPrice" class="form-control" id="ShipPrice" placeholder="Sam sung" >
+                    
+                    <label for="AcountType">Name categories</label>
+                    <input type="text" name="AcountType" class="form-control" id="AcountType" placeholder="Sam sung" >
+                    <label for="AccountNo">Name categories</label>
+                    <input type="text" name="AccountNo" class="form-control" id="AccountNo" placeholder="Sam sung" >
+                    <label for="LowestPrice">Name categories</label>
+                    <input type="text" name="LowestPrice" class="form-control" id="LowestPrice" placeholder="Sam sung" >
+                </div>
+            <button type="submit" class="btn btn-outline-success">
+                <i class="fa fa-check" aria-hidden="true">Confirm</i>
+            </button>
+            </form>
+        </div>
+        <div class="card-footer">
+        </div>
+    </div>
+</div> --}}
+
+<div class="container">
+    <div class="h1 text-center">
+        Add item
+    </div>
+    <form  method="POST">
+        <div class="form-row">
+            <div class="col mb-3">
+                <label for="Title">Title</label>
+                <input type="text" class="form-control" id="Title" name="Title" placeholder="iPhone" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <div class="col mb-3">
+                <label for="Category">Category</label>
+                <select class="custom-select mb-3" id="Category" name="Category">
+                    <option value="Excellent">Excellent</option>
+                    <option value="Good">Good</option>
+                    <option value="Fair">Fair</option>
+                    <option value="Poor" selected>Poor</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-3 mb-3">
+                <label for="Condition">Condition</label>
+                <select class="custom-select mb-3" id="Condition" name="Condition">
+                <option value="Excellent">Excellent</option>
+                <option value="Good">Good</option>
+                <option value="Fair">Fair</option>
+                <option value="Poor" selected>Poor</option>
+                </select>
+                <div class="invalid-feedback">
+                    Please choose quality.
+                </div>
+            </div>
+            <div class="col mb-3">
+                <label for="StartBidAmount">Start Bid Amount</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="Currency">$</span>
+                    </div>
+                    {{!-- <input type="text" class="form-control is-invalid" id="StartBidAmount" name="StartBidAmount" required> --}}
+                    <input type="text" class="form-control" id="StartBidAmount" name="StartBidAmount" required>
+                    <div class="invalid-feedback">
+                        Required start bid amount
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-3">
+                <label for="LowestPrice">Lowest Price</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="Currency">$</span>
+                    </div>
+                    <input type="text" class="form-control" id="LowestPrice" name="LowestPrice" required>
+                    <div class="invalid-feedback">
+                        Required lowest price
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-row mb-3">
+            <div class="col-6">
+                <label for="TinyDes">Short description</label>
+                <textarea class="form-control" id="TinyDes" name="TinyDes" placeholder="Short description" required></textarea>
+            </div>
+            <div class="col-6">
+                <label for="img">Imagine</label>
+                <input type="file" class="form-control-file" id="img" name="img">
+            </div>
+
+        </div>
+        <div class="form-row mb-3">
+            <label for="FullDes">Full description</label>
+            <textarea class="form-control" id="FullDes" name="FullDes" placeholder="Full description" required></textarea>
+        </div>
+        <div class="form-group mb-3">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="invalidCheck3" required>
+                <label class="form-check-label" for="invalidCheck3">
+                    I confirm all the information of the product is true
+                </label>
+                <div class="invalid-feedback">
+                    You must agree before submitting.
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-outline-success" type="submit">Submit form</button>
+    </form>
+</div>
