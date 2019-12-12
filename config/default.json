@@ -1,0 +1,14 @@
+{
+    "mysql":{
+        "connectionLimit": 10,
+        "host": "localhost",
+        "port": 3012,
+        "user": "root",
+        "password": "root",
+        "database": "auctiondb"
+    },
+    "port_server":{
+        "PORT": 3000
+    }
+
+}

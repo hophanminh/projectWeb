@@ -91,22 +91,16 @@
                         </thead>
                         <tbody>
                             {{#each this.seller }}
-                            <form action="/admin/deleteSeller" method="POST">
                             <tr>
                                 <th scope="row">*</th>
-                                <td class='text-center'>        
-                                    <input class="form-control border-0 bg-white" name="SellerID" readonly value="{{SellerID}}">
-                                </td>
+                                <td>{{SellerID}} </td>
                                 <td>{{Username}}</td>
                                 <td>{{Point}}</td>
                                 <td>32</td>
                                 <td>
-                                <button type="submit" class="btn btn-danger">
-                                <i class="fa fa-arrow-down" aria-hidden="true"></i>
-                                </button>
+                                <a class="btn" role = "button" href="/admin/seller/{{SellerID}}">Click here</a>
                                 </td>
                             </tr>
-                            </form>
                             {{/each}}
                         </tbody>
                     </table>
@@ -233,3 +227,4 @@
         </div>
     </div>
 </div>
+<script src='js/management.js'></script>

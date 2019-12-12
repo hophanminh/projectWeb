@@ -1,5 +1,6 @@
 const express = require('express');
 const adminModel = require('../../models/admin.model');
+const moment = require('moment');
 
 const router = express.Router();
 
@@ -16,6 +17,44 @@ router.get('/', async(req,res)=>{
         style: 'style.css'
     })
 })
+
+router.get('/seller/:id',async(req,res)=>{
+    
+    const rowsSeller = await adminModel.sellerDetail(req.params.id);
+    const dob = moment(rowsSeller[0].DoB).format('LL');
+
+    rowsSeller[0].DoB = dob;
+
+    res.render('adminViews/sellerDetail',{
+        seller: rowsSeller[0],
+        empty: rowsSeller.length === 0,
+        title: 'Seller',
+        style: 'style.css'
+    })
+})
+
+router.post('/deleteSeller',async(req,res)=>{
+    
+    const result = await adminModel.deleteSeller(req.body.SellerID);
+    console.log(result);
+    res.redirect('/admin');
+})
+
+router.post('/modifySeller',async (req,res)=>{
+    console.log(req.body);
+    const entity = req.body;
+    const dob = moment(entity.dob_raw,'LL').format('YYYY-MM-DD');
+
+    entity.DoB = dob;
+    delete entity.dob_raw;
+    delete entity.nPS;
+
+    console.log(entity);
+
+    const result = await adminModel.modifySeller(entity);
+    res.redirect('/admin');
+})
+
 
 // router.get('/sellerDetail/:id',(req,res)=>{
 //     const rows = await adminModel.getSeller(req.params.id);
@@ -40,11 +79,19 @@ router.get('/sellerDetail/:id',async(req,res)=>{
 })
 
 router.post('/deleteSeller',async(req,res)=>{
-
-    console.log(req.body.SellerID);
-    const result = await adminModel.deleteSeller(req.body.SellerID);
+    
+    const id = req.query.idSeller;
+    console.log(req.query);
+    const result = await adminModel.deleteSeller(id);
     console.log(result);
-    res.redirect('/admin');
+    res.render('adminViews/Management',{
+        seller: rowsSeller,
+        bidder: rowsBidder,
+        emptySeller: rowsSeller.length === 0,
+        emptyBidder: rowsBidder.length === 0,
+        title: 'Management',
+        style: 'style.css'
+    })
     // res.send('deleted');
 })
 

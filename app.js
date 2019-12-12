@@ -1,6 +1,8 @@
 const express = require('express');
 const morgan = require('morgan');
 const numeral = require('numeral');
+const config = require('./config/default.json');
+
 require('express-async-errors');
 
 const app = express();
@@ -19,6 +21,6 @@ require('./middlewares/routes.mdw')(app);
 //Need to place at last of app.js. Do not move it
 
 require('./middlewares/errorHandle.mdw')(app);
-app.listen(3000,()=>{
-    console.log('Web Server is running at http://localhost:3000');
+app.listen(config.port_server.PORT,()=>{
+    console.log(`Web Server is running at http://localhost:${config.port_server.PORT}`);
 })
