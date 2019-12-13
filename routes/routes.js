@@ -1,6 +1,7 @@
 const express = require('express');
-const productModel = require('../models/product.model');
-
+const bcryptjs = require('bcryptjs');
+const moment = require('moment');
+const userModel = require('../models/user.model');
 const router = express.Router();
 
 router.get('/',(req,res)=>{
@@ -31,34 +32,42 @@ router.get('/signUp',(req,res)=>{
     })
 })
 
+router.get('/payment',(req,res)=>{
+    res.render('productViews/payment',{
+        title: 'Payment',
+        style: 'style.css',
+    })
+})
+
+router.post('/signUp',async(req,res)=>{
+    console.log(req.body);
+    const N = 10;
+    const hash = bcryptjs.hashSync(req.body.pass_raw,N);
+    const dob = moment(req.body.dob,'DD/MM/YYYY').format('YYYY-MM-DD');
+    
+    const entity = req.body;
+    entity.Password = hash;
+    entity.Point = 0;
+    entity.DoB = dob;
+    
+    delete entity.dob;
+    delete entity.pass_raw;
+    delete entity.pass_rawC;
+    delete entity.Sex;
+
+    console.log(entity);
+    const result = await userModel.register(entity);
+
+    res.render('login',{
+        title:"Log In",
+        style: "style.css"
+    });
+})
+
 router.get('/contact',(req,res)=>{
     res.render('contact',{
         title: 'contact',
         style: 'style.css'
-    })
-})
-
-router.get('/listProduct',async (req,res)=>{
-    const rows = await productModel.all();
-    console.log(rows),
-    res.render('listProduct',{
-        products: rows,
-        empty: rows.length === 0,
-        title: 'List Product',
-        style: 'style.css',
-        js: 'product.js'
-    })
-})
-
-router.get('/product/:id',async (req,res)=>{
-    const rows = await productModel.single(res.param.id);
-    console.log(rows);
-    res.render('listProduct',{
-        products: rows,
-        empty: rows.length ===0,
-        title: 'List Product',
-        style: 'style.css',
-        js: 'product.js'
     })
 })
 

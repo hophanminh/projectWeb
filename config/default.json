@@ -9,6 +9,9 @@
     },
     "port_server":{
         "PORT": 3000
+    },
+    "paginate":{
+        "limit": 2
     }
 
 }

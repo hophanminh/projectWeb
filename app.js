@@ -1,6 +1,5 @@
 const express = require('express');
 const morgan = require('morgan');
-const numeral = require('numeral');
 const config = require('./config/default.json');
 
 require('express-async-errors');

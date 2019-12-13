@@ -41,15 +41,12 @@ router.post('/deleteSeller',async(req,res)=>{
 })
 
 router.post('/modifySeller',async (req,res)=>{
-    console.log(req.body);
     const entity = req.body;
     const dob = moment(entity.dob_raw,'LL').format('YYYY-MM-DD');
 
     entity.DoB = dob;
     delete entity.dob_raw;
     delete entity.nPS;
-
-    console.log(entity);
 
     const result = await adminModel.modifySeller(entity);
     res.redirect('/admin');

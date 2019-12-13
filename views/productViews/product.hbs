@@ -1,8 +1,10 @@
 <div class="container">
     <div class="card mb-5">
         <div class="row">
+            <!-- img -->
             <div class="col-md-4">
-                <img src="./img/old_phone.jpg" style="width: 360px; height:360px;" id="show" alt="Dien tu" class="mb-5">
+                <img src="/img/{{this.product.ItemID}}/1.jpg" style="width: 360px; height:360px;" id="show"
+                    alt="{{this.product.Title}}" class="mb-5">
                 <div id="picProduct"
                     class="carousel slide carousel-multi-item d-flex justify-content-center align-items-center"
                     data-ride="carousel">
@@ -69,18 +71,14 @@
             <div class="col-md-7">
                 <div class="card-body">
                     <div class=" card-title d-flex justify-content-between">
-                        <h1 class="card-title">Old Phone</h1>
-                        <span class="h1">$ 300
+                        <h1 class="card-title">{{this.product.Title}}</h1>
+                        <span class="h1">$ {{this.product.StartBidAmount}}
                         </span>
 
                     </div>
                     <br>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                        additional content. This content is a little bit longer.</p>
                     <p class="card-text">
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugit, facilis ex possimus dignissimos
-                        omnis atque quidem et nam harum optio asperiores libero quisquam hic praesentium porro repellat
-                        perspiciatis accusamus vitae.
+                        {{this.product.TinyDes}}
                     </p>
                     <span class="d-flex justify-content-end">
                         <div class="card bg-danger text-white">
@@ -96,7 +94,7 @@
                     </span>
 
                     <p class="card-text mb-3">
-                        Points: <span class="h1 text-info"> 30 </span>
+                        Points: <span class="h1 text-info"> {{this.product.Condition}} </span>
 
                         <a href="#">
                             <i class="fa fa-arrow-up fa-2x text-success"></i>
@@ -104,29 +102,34 @@
                         <a href="#">
                             <i class="fa fa-arrow-down fa-2x text-dark"></i>
                         </a>
-                        <br> Date: <strong>Thu Nov 14 2019 14:02:05 GMT+0700 (Indochina Time)</strong> <br> Owner:
-                        <a href="#"> <strong> Marina Gleason </strong> </a> <br> Point's Owner: <strong>12 </strong>
+                        <br> Date: <strong>{{this.product.AuctionStart}}</strong> <br> Owner:
+                        <a href="#"> <strong> {{this.product.SellerFname}} </strong> </a> <br> Point's Owner: <strong>12
+                        </strong>
                         <hr> Bidder's highest price:
-                        <a href="#"> <strong>Donald Spinka</strong> </a> <br> Bidder's points: <strong>2007</strong>
+                        <a href="#"> <strong>{{this.product.BidderFname}}</strong> </a> <br> Bidder's points:
+                        <strong>2007</strong>
                     </p>
                     <hr>
-                    <p class="card-text">How much do you want to bid??</p>
-                    <div class="input-group mb-3">
-                        <div class="input-group">
-                            <div class="col-auto">
-                                <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">$</div>
+                    <form method="POST">
+                        <p class="card-text">How much do you want to bid??</p>
+                        <div class="input-group mb-3">
+                            <div class="input-group">
+                                <div class="col-auto">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">$</div>
+                                        </div>
+                                        <input type="text" class="form-control" id="money" name="money"
+                                            placeholder="400">
+                                        <button type="submit" class="btn btn-danger m-0 rounded-right-button"
+                                            formaction="/product/{{this.product.ItemID}}/bidProduct">
+                                            <i class="fa fa-gavel" aria-hidden="true"> Bid </i>
+                                        </button>
                                     </div>
-                                    <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="400">
-                                    <button type="button" class="btn btn-danger m-0 rounded-right-button">
-                                        <i class="fa fa-gavel" aria-hidden="true"> Bid </i>
-                                    </button>
                                 </div>
                             </div>
                         </div>
-
-                    </div>
+                    </form>
 
                     <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                 </div>
