@@ -1,5 +1,7 @@
 const express = require('express');
-
+const bcryptjs = require('bcryptjs');
+const moment = require('moment');
+const userModel = require('../models/user.model');
 const router = express.Router();
 
 router.get('/',(req,res)=>{
@@ -29,11 +31,37 @@ router.get('/signUp',(req,res)=>{
         style: 'style.css'
     })
 })
-router.get('/listProduct',(req,res)=>{
-    res.render('listProduct',{
-        title: 'List Product',
-        style: 'style.css'
+
+router.get('/payment',(req,res)=>{
+    res.render('productViews/payment',{
+        title: 'Payment',
+        style: 'style.css',
     })
+})
+
+router.post('/signUp',async(req,res)=>{
+    console.log(req.body);
+    const N = 10;
+    const hash = bcryptjs.hashSync(req.body.pass_raw,N);
+    const dob = moment(req.body.dob,'DD/MM/YYYY').format('YYYY-MM-DD');
+    
+    const entity = req.body;
+    entity.Password = hash;
+    entity.Point = 0;
+    entity.DoB = dob;
+    
+    delete entity.dob;
+    delete entity.pass_raw;
+    delete entity.pass_rawC;
+    delete entity.Sex;
+
+    console.log(entity);
+    const result = await userModel.register(entity);
+
+    res.render('login',{
+        title:"Log In",
+        style: "style.css"
+    });
 })
 
 router.get('/contact',(req,res)=>{

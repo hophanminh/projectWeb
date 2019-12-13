@@ -1,0 +1,91 @@
+<div class="container">
+    <div class="h1 text-center">
+        Add item
+    </div>
+    <form  method="POST">
+        <div class="form-row">
+            <div class="col mb-3">
+                <label for="Title">Title</label>
+                <input type="text" class="form-control" id="Title" name="Title" placeholder="iPhone" required>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <div class="col mb-3">
+                <label for="Category">Category</label>
+                <select class="custom-select mb-3" id="Category" name="Category">
+                    <option value="Excellent">Excellent</option>
+                    <option value="Good">Good</option>
+                    <option value="Fair">Fair</option>
+                    <option value="Poor" selected>Poor</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-3 mb-3">
+                <label for="Condition">Condition</label>
+                <select class="custom-select mb-3" id="Condition" name="Condition">
+                <option value="Excellent">Excellent</option>
+                <option value="Good">Good</option>
+                <option value="Fair">Fair</option>
+                <option value="Poor" selected>Poor</option>
+                </select>
+                <div class="invalid-feedback">
+                    Please choose quality.
+                </div>
+            </div>
+            <div class="col mb-3">
+                <label for="StartBidAmount">Start Bid Amount</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="Currency">$</span>
+                    </div>
+                    {{!-- <input type="text" class="form-control is-invalid" id="StartBidAmount" name="StartBidAmount" required> --}}
+                    <input type="text" class="form-control" id="StartBidAmount" name="StartBidAmount" required>
+                    <div class="invalid-feedback">
+                        Required start bid amount
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-3">
+                <label for="LowestPrice">Lowest Price</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="Currency">$</span>
+                    </div>
+                    <input type="text" class="form-control" id="LowestPrice" name="LowestPrice" required>
+                    <div class="invalid-feedback">
+                        Required lowest price
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-row mb-3">
+            <div class="col-6">
+                <label for="TinyDes">Short description</label>
+                <textarea class="form-control" id="TinyDes" name="TinyDes" placeholder="Short description" required></textarea>
+            </div>
+            <div class="col-6">
+                <label for="img">Imagine</label>
+                <input type="file" class="form-control-file" id="img" name="img">
+            </div>
+
+        </div>
+        <div class="form-row mb-3">
+            <label for="FullDes">Full description</label>
+            <textarea class="form-control" id="FullDes" name="FullDes" placeholder="Full description" required></textarea>
+        </div>
+        <div class="form-group mb-3">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="invalidCheck3" required>
+                <label class="form-check-label" for="invalidCheck3">
+                    I confirm all the information of the product is true
+                </label>
+                <div class="invalid-feedback">
+                    You must agree before submitting.
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-outline-success" type="submit">Submit form</button>
+    </form>
+</div>
