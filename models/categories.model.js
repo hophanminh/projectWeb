@@ -1,6 +1,9 @@
 const db = require('../utils/db');
 
 module.exports={
-    all: () => db.load('select * from item'),
-    add: (entity) => db.add('item',entity),
+    allCategory: () => {
+        const sql = `SELECT c.*, count(*) Total FROM category c right join item i  on c.CatID = i.CatID group by c.CatName`
+        return db.load(sql);
+    },
+    add: (entity) => db.add('category',entity),
 }

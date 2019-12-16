@@ -5,7 +5,7 @@
         "port": 3012,
         "user": "root",
         "password": "root",
-        "database": "auctiondb"
+        "database": "auction"
     },
     "port_server":{
         "PORT": 3000
