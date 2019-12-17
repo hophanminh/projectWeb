@@ -5,13 +5,16 @@
         "port": 3012,
         "user": "root",
         "password": "root",
-        "database": "auction"
+        "database": "auctiondb"
     },
     "port_server":{
         "PORT": 3000
     },
     "paginate":{
-        "limit": 2
+        "limit": 6
+    },
+    "DateLast":{
+        "LastDate": 7
     }
 
 }

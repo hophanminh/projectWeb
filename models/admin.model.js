@@ -3,10 +3,9 @@ const db = require('../utils/db');
 module.exports = {
     allSeller: () => db.load('select * from user where Type = 1'),
     allBidder: () =>db.load('select * from user where Type = 0'),
+    countSeller: () => db.load('select count(*) as numSeller from user where Type = 1'),
+    countBidder: ()=>db.load('select count(*) as numBidder from user where Type = 0'),
         
-
-    // add: (entity) => db.add('administrator',entity),
-
     deleteSeller: (id) => {
         const sql = `update user set Type = 0 where UserID = ${id}`
         return db.load(sql);

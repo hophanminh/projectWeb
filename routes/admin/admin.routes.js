@@ -6,13 +6,20 @@ const moment = require('moment');
 const router = express.Router();
 
 router.get('/', async(req,res)=>{
+
     const rowsSeller = await adminModel.allSeller();
     const rowsBidder = await adminModel.allBidder();
     let rowsCategory = await categoryModel.allCategory();
+    const numSeller = await adminModel.countSeller();
+    const numBidder = await adminModel.countBidder();
+
+    console.log(numSeller);
+
+    console.log(rowsCategory);
 
     for(i = 0; i< rowsCategory.length;i++)
     {
-        if(rowsCategory[i].total === 0)
+        if(rowsCategory[i].Total === 0)
             rowsCategory[i].del = true;
         else rowsCategory[i].del = false;
     }
@@ -23,6 +30,8 @@ router.get('/', async(req,res)=>{
         seller: rowsSeller,
         bidder: rowsBidder,
         category: rowsCategory,
+        nBidder: numBidder[0],
+        nSeller: numSeller[0],
 
         emptySeller: rowsSeller.length === 0,
         emptyBidder: rowsBidder.length === 0,
@@ -72,7 +81,6 @@ router.post('/modifySeller',async (req,res)=>{
     res.redirect('/admin');
 })
 
-
 router.get('/sellerDetail/:id',async(req,res)=>{
     const rows = await adminModel.sellerDetail(req.params.id);
     console.log(rows);
@@ -110,6 +118,13 @@ router.post('/addCategory',async (req,res)=>{
     
     console.log(result);
     
+    res.redirect('/admin');
+})
+
+router.post('/deleteCategory/:CatId',async(req,res)=>{
+    console.log(req.params);
+    const result = await categoryModel.deleteCategory(req.params);
+    console.log(result);
     res.redirect('/admin');
 })
 
