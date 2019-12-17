@@ -12,6 +12,7 @@ router.get('/', async(req,res)=>{
     let rowsCategory = await categoryModel.allCategory();
     const numSeller = await adminModel.countSeller();
     const numBidder = await adminModel.countBidder();
+    const numCategory = await categoryModel.countCategory();
 
     console.log(numSeller);
 
@@ -32,6 +33,7 @@ router.get('/', async(req,res)=>{
         category: rowsCategory,
         nBidder: numBidder[0],
         nSeller: numSeller[0],
+        nCategory: numCategory[0],
 
         emptySeller: rowsSeller.length === 0,
         emptyBidder: rowsBidder.length === 0,
@@ -128,6 +130,12 @@ router.post('/deleteCategory/:CatId',async(req,res)=>{
     res.redirect('/admin');
 })
 
+router.post('/aprove/:UserID',async(req,res)=>{
+    console.log(req.params);
+    const result = await adminModel.aproveBidder(req.params.UserID);
+    console.log(result);
+    res.redirect('/admin');
+})
 router.get('/err', (req, res) => {
 
     throw new Error('error occured');

@@ -8,14 +8,15 @@ const router = express.Router();
 
 router.get('/',async (req,res)=>{
     // const rows = await productModel.all();
+    const CatID = req.params.CatID;
     const limit = config.paginate.limit;
     const page = req.query.page || 1;
     if(page<1) page = 1;
     const offset = (page-1)*limit;
 
     const [total,rows] = await Promise.all([
-        productModel.countAll(),
-        productModel.pageAll(offset)
+        productModel.countAllByCat(),
+        productModel.pageAllByCat(offset)
     ])
 
     let nPage = Math.floor(total/limit);
