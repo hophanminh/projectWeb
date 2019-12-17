@@ -8,7 +8,7 @@
     {{else}}
     <div class="card shadow mb-4">
         <h4 class="card-header">
-            Seller {{this.seller.SellerID}}
+            Seller {{this.seller.UserID}}
         </h4>
         <div class="card-body">
             <form method="POST">
@@ -16,8 +16,8 @@
                     <div class="row">
                         <div class="col">
                             <label for="id">ID</label>
-                            <input type="text" class="form-control" id="id" name="SellerID" readonly
-                                value="{{this.seller.SellerID}}">
+                            <input type="text" class="form-control" id="id" name="UserID" readonly
+                                value="{{this.seller.UserID}}">
                         </div>
                         <div class="col">
                             <label for="username">User name</label>
@@ -85,7 +85,7 @@
                 </button>
                 <button type="submit" class="btn btn-outline-danger" formaction="/admin/deleteSeller">
                     <i class="fa fa-trash-o" aria-hidden="true"></i>
-                    Delete
+                    Down to bidder
                 </button>
             </form>
         </div>

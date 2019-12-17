@@ -2,17 +2,23 @@ const db = require('../utils/db');
 const config = require('../config/default.json');
 module.exports={
     all: ()=>{
-        const sql = `select i.ItemID, i.Title,i.StartBidAmount,i.TinyDes,s.Fname SellerFname, b.Fname BidderFname, i.AuctionStart
-        from item i join seller s join bidder b on i.SellerID=s.SellerID and i.BidderID = b.BidderID`
+        const sql = `
+        SELECT *, u1.Fname SellerName, u2.Fname BidderName
+        FROM item i join user u1 join user u2
+        on i.SellerID = u1.UserID and i.BidderID = u2.UserID
+        `
         return db.load(sql);
     },
     countAll: async ()=>{
-        const rows = await db.load(`select count(*) as total from item i join seller s join bidder b on i.SellerID=s.SellerID and i.BidderID = b.BidderID`)
+        const rows = await db.load(`select count(*) as total FROM item i join user u1 join user u2
+        on i.SellerID = u1.UserID and i.BidderID = u2.UserID`)
         return rows[0].total
     },
     pageAll: (offset)=>{
-        const sql = `select i.ItemID, i.Title,i.StartBidAmount,i.TinyDes,s.Fname SellerFname, b.Fname BidderFname, i.AuctionStart
-        from item i join seller s join bidder b on i.SellerID=s.SellerID and i.BidderID = b.BidderID
+        const sql = `
+        SELECT *, u1.Fname SellerName, u2.Fname BidderName
+        FROM item i join user u1 join user u2
+        on i.SellerID = u1.UserID and i.BidderID = u2.UserID
         limit ${config.paginate.limit} offset ${offset}
         `
         return db.load(sql);
@@ -20,8 +26,9 @@ module.exports={
     add: (entity) => db.add('item',entity),
     single: (id) => {
         const sql = `
-        select i.*, s.Fname SellerFname, b.Fname BidderFname
-        from item i join seller s join bidder b on i.SellerID=s.SellerID and i.BidderID = b.BidderID
+        SELECT *, u1.Fname SellerName, u2.Fname BidderName
+        FROM item i join user u1 join user u2
+        on i.SellerID = u1.UserID and i.BidderID = u2.UserID
         where i.ItemID = ${id}
         `
         return db.load(sql);

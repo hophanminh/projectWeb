@@ -11,7 +11,10 @@
         "PORT": 3000
     },
     "paginate":{
-        "limit": 2
+        "limit": 6
+    },
+    "DateLast":{
+        "LastDate": 7
     }
 
 }

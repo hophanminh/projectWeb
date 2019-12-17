@@ -6,12 +6,12 @@
                 <a class="list-group-item list-group-item-action d-flex justify-content-between" id="list-upgrade-list"
                     data-toggle="list" href="#list-upgrade" role="tab" aria-controls="home">
                     Approve Account
-                    <span class="badge badge-warning badge-pill"> 3</span>
+                    <span class="badge badge-warning badge-pill"> {{this.nBidder.numBidder}}</span>
                 </a>
                 <a class="list-group-item list-group-item-action d-flex justify-content-between" id="list-seller-list"
                     data-toggle="list" href="#list-seller" role="tab" aria-controls="profile">
                     Seller
-                    <span class="badge badge-success badge-pill"> 3012</span>
+                    <span class="badge badge-success badge-pill"> {{this.nSeller.numSeller}}</span>
                 </a>
                 <a class="list-group-item list-group-item-action d-flex justify-content-between" id="list-report-list"
                     data-toggle="list" href="#list-report" role="tab" aria-controls="messages">
@@ -93,12 +93,12 @@
                             {{#each this.seller }}
                             <tr>
                                 <th scope="row">*</th>
-                                <td>{{SellerID}} </td>
+                                <td>{{UserID}} </td>
                                 <td>{{Username}}</td>
                                 <td>{{Point}}</td>
                                 <td>32</td>
                                 <td>
-                                <a class="btn" role = "button" href="/admin/seller/{{SellerID}}">Click here</a>
+                                <a class="btn btn-outline-warning" role = "button" href="/admin/seller/{{UserID}}">Detail</a>
                                 </td>
                             </tr>
                             {{/each}}
@@ -173,6 +173,13 @@
                     </table>
                 </div>
                 <div class="tab-pane fade" id="list-categories" role="tabpanel" aria-labelledby="list-categories">
+                    {{#if this.emptyCategory}}
+                    <div class="card-body">
+                        <p class="card-text">
+                            No data available
+                        </p>
+                    </div>
+                    {{else}}
                     <p class="h2 d-flex justify-content-center">List categories</p>
                     <table class="table table-hover">
                         <thead>
@@ -184,40 +191,33 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {{#each this.category}}
                             <tr>
-                                <th scope="row">1</th>
-                                <td><a href="./listProduct.html" class="text-dark">Christmas</a></td>
-                                <td>400</td>
+                                <td scope="row">*</td>
+                                <td scope="col">{{CatName}}</td>
+                                <td>{{Total}}</td>
+                                {{#if del}}
+                                <td>
+                                    <form method="POST">
+                                    <button type="submit" class="btn btn-outline-danger" formaction="/admin/deleteCategory/{{CatID}}" >
+                                        <i class="fa fa-minus" aria-hidden="true"></i>
+                                    </button>
+                                    </form>
+                                </td>
+                                {{else}}
                                 <td>
                                     <button type="button" class="btn btn-outline-danger" disabled>
                                         <i class="fa fa-minus" aria-hidden="true"></i>
                                     </button>
                                 </td>
+                                {{/if}}
                             </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td><a href="./listProduct.html" class="text-dark">Phone</a></td>
-                                <td>200</td>
-                                <td>
-                                    <button type="button" class="btn btn-outline-danger" disabled>
-                                        <i class="fa fa-minus" aria-hidden="true"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Laptop</td>
-                                <td>0</td>
-                                <td>
-                                    <button type="button" class="btn btn-outline-danger">
-                                        <i class="fa fa-minus" aria-hidden="true"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                            {{/each}}
                         </tbody>
                     </table>
+                    {{/if}}
                     <div>
-                        <a href="/admin/addCategories">
+                        <a href="/admin/addCategory" role = 'button' class='btn btn-outline-primary'>
                             <i class="fa fa-plus" aria-hidden="true"> Add categories</i>
                         </a>
                         
