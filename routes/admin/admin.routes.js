@@ -7,12 +7,21 @@ const router = express.Router();
 
 router.get('/', async(req,res)=>{
 
-    const rowsSeller = await adminModel.allSeller();
-    const rowsBidder = await adminModel.allBidder();
-    let rowsCategory = await categoryModel.allCategory();
-    const numSeller = await adminModel.countSeller();
-    const numBidder = await adminModel.countBidder();
-    const numCategory = await categoryModel.countCategory();
+    const [rowsSeller, rowsBidder, rowsCategory, numSeller, numBidder,numCategory] = await Promise.all([
+            adminModel.allSeller(),
+            adminModel.allBidder(),
+            categoryModel.allCategory(),
+            adminModel.countSeller(),
+            adminModel.countBidder(),
+            categoryModel.countCategory()            
+        ]
+    )
+    // const rowsSeller = await adminModel.allSeller();
+    // const rowsBidder = await adminModel.allBidder();
+    // let rowsCategory = await categoryModel.allCategory();
+    // const numSeller = await adminModel.countSeller();
+    // const numBidder = await adminModel.countBidder();
+    // const numCategory = await categoryModel.countCategory();
 
     console.log(numSeller);
 

@@ -13,13 +13,8 @@ app.use(express.urlencoded({
   }));
 app.use(express.static('public'));
 
-const categoryModel = require('./models/categories.model');
-app.use(async(req,res,next)=>{
-  const rows = await categoryModel.allCategory();
-  console.log(rows);
-  res.locals.lcCategory = rows;
-  next();
-})
+//Local
+require('./middlewares/local.mdw')(app);
 
 require('./middlewares/engine.mdw')(app);
 require('./middlewares/routes.mdw')(app);

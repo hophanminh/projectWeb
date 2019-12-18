@@ -6,50 +6,50 @@ const moment = require('moment');
 
 const router = express.Router();
 
-router.get('/',async (req,res)=>{
-    // const rows = await productModel.all();
-    const CatID = req.params.CatID;
-    const limit = config.paginate.limit;
-    const page = req.query.page || 1;
-    if(page<1) page = 1;
-    const offset = (page-1)*limit;
+// router.get('/',async (req,res)=>{
+//     // const rows = await productModel.all();
+//     const CatID = req.params.CatID;
+//     const limit = config.paginate.limit;
+//     const page = req.query.page || 1;
+//     if(page<1) page = 1;
+//     const offset = (page-1)*limit;
 
-    const [total,rows] = await Promise.all([
-        productModel.countAllByCat(),
-        productModel.pageAllByCat(offset)
-    ])
+//     const [total,rows] = await Promise.all([
+//         productModel.countAllByCat(),
+//         productModel.pageAllByCat(offset)
+//     ])
 
-    let nPage = Math.floor(total/limit);
-    if (total%limit > 0) nPage++;
+//     let nPage = Math.floor(total/limit);
+//     if (total%limit > 0) nPage++;
 
-    const page_numbers = [];
-    for(i=1;i<=nPage;i++){
-        page_numbers.push({
-            value: i,
-            current: i === +page
-        })
-    };
+//     const page_numbers = [];
+//     for(i=1;i<=nPage;i++){
+//         page_numbers.push({
+//             value: i,
+//             current: i === +page
+//         })
+//     };
 
-    let page_prev = +page -1;
-    if(page_prev < 1) page_prev=1;
+//     let page_prev = +page -1;
+//     if(page_prev < 1) page_prev=1;
 
-    let page_next = +page + 1;
-    if(page_next > nPage) page_next = nPage;
+//     let page_next = +page + 1;
+//     if(page_next > nPage) page_next = nPage;
 
-    console.log(rows);
-    res.render('productViews/listProduct',{
-        products: rows,
-        empty: rows.length === 0,
-        page_numbers,
-        page_prev,
-        min: +page === 1,
-        page_next,
-        max: +page === nPage,
-        title: 'List Product',
-        style: 'style.css',
-        js: 'product.js'
-    })
-})
+//     console.log(rows);
+//     res.render('productViews/listProduct',{
+//         products: rows,
+//         empty: rows.length === 0,
+//         page_numbers,
+//         page_prev,
+//         min: +page === 1,
+//         page_next,
+//         max: +page === nPage,
+//         title: 'List Product',
+//         style: 'style.css',
+//         js: 'product.js'
+//     })
+// })
 
 router.get('/addItem',async(req,res)=>{
 
@@ -123,7 +123,7 @@ router.post('/:ItemId/bidProduct',async(req,res)=>{
     console.log(entity);
 
     const result = await productModel.bid(entity);
-    res.redirect(`/product`);
+    res.redirect(`/category`);
 })
 
 

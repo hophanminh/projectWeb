@@ -14,6 +14,15 @@ router.get('/',async(req,res)=>{
 
 router.get('/:CatID/product',async(req,res)=>{
     // const rows = await productModel.all();
+
+    for(const c of res.locals.lcCategory){
+        if(c.CatID === +req.params.CatID){
+            c.isActive = true;
+        }
+    }
+
+    console.log(res.locals.lcCategory);
+
     const CatID = req.params.CatID;
     console.log(CatID);
     const limit = config.paginate.limit;

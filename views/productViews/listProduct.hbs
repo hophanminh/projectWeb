@@ -23,7 +23,7 @@
                 <div class="list-group list-group-flush">
                     {{#each lcCategory}}
                     <a href="/category/{{CatID}}/product"
-                        class="list-group-item list-group-item-action {{#if isActive}}active{{/if}}">
+                        class="list-group-item list-group-item-action {{#if isActive}} active{{/if}}">
                         {{CatName}}
                         {{#if Total}}
                         <span class="badge badge-danger float-right">{{Total}}</span>
@@ -82,40 +82,37 @@
                     {{/each}}
                 </div>
             </div>
+
+            <nav aria-label="Page navigation example" style="margin-top: 10px;">
+                <ul class="pagination d-flex justify-content-center">
+                    {{#if min}}
+                    <li class="page-item disabled"><a class="page-link">Previous</a></li>
+                    {{else}}
+                    <li class="page-item"><a class="page-link" href="?page={{page_prev}}">Previous</a></li>
+                    {{/if}}
+
+                    {{#each this.page_numbers}}
+                    {{#if current}}
+                    <li class="page-item active">
+                        <a class="page-link" href="?page={{value}}">{{value}}</a>
+                    </li>
+                    {{else}}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{value}}">{{value}}</a>
+                    </li>
+                    {{/if}}
+                    {{/each}}
+
+                    {{#if max}}
+                    <li class="page-item disabled"><a class="page-link">Next</a></li>
+                    {{else}}
+                    <li class="page-item"><a class="page-link" href="?page={{page_next}}">Next</a></li>
+                    {{/if}}
+                </ul>
+            </nav>
             {{/if}}
-
-
-        <nav aria-label="Page navigation example" style="margin-top: 10px;">
-            <ul class="pagination d-flex justify-content-center">
-                {{#if min}}
-                <li class="page-item disabled"><a class="page-link">Previous</a></li>
-                {{else}}
-                <li class="page-item"><a class="page-link" href="?page={{page_prev}}">Previous</a></li>
-                {{/if}}
-
-                {{#each this.page_numbers}}
-                {{#if current}}
-                <li class="page-item active">
-                    <a class="page-link" href="?page={{value}}">{{value}}</a>
-                </li>
-                {{else}}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{value}}">{{value}}</a>
-                </li>
-                {{/if}}
-                {{/each}}
-
-                {{#if max}}
-                <li class="page-item disabled"><a class="page-link">Next</a></li>
-                {{else}}
-                <li class="page-item"><a class="page-link" href="?page={{page_next}}">Next</a></li>
-                {{/if}}
-            </ul>
-        </nav>       
-         </div>
+        </div>
     </div>
-           </div> 
 </div>
-
 
 <script src='/js/listProduct.js'></script>
