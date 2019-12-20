@@ -104,26 +104,26 @@ router.get('/:ItemId',async (req,res)=>{
     product[0].AuctionStart = start;
     console.log(product);
 
+    console.log(product[0].AuctionEnd);
     res.render('productViews/product',{
         product: product[0],
-        empty: product.length ===0,
+        empty: product.length === 0,
         title: 'Product',
         style: 'style.css',
-        js: 'product.js'
     })
 })
 
 
-router.post('/:ItemId/bidProduct',async(req,res)=>{
-    console.log(req.params);
+router.post('/:ItemId/:BidderID/bidProduct',async(req,res)=>{
     console.log(req.body);
-
     const entity = req.params;
+    console.log(entity);
     entity.CurrentBidAmount = req.body.money;
     console.log(entity);
 
     const result = await productModel.bid(entity);
     res.redirect(`/category`);
+
 })
 
 

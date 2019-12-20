@@ -1,31 +1,38 @@
 {{#section 'js'}}
-<script>
-    function AmountValid(){
-        const bid = $("input[name = money]").val();
-        const current = $('#current').val();
+<script>// Update the count down every 1 second
+//var countDownDate = moment(this.product.AuctionEnd,'YYYY-MM-DD').format('DD/MM/YYYY');
 
-        console.log(bid);
-        console.log(current);
+var countDownDate = new Date();
+var x = setInterval(function() {
 
-        if(bid < current)
-        {
-            Swal.fire();
-            return false;
-        }
-        return true;
-    }
+// Get today's date and time
+var now = new Date().getTime();
+//now = moment(now,'YYYY-MM-DD').format('DD/MM/YYYY');// Find the distance between now and the count down date
+var distance = countDownDate - now;
 
-    Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Date start go after date end',
-        footer: 'You need to check Start Date and End Date'
-    })
+// Time calculations for days, hours, minutes and seconds
+var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
+int id = this.products.ItemID;
+// Display the result in the element with id="demo"
+document.getElementById(`day`).innerHTML = days +" day";
+document.getElementById(`hour`).innerHTML = hours +" hour";
+document.getElementById(`min`).innerHTML = minutes + " min";
+document.getElementById(`sec`).innerHTML = seconds+" sec";
+
+// If the count down is finished, write some text
+if (distance < 0) {
+clearInterval(x);
+document.getElementById("demo").innerHTML = "EXPIRED";
+}
+}, 1000);
 </script>
+
+
 {{/section}}
-
-
 <div class="container">
     <div class="card mb-5">
         <div class="row">
@@ -106,7 +113,7 @@
                     </div>
                     <br>
                     <p class="card-text">
-                        {{this.product.TinyDes}}
+                        {{{this.product.TinyDes}}}
                     </p>
                     <span class="d-flex justify-content-end">
                         <div class="card bg-danger text-white">
@@ -138,7 +145,7 @@
                         <strong>2007</strong>
                     </p>
                     <hr>
-                    <form method="POST" onsubmit='return AmountValid();'>
+                    <form method="POST" name="form" onsubmit="return AmountValid();">
                         <p class="card-text">How much do you want to bid??</p>
                         <div class="input-group mb-3">
                             <div class="input-group">
@@ -147,12 +154,19 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">$</div>
                                         </div>
-                                        <input type="text" class="form-control" id="money" name="money"
-                                            placeholder="400">
+                                        {{#if isAuthenticated}}
+                                        <input type="text" class="form-control" id="money" name="money" placeholder="400">
                                         <button type="submit" class="btn btn-danger m-0 rounded-right-button"
-                                            formaction="/product/{{this.product.ItemID}}/bidProduct" value="SUBMIT">
+                                            formaction="/product/{{this.product.ItemID}}/{{authUser.UserID}}/bidProduct" value="SUBMIT" >
                                             <i class="fa fa-gavel" aria-hidden="true"> Bid </i>
                                         </button>
+                                        {{else }}
+                                        <button class="btn btn-danger m-0 rounded-right-button"
+                                            disabled value="SUBMIT" >
+                                            <i class="fa fa-gavel" aria-hidden="true"> Bid </i>
+                                        </button>
+                                        <label for="money">Log in first</label>
+                                        {{/if}}
                                     </div>
                                 </div>
                             </div>
@@ -164,24 +178,8 @@
             </div>
         </div>
         <!-- /summary-->
-        <div class="mb-10">
-            <p class="h3">Detail</p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam voluptas eaque cupiditate consequatur alias
-            voluptatibus enim perspiciatis, quos aut aliquid maiores ipsum tempora sit fuga, rem nobis dolorum! Iure,
-            nemo. Lorem ipsum dolor, sit amet consectetur
-            adipisicing elit. Cumque quidem atque modi, aperiam mollitia sequi! Mollitia, facilis dignissimos similique
-            sequi, veritatis blanditiis eveniet eaque neque nulla adipisci deserunt iusto enim. Lorem ipsum dolor sit
-            amet consectetur, adipisicing
-            elit. Repellendus quidem eveniet voluptatem laudantium, odit dicta vel laboriosam corrupti quis tempore
-            doloribus quod et placeat natus quos! Nam voluptates totam quo? Lorem ipsum dolor sit amet, consectetur
-            adipisicing elit. Optio, culpa dolorum
-            enim nostrum, perspiciatis neque tenetur illum corporis asperiores saepe molestiae ea aut vero sequi quis
-            eius tempore a pariatur. Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae aut asperiores
-            incidunt fugiat quibusdam, ex voluptatibus
-            quidem, corporis explicabo, quod quisquam. Dolore laudantium fugit suscipit temporibus necessitatibus
-            aspernatur at provident. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis labore ex rerum
-            odio odit, dolorum quia, exercitationem
-            officiis tempora, rem nemo dolores dolore magni! Cumque dignissimos nobis eum! Repudiandae, magnam!
+        <div class="mb-5 ml-3">
+            {{{this.product.FullDes}}}
         </div>
     </div>
     <hr>
@@ -361,3 +359,30 @@
         <!--/.Carousel Wrapper-->
     </div>
 </div>
+{{#section 'js'}}
+<script>
+    function AmountValid(){
+        const bid = $("input[name = money]").val();
+        const current = this.product.CurrentBidAmount;
+
+        console.log(bid);
+        console.log(current);
+
+        if(bid < current)
+        {
+            Swal.fire();
+            return false;
+        }
+        return true;
+    }
+
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'bid need bigger',
+        footer: 'You need to check Start Date and End Date'
+    })
+
+</script>
+{{/section}}
+

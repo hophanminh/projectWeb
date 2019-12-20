@@ -14,6 +14,7 @@ app.use(express.urlencoded({
 app.use(express.static('public'));
 
 //Local
+require('./middlewares/session.mdw')(app);
 require('./middlewares/local.mdw')(app);
 
 require('./middlewares/engine.mdw')(app);
