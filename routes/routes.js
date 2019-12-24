@@ -96,8 +96,46 @@ router.post('/logout',(req,res)=>{
     req.session.authUser = null;
     res.redirect(req.headers.referer);
     
-})
+});
 
+router.get('/forgetPass',(req,res)=>{
+    res.render('forgetPass',{
+        title: 'Forget pass',
+        style: "home.css"
+    })
+})
+router.post('/forgetPass',async (req,res)=>{
+    console.log(req.body);
+    const check = await userModel.singleByEmail(req.body.Email);
+    console.log(check);
+    if(check === false)
+        throw new Error('Invalid username or password');
+
+    console.log(check);
+
+    const N = 10;
+    const hash = bcryptjs.hashSync(check.PhoneNo,N);
+
+    delete check.Username;
+    delete check.Password;
+    delete check.Type;
+    delete check.Fname;
+    delete check.Lname;
+    delete check.DoB;
+    delete check.Street;
+    delete check.District;
+    delete check.City;
+    delete check.Email;
+    delete check.PhoneNo;
+    delete check.Point;
+
+    const entity = check
+    entity.Password = hash;
+    console.log(entity);
+    const result = await userModel.changePass(entity);
+
+    res.redirect('/login');
+})
 
 router.get('/payment',(req,res)=>{
     res.render('productViews/payment',{

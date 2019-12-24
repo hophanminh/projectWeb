@@ -1,37 +1,69 @@
+{{#section 'css'}}
+{{/section}}
 {{#section 'js'}}
 <script>// Update the count down every 1 second
-//var countDownDate = moment(this.product.AuctionEnd,'YYYY-MM-DD').format('DD/MM/YYYY');
+    //var countDownDate = moment(this.product.AuctionEnd,'YYYY-MM-DD').format('DD/MM/YYYY');
 
-var countDownDate = new Date();
-var x = setInterval(function() {
+    var countDownDate = new Date();
+    var x = setInterval(function () {
 
-// Get today's date and time
-var now = new Date().getTime();
-//now = moment(now,'YYYY-MM-DD').format('DD/MM/YYYY');// Find the distance between now and the count down date
-var distance = countDownDate - now;
+        // Get today's date and time
+        var now = new Date().getTime();
+        //now = moment(now,'YYYY-MM-DD').format('DD/MM/YYYY');// Find the distance between now and the count down date
+        var distance = countDownDate - now;
 
-// Time calculations for days, hours, minutes and seconds
-var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-int id = this.products.ItemID;
-// Display the result in the element with id="demo"
-document.getElementById(`day`).innerHTML = days +" day";
-document.getElementById(`hour`).innerHTML = hours +" hour";
-document.getElementById(`min`).innerHTML = minutes + " min";
-document.getElementById(`sec`).innerHTML = seconds+" sec";
+        int id = this.products.ItemID;
+        // Display the result in the element with id="demo"
+        document.getElementById(`day`).innerHTML = days + " day";
+        document.getElementById(`hour`).innerHTML = hours + " hour";
+        document.getElementById(`min`).innerHTML = minutes + " min";
+        document.getElementById(`sec`).innerHTML = seconds + " sec";
 
-// If the count down is finished, write some text
-if (distance < 0) {
-clearInterval(x);
-document.getElementById("demo").innerHTML = "EXPIRED";
-}
-}, 1000);
+        // If the count down is finished, write some text
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("demo").innerHTML = "EXPIRED";
+        }
+    }, 1000);
+
+
 </script>
 
-
+<script>
+    function isMoneyValid() {
+        const money = $("#money").val();
+        const current = {{ this.product.CurrentBidAmount }};
+        const productPoint = {{this.product.MinPoint}};
+        const userPoint = {{autheUser.Point}};
+            if (money < current) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'More money please',
+                    footer: 'you need more money to bid'
+                })
+                return false;
+            }
+            else {
+                if (productPoint > userPoint) {
+                Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'More point please',
+                footer: 'you need more point to bid'
+                })
+                return false;
+                }
+            }
+            return true;
+    }
+</script>
 {{/section}}
 <div class="container">
     <div class="card mb-5">
@@ -115,6 +147,9 @@ document.getElementById("demo").innerHTML = "EXPIRED";
                     <p class="card-text">
                         {{{this.product.TinyDes}}}
                     </p>
+                    <script>
+                        
+                    </script>
                     <span class="d-flex justify-content-end">
                         <div class="card bg-danger text-white">
                             <h3 class="card-title text-center">
@@ -145,7 +180,7 @@ document.getElementById("demo").innerHTML = "EXPIRED";
                         <strong>2007</strong>
                     </p>
                     <hr>
-                    <form method="POST" name="form" onsubmit="return AmountValid();">
+                    <form method="POST" onsubmit="return isMoneyValid();">
                         <p class="card-text">How much do you want to bid??</p>
                         <div class="input-group mb-3">
                             <div class="input-group">
@@ -155,14 +190,15 @@ document.getElementById("demo").innerHTML = "EXPIRED";
                                             <div class="input-group-text">$</div>
                                         </div>
                                         {{#if isAuthenticated}}
-                                        <input type="text" class="form-control" id="money" name="money" placeholder="400">
+                                        <input type="text" class="form-control" id="money" name="money"
+                                            placeholder="400">
                                         <button type="submit" class="btn btn-danger m-0 rounded-right-button"
-                                            formaction="/product/{{this.product.ItemID}}/{{authUser.UserID}}/bidProduct" value="SUBMIT" >
+                                            formaction="/bidder/{{this.product.ItemID}}/{{authUser.UserID}}/bidProduct"
+                                            value="SUBMIT">
                                             <i class="fa fa-gavel" aria-hidden="true"> Bid </i>
                                         </button>
                                         {{else }}
-                                        <button class="btn btn-danger m-0 rounded-right-button"
-                                            disabled value="SUBMIT" >
+                                        <button class="btn btn-danger m-0 rounded-right-button" disabled value="SUBMIT">
                                             <i class="fa fa-gavel" aria-hidden="true"> Bid </i>
                                         </button>
                                         <label for="money">Log in first</label>
@@ -173,7 +209,7 @@ document.getElementById("demo").innerHTML = "EXPIRED";
                         </div>
                     </form>
 
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    <p class="card-text"><small class="text-muted">{{this.product.AuctionStart}}</small></p>
                 </div>
             </div>
         </div>
@@ -361,15 +397,14 @@ document.getElementById("demo").innerHTML = "EXPIRED";
 </div>
 {{#section 'js'}}
 <script>
-    function AmountValid(){
+    function AmountValid() {
         const bid = $("input[name = money]").val();
         const current = this.product.CurrentBidAmount;
 
         console.log(bid);
         console.log(current);
 
-        if(bid < current)
-        {
+        if (bid < current) {
             Swal.fire();
             return false;
         }
@@ -385,4 +420,3 @@ document.getElementById("demo").innerHTML = "EXPIRED";
 
 </script>
 {{/section}}
-

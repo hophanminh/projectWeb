@@ -1,25 +1,10 @@
 <div class="container">
-    <h2>Find your account</h2>
-    <div class="phl ptm identify_yourself_block">
-        <table>
-            <tbody>
-                <tr>
-                    <td></td>
-                    <td>
-                        <small>Vui lòng nhập email hoặc số điện thoại để tìm kiếm tài khoản.</small>
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><input type="text" class="inputtext" id="identify_email" name="email" placeholder="Số điện thoại hoặc email" autofocus="1" aria-label="Số điện thoại hoặc email"></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <button type="submit">Tìm kiếm</button>
-    <button type="submit">Hủy</button>
+    <form method="POST">
+        <div class="form-group">
+            <label for="Email">Email address</label>
+            <input type="text" class="form-control" id="Email" name="Email">
+            <small id="emailHelp" class="form-text text-muted">Give us your email, we'll help you.</small>
+        </div>
+        <button type="submit" class="btn btn-primary" formaction="/forgetPass">Submit</button>
+    </form>
 </div>
