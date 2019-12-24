@@ -15,6 +15,9 @@
     },
     "DateLast":{
         "LastDate": 3
+    },
+    "listHistory": {
+        "people": 5
     }
 
 }

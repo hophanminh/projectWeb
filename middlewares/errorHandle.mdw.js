@@ -8,6 +8,6 @@ module.exports = function(app){
     app.use((err, req, res, next) => {
         // logic
         console.error(err.stack);
-        res.status(500).send('View error in console');
+        res.status(500).send('Some thing went wrong, please return');
     })
 }

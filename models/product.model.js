@@ -25,6 +25,26 @@ module.exports={
         delete entity.ItemID;
         return db.modify('item',entity,condition);
     },
+    timeBid: (entity) => {
+        entity.BidAmount = entity.CurrentBidAmount;
+        delete entity.CurrentBidAmount;
+        console.log(entity);
+        return db.add('bids',entity);
+    },
+    countBid: async(id)=>{
+        const sql = `select count(*) as total from bids where ItemID =  ${id}`;
+        const times = await db.load(sql);
+        return times[0].total;
+    },
+    bidHistory: id => {
+        const sql = 
+        `select b.*, u.Fname as BidderName from bids b join user u on u.UserID = b.BidderID 
+        where ItemID = ${id}
+        order by BidTime desc 
+        limit ${config.listHistory.people}`
+        const result = db.load(sql);
+        return result;
+    },
 }
 
 

@@ -10,6 +10,11 @@ module.exports=function(app){
         helpers:{
             section: hbs_section(),
             formatDate: value => moment(value).format('LL'),
+            lastProduct: function (dateStart, dateEnd){
+                const now = moment().format();
+                const end = moment(end,'YYYY-MM-DD h:mm:ss')
+                const period = end - now;
+            }
         }
     }));
     app.set('view engine','hbs');  
