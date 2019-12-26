@@ -2,6 +2,7 @@ const express = require('express');
 const bcryptjs = require('bcryptjs');
 const moment = require('moment');
 const userModel = require('../models/user.model');
+const adminModel = require('../models/admin.model');
 const router = express.Router();
 
 router.get('/',(req,res)=>{
@@ -82,6 +83,7 @@ router.post('/login',async(req,res)=>{
 
     delete user.Password;
     req.session.isAuthenticated = true;
+    req.session.isAuthenticatedAdmin = false;
     req.session.authUser = user;
 
     console.log(user);
@@ -91,8 +93,49 @@ router.post('/login',async(req,res)=>{
     res.redirect(url);
     
 })
+
+router.get('/loginAdmin',(req,res)=>{
+    res.render('loginAdmin',{
+        layout: false,
+        title:"Log In",
+        style: "style.css"
+    });
+})
+
+router.post('/loginAdmin',async(req,res)=>{
+    const user = await adminModel.singleByAdmin(req.body.username);
+    
+    if(user === null)
+        throw new Error('Invalid username or password');
+
+    const authe = bcryptjs.compareSync(req.body.password, user.Password);
+    
+    console.log(authe);
+
+    if(authe === false){
+        return res.render('loginAdmin',{
+            layout: false,
+            title:"Log In",
+            style: "style.css"
+        });
+    }
+
+    delete user.Password;
+    req.session.isAuthenticated = true;
+    req.session.isAuthenticatedAdmin = true;
+    req.session.authUser = user;
+
+    console.log(user);
+
+    // const url = req.query.retUrl || '/';
+    const url = req.query.retUrl || '/';
+    res.redirect(url);
+    
+})
+
 router.post('/logout',(req,res)=>{
     req.session.isAuthenticated = false;
+    req.session.isAuthenticatedAdmin=false;
     req.session.authUser = null;
     res.redirect(req.headers.referer);
     

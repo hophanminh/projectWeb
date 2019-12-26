@@ -1,7 +1,7 @@
 const express = require('express');
+const moment = require('moment');
 const adminModel = require('../../models/admin.model');
 const categoryModel = require('../../models/categories.model');
-const moment = require('moment');
 
 const router = express.Router();
 

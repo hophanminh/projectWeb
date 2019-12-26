@@ -8,6 +8,6 @@ module.exports = function(app){
     app.use('/product',require('../routes/product/product.routes'));
     app.use('/user',restrictUser,require('../routes/user/user.routes'));
     app.use('/seller',require('../routes/seller/seller.routes'));
-    app.use('/bidder',require('../routes/bidder/bidder.routes'));
+    app.use('/bidder',restrictUser,require('../routes/bidder/bidder.routes'));
     app.use('/',require('../routes/routes'));
 }

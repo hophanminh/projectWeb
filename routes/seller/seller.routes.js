@@ -11,15 +11,16 @@ const router = express.Router();
 const time = Date.now();
 
 const storage = multer.diskStorage({
-    filename: function (req, file, cb) {
-            let filename = file.originalname;
-            let fileExtension = filename.split(".")[1];
-            cb(null, Date.now() + "." + fileExtension);
-    },
     destination: function (req, file, cb) {
         const dir = `./public/img/` + time;
         fs.mkdirsSync(dir);
         return cb(null, dir);
+    },
+    filename: function (req, file, cb) {
+            const files = req.files;
+            let filename = file.originalname;
+            let fileExtension = filename.split(".")[1];
+            cb(null, Date.now() + "." + fileExtension);
     },
 });
 const upload = multer({ storage });
