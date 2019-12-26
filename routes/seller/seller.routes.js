@@ -1,32 +1,51 @@
 const express = require('express');
+const moment = require('moment');
+const multer = require('multer');
+const fs = require('fs.extra');
+
 const productModel = require('../../models/product.model');
 const categoryModel = require('../../models/categories.model');
 const config = require('../../config/default.json');
-const moment = require('moment');
 
 const router = express.Router();
+const time = Date.now();
 
-router.get('/addItem',async(req,res)=>{
+const storage = multer.diskStorage({
+    filename: function (req, file, cb) {
+            let filename = file.originalname;
+            let fileExtension = filename.split(".")[1];
+            cb(null, Date.now() + "." + fileExtension);
+    },
+    destination: function (req, file, cb) {
+        const dir = `./public/img/` + time;
+        fs.mkdirsSync(dir);
+        return cb(null, dir);
+    },
+});
+const upload = multer({ storage });
+
+router.get('/addItem', async (req, res) => {
 
     const category = await categoryModel.allCategory();
 
     console.log(category);
 
-    res.render('productViews/addItem',{
+    res.render('productViews/addItem', {
         category,
         title: 'Add Item',
         style: 'style.css'
     })
 })
 
-router.post('/addItem/:UserID',async (req,res)=>{    
+// router.post('/addItem/:UserID',upload.single('img'),async (req,res)=>{    
+router.post('/addItem/:UserID',upload.array('img',6), async (req, res) => {
     let startDate = new Date();
-    Date.prototype.addDays = function(days) {
+    Date.prototype.addDays = function (days) {
         var date = new Date(this.valueOf());
         date.setDate(date.getDate() + days);
         return date;
     }
-        
+
     const endDate = (startDate.addDays(config.DateLast.LastDate));
 
     const entity = {
@@ -46,15 +65,9 @@ router.post('/addItem/:UserID',async (req,res)=>{
         AccountType: 'Mastercard',
         AccountNo: 'JEMO',
     }
-    console.log(entity);
 
     const result = await productModel.add(entity);
-    console.log(result);
-    res.render('productViews/addItem',{
-        title: 'Add Item',
-        style: 'style.css',
-        js: 'addCategory.js'
-    })
+    res.redirect('/seller/addItem');
 })
 
 router.get('/err', (req, res) => {

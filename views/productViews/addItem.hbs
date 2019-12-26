@@ -1,46 +1,67 @@
+{{#section 'css'}}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/css/fileinput.min.css" media="all"
+    rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+
+{{/section}}
+
 {{#section 'js'}}
 <script>
-// Example starter JavaScript for disabling form submissions if there are invalid fields
-(function() {
-  'use strict';
-  window.addEventListener('load', function() {
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.getElementsByClassName('needs-validation');
-    // Loop over them and prevent submission
-    var validation = Array.prototype.filter.call(forms, function(form) {
-      form.addEventListener('submit', function(event) {
-        if (form.checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        form.classList.add('was-validated');
-      }, false);
-    });
-  }, false);
-})();
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
 </script>
 <script
-  src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=ezd73nxbzc7bu6e86g2l82jbbffke0mwevwrnyvc5q8h89j6"></script>
+    src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=ezd73nxbzc7bu6e86g2l82jbbffke0mwevwrnyvc5q8h89j6"></script>
 <script>
-  tinymce.init({
-    selector: '#txtTinyDes',
-    height: 300,
-    plugins: 'paste image link autolink lists table media',
-    menubar: false,
-    toolbar: [
-      'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright | table link image media',
-      'forecolor backcolor',
-    ],
-  });
-  tinymce.init({
-    selector: '#txtFullDes',
-    height: 300,
-    plugins: 'paste image link autolink lists table media',
-    menubar: false,
-    toolbar: [
-      'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright | forecolor backcolor | table link image media',
-    ],
-  });
+    tinymce.init({
+        selector: '#txtTinyDes',
+        height: 300,
+        plugins: 'paste image link autolink lists table media',
+        menubar: false,
+        toolbar: [
+            'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright | table link image media',
+            'forecolor backcolor',
+        ],
+    });
+    tinymce.init({
+        selector: '#txtFullDes',
+        height: 300,
+        plugins: 'paste image link autolink lists table media',
+        menubar: false,
+        toolbar: [
+            'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright | forecolor backcolor | table link image media',
+        ],
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/js/fileinput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/themes/fa/theme.min.js"></script>
+<script>
+    $('#img').fileinput({
+        maxFileCount: 10,
+        theme: 'fa',
+        dropZoneEnabled: false,
+        allowedFileExtensions: ['png', 'jpg', 'gif'],
+        removeClass: "btn btn-danger",
+    });
+</script>
+
 </script>
 {{/section}}
 
@@ -48,7 +69,7 @@
     <div class="h1 text-center">
         Add item
     </div>
-    <form  method="POST" class="needs-validation" novalidate>
+    <form method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
         <div class="form-row">
             <div class="col mb-3">
                 <label for="Title">Title</label>
@@ -70,10 +91,10 @@
             <div class="col-md-3 mb-3">
                 <label for="Condition">Condition</label>
                 <select class="custom-select mb-3" id="Condition" name="Condition">
-                <option value="Excellent">Excellent</option>
-                <option value="Good">Good</option>
-                <option value="Fair">Fair</option>
-                <option value="Poor" selected>Poor</option>
+                    <option value="Excellent">Excellent</option>
+                    <option value="Good">Good</option>
+                    <option value="Fair">Fair</option>
+                    <option value="Poor" selected>Poor</option>
                 </select>
                 <div class="valid-feedback">
                     Looks good!
@@ -106,19 +127,24 @@
             </div>
         </div>
         <div class="form-row mb-3">
-            <div class="col-7">
+            <div class="col">
                 <label for="txtTinyDes">Short description</label>
-                <textarea class="form-control" id="txtTinyDes" name="TinyDes" placeholder="Short description" required></textarea>
+                <textarea class="form-control" id="txtTinyDes" name="TinyDes" placeholder="Short description"
+                    required></textarea>
             </div>
-            <div class="col-5">
-                <label for="img">Imagine</label>
-                <input type="file" class="form-control-file" id="img" name="img">
-            </div>
-
         </div>
         <div class="form mb-3">
             <label for="txtFullDes">Full description</label> <br>
-            <textarea class="form-control" id="txtFullDes" name="FullDes" placeholder="Full description" required></textarea>
+            <textarea class="form-control" id="txtFullDes" name="FullDes" placeholder="Full description"
+                required></textarea>
+        </div>
+        <div class="card">
+            <h4 class="card-header">
+                Upload
+            </h4>
+            <div class="card-body">
+                    <input id="img" name="img" type="file" multiple>
+            </div>
         </div>
         <div class="form-group mb-3">
             <div class="form-check">
@@ -131,6 +157,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-outline-success" type="submit" formaction='/seller/addItem/{{authUser.UserID}}'>Submit form</button>
+        <button class="btn btn-outline-success" type="submit" formaction='/seller/addItem/{{authUser.UserID}}'>Submit
+            form</button>
     </form>
 </div>
