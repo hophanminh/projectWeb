@@ -17,7 +17,7 @@ router.get('/:ItemId',async (req,res)=>{
     product[0].AuctionStart = start;
 
     for(i=0;i<history.length;i++){
-        const time = moment(history[i].BidTime,'YYYY-MM-DD').format('LL');
+        const time = moment(history[i].BidTime).format('LLL');
         delete history[i].BidTime;
 
         history[i].time = time;

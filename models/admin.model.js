@@ -29,4 +29,5 @@ module.exports = {
             return null;
         return rows[0];
     },
+    addAdmin: entity => db.add('administrator',entity),
 }

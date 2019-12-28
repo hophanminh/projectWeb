@@ -1,6 +1,7 @@
 const express = require('express');
 const bcryptjs = require('bcryptjs');
 const moment = require('moment');
+const {check, validationResult} = require('express-validator');
 const userModel = require('../models/user.model');
 const adminModel = require('../models/admin.model');
 const router = express.Router();
@@ -15,19 +16,64 @@ router.get('/',(req,res)=>{
 router.get('/FAQ',(req,res)=>{
     res.render('FAQ',{
         title:"FAQ",
-        style: "style.css"
+        style: "style.css",
+        errors: req.session.errors,
+        saveForm: req.session.saveForm,
     });
+    req.session.errors = null;
+    req.session.saveForm=null;
 })
 
 router.get('/signUp',(req,res)=>{
     res.render('signUp',{
         title: 'Sign Up',
-        style: 'style.css'
+        style: 'style.css',
+        js: 'signUp.js',
+        errors: req.session.errors,
+        saveForm: req.session.saveForm
     })
+    req.session.errors = null;
+    req.session.saveForm = null;
 })
 
 
-router.post('/signUp',async(req,res)=>{
+router.post('/signUp',[
+    check('Username','Username is already exist')
+    .not().isEmpty()
+    .isLength({min: 6}).withMessage("Username has at least 6 characters")
+    .custom(async value =>{
+        return id = await userModel.getIDByUsername(value).then(result =>{
+            if(result.length>0){
+                return Promise.reject('Username is already exist');
+            }
+        })
+    }),
+    check('Email','email is already exist')
+    .isEmail()
+    .normalizeEmail()
+    .custom(async value =>{
+        return email = await userModel.getIDByEmail(value).then(result => {
+            if(result.length > 0){
+                return Promise.reject('Email is already exist');
+            }
+        })
+    }),
+    check('pass_raw')
+    .notEmpty()
+    .isLength({min: 6}).withMessage('Pass has at least 6 character')
+    .custom((value,{req})=>{
+        if(value !== req.body.pass_rawC){
+            throw new Error('Pass not match')
+        }
+        else return value;
+    })
+    ],async(req,res)=>{
+    var errors = validationResult(req).array();
+    if(errors.length > 0){
+        req.session.errors = errors;
+        req.session.saveForm = req.body;
+        res.redirect('/signUp');
+    }
     console.log(req.body);
     const N = 10;
     const hash = bcryptjs.hashSync(req.body.pass_raw,N);
@@ -64,8 +110,12 @@ router.get('/login',(req,res)=>{
 })
 
 router.post('/login',async(req,res)=>{
+    console.log(req.body);
     const user = await userModel.singleByUsername(req.body.username);
-    
+    const bidTime = await userModel.countBid(req.body.username);
+
+    user.countBid = bidTime;
+
     if(user === null)
         throw new Error('Invalid username or password');
 

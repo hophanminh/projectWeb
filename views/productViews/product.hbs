@@ -38,31 +38,57 @@
 <script>
     function isMoneyValid() {
         const money = $("#money").val();
-        const current = {{ this.product.CurrentBidAmount }}
-    };
-    const productPoint = {{ this.product.MinPoint }};
-    const userPoint = {{ autheUser.Point }};
-    if (money < current) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'More money please',
-            footer: 'you need more money to bid'
-        })
-        return false;
-    }
-    else {
-        if (productPoint > userPoint) {
+        const current = {{this.product.CurrentBidAmount}};
+        
+
+        const productPoint = {{ this.product.MinPoint }};
+        const userPoint = {{ authUser.Point}};
+        const bidTime = {{authUser.countBid}};
+        const condition = (bidTime == 0) || (productPoint > userPoint);
+        if (money <= current) {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'More point please',
-                footer: 'you need more point to bid'
+                text: 'More money please',
+                footer: 'you need more money to bid'
             })
             return false;
         }
-    }
-    return true;
+        else {
+            if (!condition ) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'More point please',
+                    footer: 'you need more point to bid'
+                })
+                return false;
+            }
+            else {
+                Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Bid it!'
+                }).then(function(result){
+                if (result.value){
+                    Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Bidded',
+                    })
+                }
+                }).then(function(isConfirm){
+                    if(isConfirm)
+                        return true;
+                    return false;
+                });
+            };
+        };
+    return false;
     }
 </script>
 {{/section}}
@@ -210,269 +236,268 @@
                                             </thead>
                                             <tbody>
                                                 {{#each this.history}}
-                                                    <tr>
+                                                <tr>
                                                     <th scope="row">*</th>
                                                     <td>{{BidderName}}</td>
                                                     <td>${{BidAmount}}</td>
                                                     <td>{{time}}</td>
-                                                    </tr>
-                                                {{/each}}  
+                                                </tr>
+                                                {{/each}}
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-                            </div>
-                            
-                            </div>
-                            <hr>
-                            <form method="POST" onsubmit="return isMoneyValid();">
-                                <p class="card-text">How much do you want to bid??</p>
-                                <div class="input-group mb-3">
-                                    <div class="input-group">
-                                        <div class="col-auto">
-                                            <div class="input-group mb-2">
-                                                <div class="input-group-prepend">
-                                                    <div class="input-group-text">$</div>
-                                                </div>
-                                                {{#if isAuthenticated}}
-                                                <input type="text" class="form-control" id="money" name="money"
-                                                    placeholder="400">
-                                                <button type="submit" class="btn btn-danger m-0 rounded-right-button"
-                                                    formaction="/bidder/{{this.product.ItemID}}/{{authUser.UserID}}/bidProduct"
-                                                    value="SUBMIT">
-                                                    <i class="fa fa-gavel" aria-hidden="true"> Bid </i>
-                                                </button>
-                                                {{else }}
-                                                <button class="btn btn-danger m-0 rounded-right-button" disabled
-                                                    value="SUBMIT">
-                                                    <i class="fa fa-gavel" aria-hidden="true"> Bid </i>
-                                                </button>
-                                                <label for="money">Log in first</label>
-                                                {{/if}}
-                                            </div>
+                        </div>
+
+                    </div>
+                    <hr>
+                    <form method="POST" onsubmit="return isMoneyValid();">
+                        <p class="card-text">How much do you want to bid??</p>
+                        <div class="input-group mb-3">
+                            <div class="input-group">
+                                <div class="col-auto">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">$</div>
                                         </div>
+                                        {{#if isAuthenticated}}
+                                        <input type="text" class="form-control" id="money" name="money"
+                                            placeholder="400">
+                                        <button type="submit" class="btn btn-danger m-0 rounded-right-button"
+                                            formaction="/bidder/{{this.product.ItemID}}/{{authUser.UserID}}/bidProduct"
+                                            value="SUBMIT">
+                                            <i class="fa fa-gavel" aria-hidden="true"> Bid </i>
+                                        </button>
+                                        {{else }}
+                                        <button class="btn btn-danger m-0 rounded-right-button" disabled value="SUBMIT">
+                                            <i class="fa fa-gavel" aria-hidden="true"> Bid </i>
+                                        </button>
+                                        <label for="money">Log in first</label>
+                                        {{/if}}
                                     </div>
                                 </div>
-                            </form>
-
-                            <p class="card-text"><small class="text-muted">{{this.product.AuctionStart}}</small></p>
+                            </div>
                         </div>
-                    </div>
+                    </form>
+
+                    <p class="card-text"><small class="text-muted">{{this.product.AuctionStart}}</small></p>
                 </div>
-                <!-- /summary-->
-                <div class="mb-5 ml-3">
-                    {{{this.product.FullDes}}}
-                </div>
-            </div>
-            <hr>
-            <div class="h3 d-flex justify-content-center mb-5">Products you may considerate</div>
-            <div class="mt-10">
-                <div id="multi-item-example_bot"
-                    class="carousel slide carousel-multi-item d-flex justify-content-center align-items-center"
-                    data-ride="carousel">
-                    <!--Controls-->
-                    <div class="controls-top mr-3">
-                        <a class="btn-floating" href="#multi-item-example_bot" data-slide="prev">
-                            <i class="fa fa-angle-left fa-3x" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                    <!--/.Controls-->
-
-                    <!--Indicators-->
-                    <ol class="carousel-indicators">
-                        <li data-target="#multi-item-example_bot" data-slide-to="0" class="active"></li>
-                        <li data-target="#multi-item-example_bot" data-slide-to="1"></li>
-                        <li data-target="#multi-item-example_bot" data-slide-to="2"></li>
-                    </ol>
-                    <!--/.Indicators-->
-
-                    <!--Slides-->
-                    <div class="carousel-inner" role="listbox">
-                        <!--First slide-->
-                        <div class="carousel-item active">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="card mb-2">
-                                        <img class="card-img-top"
-                                            src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
-                                            alt="Card image cap">
-                                        <div class="card-body">
-                                            <h4 class="card-title">Card title</h4>
-                                            <p class="card-text">Some quick example text to build on the card title and
-                                                make up
-                                                the bulk of the card's content.</p>
-                                            <a class="btn btn-primary">Button</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="card mb-2">
-                                        <img class="card-img-top"
-                                            src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
-                                            alt="Card image cap">
-                                        <div class="card-body">
-                                            <h4 class="card-title">Card title</h4>
-                                            <p class="card-text">Some quick example text to build on the card title and
-                                                make up
-                                                the bulk of the card's content.</p>
-                                            <a class="btn btn-primary">Button</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="card mb-2">
-                                        <img class="card-img-top"
-                                            src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(35).jpg"
-                                            alt="Card image cap">
-                                        <div class="card-body">
-                                            <h4 class="card-title">Card title</h4>
-                                            <p class="card-text">Some quick example text to build on the card title and
-                                                make up
-                                                the bulk of the card's content.</p>
-                                            <a class="btn btn-primary">Button</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--/.First slide-->
-
-                        <!--Second slide-->
-                        <div class="carousel-item">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="card mb-2">
-                                        <img class="card-img-top"
-                                            src="https://mdbootstrap.com/img/Photos/Horizontal/City/4-col/img%20(60).jpg"
-                                            alt="Card image cap">
-                                        <div class="card-body">
-                                            <h4 class="card-title">Card title</h4>
-                                            <p class="card-text">Some quick example text to build on the card title and
-                                                make up
-                                                the bulk of the card's content.</p>
-                                            <a class="btn btn-primary">Button</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="card mb-2">
-                                        <img class="card-img-top"
-                                            src="https://mdbootstrap.com/img/Photos/Horizontal/City/4-col/img%20(47).jpg"
-                                            alt="Card image cap">
-                                        <div class="card-body">
-                                            <h4 class="card-title">Card title</h4>
-                                            <p class="card-text">Some quick example text to build on the card title and
-                                                make up
-                                                the bulk of the card's content.</p>
-                                            <a class="btn btn-primary">Button</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="card mb-2">
-                                        <img class="card-img-top"
-                                            src="https://mdbootstrap.com/img/Photos/Horizontal/City/4-col/img%20(48).jpg"
-                                            alt="Card image cap">
-                                        <div class="card-body">
-                                            <h4 class="card-title">Card title</h4>
-                                            <p class="card-text">Some quick example text to build on the card title and
-                                                make up
-                                                the bulk of the card's content.</p>
-                                            <a class="btn btn-primary">Button</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--/.Second slide-->
-                        <!--Third slide-->
-                        <div class="carousel-item">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="card mb-2">
-                                        <img class="card-img-top"
-                                            src="https://mdbootstrap.com/img/Photos/Horizontal/Food/4-col/img%20(53).jpg"
-                                            alt="Card image cap">
-                                        <div class="card-body">
-                                            <h4 class="card-title">Card title</h4>
-                                            <p class="card-text">Some quick example text to build on the card title and
-                                                make up
-                                                the bulk of the card's content.</p>
-                                            <a class="btn btn-primary">Button</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="card mb-2">
-                                        <img class="card-img-top"
-                                            src="https://mdbootstrap.com/img/Photos/Horizontal/Food/4-col/img%20(45).jpg"
-                                            alt="Card image cap">
-                                        <div class="card-body">
-                                            <h4 class="card-title">Card title</h4>
-                                            <p class="card-text">Some quick example text to build on the card title and
-                                                make up
-                                                the bulk of the card's content.</p>
-                                            <a class="btn btn-primary">Button</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="card mb-2">
-                                        <img class="card-img-top"
-                                            src="https://mdbootstrap.com/img/Photos/Horizontal/Food/4-col/img%20(51).jpg"
-                                            alt="Card image cap">
-                                        <div class="card-body">
-                                            <h4 class="card-title">Card title</h4>
-                                            <p class="card-text">Some quick example text to build on the card title and
-                                                make up
-                                                the bulk of the card's content.</p>
-                                            <a class="btn btn-primary">Button</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--/.Third slide-->
-
-                    </div>
-                    <!--/.Slides-->
-                    <div class="controls-top ml-3">
-                        <a class="btn-floating" href="#multi-item-example_bot" data-slide="next">
-                            <i class="fa fa-angle-right fa-3x" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                </div>
-                <!--/.Carousel Wrapper-->
             </div>
         </div>
-        {{#section 'js'}}
-        <script>
-            function AmountValid() {
-                const bid = $("input[name = money]").val();
-                const current = this.product.CurrentBidAmount;
+        <!-- /summary-->
+        <div class="mb-5 ml-3">
+            {{{this.product.FullDes}}}
+        </div>
+    </div>
+    <hr>
+    <div class="h3 d-flex justify-content-center mb-5">Products you may considerate</div>
+    <div class="mt-10">
+        <div id="multi-item-example_bot"
+            class="carousel slide carousel-multi-item d-flex justify-content-center align-items-center"
+            data-ride="carousel">
+            <!--Controls-->
+            <div class="controls-top mr-3">
+                <a class="btn-floating" href="#multi-item-example_bot" data-slide="prev">
+                    <i class="fa fa-angle-left fa-3x" aria-hidden="true"></i>
+                </a>
+            </div>
+            <!--/.Controls-->
 
-                console.log(bid);
-                console.log(current);
+            <!--Indicators-->
+            <ol class="carousel-indicators">
+                <li data-target="#multi-item-example_bot" data-slide-to="0" class="active"></li>
+                <li data-target="#multi-item-example_bot" data-slide-to="1"></li>
+                <li data-target="#multi-item-example_bot" data-slide-to="2"></li>
+            </ol>
+            <!--/.Indicators-->
 
-                if (bid < current) {
-                    Swal.fire();
-                    return false;
-                }
-                return true;
-            }
+            <!--Slides-->
+            <div class="carousel-inner" role="listbox">
+                <!--First slide-->
+                <div class="carousel-item active">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card mb-2">
+                                <img class="card-img-top"
+                                    src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
+                                    alt="Card image cap">
+                                <div class="card-body">
+                                    <h4 class="card-title">Card title</h4>
+                                    <p class="card-text">Some quick example text to build on the card title and
+                                        make up
+                                        the bulk of the card's content.</p>
+                                    <a class="btn btn-primary">Button</a>
+                                </div>
+                            </div>
+                        </div>
 
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'bid need bigger',
-                footer: 'You need to check Start Date and End Date'
-            })
+                        <div class="col-md-4">
+                            <div class="card mb-2">
+                                <img class="card-img-top"
+                                    src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg"
+                                    alt="Card image cap">
+                                <div class="card-body">
+                                    <h4 class="card-title">Card title</h4>
+                                    <p class="card-text">Some quick example text to build on the card title and
+                                        make up
+                                        the bulk of the card's content.</p>
+                                    <a class="btn btn-primary">Button</a>
+                                </div>
+                            </div>
+                        </div>
 
-        </script>
-        {{/section}}
+                        <div class="col-md-4">
+                            <div class="card mb-2">
+                                <img class="card-img-top"
+                                    src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(35).jpg"
+                                    alt="Card image cap">
+                                <div class="card-body">
+                                    <h4 class="card-title">Card title</h4>
+                                    <p class="card-text">Some quick example text to build on the card title and
+                                        make up
+                                        the bulk of the card's content.</p>
+                                    <a class="btn btn-primary">Button</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/.First slide-->
+
+                <!--Second slide-->
+                <div class="carousel-item">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card mb-2">
+                                <img class="card-img-top"
+                                    src="https://mdbootstrap.com/img/Photos/Horizontal/City/4-col/img%20(60).jpg"
+                                    alt="Card image cap">
+                                <div class="card-body">
+                                    <h4 class="card-title">Card title</h4>
+                                    <p class="card-text">Some quick example text to build on the card title and
+                                        make up
+                                        the bulk of the card's content.</p>
+                                    <a class="btn btn-primary">Button</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card mb-2">
+                                <img class="card-img-top"
+                                    src="https://mdbootstrap.com/img/Photos/Horizontal/City/4-col/img%20(47).jpg"
+                                    alt="Card image cap">
+                                <div class="card-body">
+                                    <h4 class="card-title">Card title</h4>
+                                    <p class="card-text">Some quick example text to build on the card title and
+                                        make up
+                                        the bulk of the card's content.</p>
+                                    <a class="btn btn-primary">Button</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card mb-2">
+                                <img class="card-img-top"
+                                    src="https://mdbootstrap.com/img/Photos/Horizontal/City/4-col/img%20(48).jpg"
+                                    alt="Card image cap">
+                                <div class="card-body">
+                                    <h4 class="card-title">Card title</h4>
+                                    <p class="card-text">Some quick example text to build on the card title and
+                                        make up
+                                        the bulk of the card's content.</p>
+                                    <a class="btn btn-primary">Button</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/.Second slide-->
+                <!--Third slide-->
+                <div class="carousel-item">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card mb-2">
+                                <img class="card-img-top"
+                                    src="https://mdbootstrap.com/img/Photos/Horizontal/Food/4-col/img%20(53).jpg"
+                                    alt="Card image cap">
+                                <div class="card-body">
+                                    <h4 class="card-title">Card title</h4>
+                                    <p class="card-text">Some quick example text to build on the card title and
+                                        make up
+                                        the bulk of the card's content.</p>
+                                    <a class="btn btn-primary">Button</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-2">
+                                <img class="card-img-top"
+                                    src="https://mdbootstrap.com/img/Photos/Horizontal/Food/4-col/img%20(45).jpg"
+                                    alt="Card image cap">
+                                <div class="card-body">
+                                    <h4 class="card-title">Card title</h4>
+                                    <p class="card-text">Some quick example text to build on the card title and
+                                        make up
+                                        the bulk of the card's content.</p>
+                                    <a class="btn btn-primary">Button</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card mb-2">
+                                <img class="card-img-top"
+                                    src="https://mdbootstrap.com/img/Photos/Horizontal/Food/4-col/img%20(51).jpg"
+                                    alt="Card image cap">
+                                <div class="card-body">
+                                    <h4 class="card-title">Card title</h4>
+                                    <p class="card-text">Some quick example text to build on the card title and
+                                        make up
+                                        the bulk of the card's content.</p>
+                                    <a class="btn btn-primary">Button</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/.Third slide-->
+
+            </div>
+            <!--/.Slides-->
+            <div class="controls-top ml-3">
+                <a class="btn-floating" href="#multi-item-example_bot" data-slide="next">
+                    <i class="fa fa-angle-right fa-3x" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+        <!--/.Carousel Wrapper-->
+    </div>
+</div>
+{{#section 'js'}}
+<script>
+    function AmountValid() {
+        const bid = $("input[name = money]").val();
+        const current = this.product.CurrentBidAmount;
+
+        console.log(bid);
+        console.log(current);
+
+        if (bid < current) {
+            Swal.fire();
+            return false;
+        }
+        return true;
+    }
+
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'bid need bigger',
+        footer: 'You need to check Start Date and End Date'
+    })
+
+</script>
+{{/section}}

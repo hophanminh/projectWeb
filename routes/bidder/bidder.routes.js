@@ -7,12 +7,14 @@ const productModel = require('../../models/product.model');
 const router = express.Router();
 
 router.post('/:ItemId/:BidderID/bidProduct',async(req,res)=>{
+    console.log(req.body);
     const entity = req.params;
     entity.CurrentBidAmount = req.body.money;
 
     const result = await productModel.bid(entity);
 
     entity.BidTime = new Date();
+    console.log(entity);
     const bidTime = await productModel.timeBid(entity);
 
     res.redirect(`/category`);

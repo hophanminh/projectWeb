@@ -1,5 +1,6 @@
 const express = require('express');
 const moment = require('moment');
+const bcryptjs = require('bcryptjs');
 const adminModel = require('../../models/admin.model');
 const categoryModel = require('../../models/categories.model');
 
@@ -106,13 +107,29 @@ router.get('/sellerDetail/:id',async(req,res)=>{
 })
 
 
-// Add admin mai mot lam
-// router.get('/addAdmin',(req,res)=>{
-//     res.render('adminViews/addCategories',{
-//         title: 'Add categories',
-//         style: 'style.css'
-//     })
-// })
+//Add admin mai mot lam
+router.get('/addAdmin',(req,res)=>{
+    res.render('adminViews/addAdmin',{
+        title: 'Add Admin',
+        style: 'style.css'
+    })
+})
+
+router.post('/addAdmin',async(req,res)=>{
+    console.log(req.body);
+    const N = 10;
+    const hash = bcryptjs.hashSync(req.body.pass_raw,N);
+
+    const entity = req.body;
+    entity.Password = hash;
+    
+    delete entity.pass_rawC;
+    delete entity.pass_raw;
+
+    console.log(entity);
+    const result = await adminModel.addAdmin(entity);
+    res.redirect('/');
+})
 
 router.get('/addCategory',(req,res)=>{
     res.render('adminViews/addCategory',{
