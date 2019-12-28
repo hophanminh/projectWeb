@@ -8,13 +8,29 @@ const router = express.Router();
 
 router.post('/:ItemId/:BidderID/bidProduct',async(req,res)=>{
     console.log(req.body);
-    const entity = req.params;
-    entity.CurrentBidAmount = req.body.money;
+    console.log(req.params.ItemId);
+    const id = req.params.ItemId;
 
+    const product = await productModel.single(id);
+    
+    let entity;
+    if(product[0].maxPrice < req.body.money){
+        entity = req.params;
+        entity.CurrentBidAmount = +product[0].maxPrice + 1;
+        entity.maxPrice = req.body.money;
+    }
+    else {
+        entity = req.params;
+        console.log(entity);
+        delete entity.BidderID;
+        entity.CurrentBidAmount = +req.body.money + 1;
+    }
+    
     const result = await productModel.bid(entity);
 
     entity.BidTime = new Date();
-    console.log(entity);
+
+    delete entity.maxPrice;
     const bidTime = await productModel.timeBid(entity);
 
     res.redirect(`/category`);

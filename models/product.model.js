@@ -16,7 +16,7 @@ module.exports={
         SELECT *, u1.Fname SellerName, u2.Fname BidderName
         FROM item i join user u1 join user u2
         on i.SellerID = u1.UserID and i.BidderID = u2.UserID
-        where i.ItemID = ${id}
+        where i.ItemID = '${id}'
         `
         return db.load(sql);
     },

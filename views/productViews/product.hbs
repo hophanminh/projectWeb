@@ -44,7 +44,8 @@
         const productPoint = {{ this.product.MinPoint }};
         const userPoint = {{ authUser.Point}};
         const bidTime = {{authUser.countBid}};
-        const condition = (bidTime == 0) || (productPoint > userPoint);
+        const condition = (bidTime == 0) || (productPoint < userPoint);
+
         if (money <= current) {
             Swal.fire({
                 icon: 'error',
@@ -63,32 +64,9 @@
                     footer: 'you need more point to bid'
                 })
                 return false;
-            }
-            else {
-                Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, Bid it!'
-                }).then(function(result){
-                if (result.value){
-                    Swal.fire({
-                    icon: 'success',
-                    title: 'Success',
-                    text: 'Bidded',
-                    })
-                }
-                }).then(function(isConfirm){
-                    if(isConfirm)
-                        return true;
-                    return false;
-                });
-            };
+            }   
         };
-    return false;
+    return true;
     }
 </script>
 {{/section}}
@@ -263,11 +241,11 @@
                                         </div>
                                         {{#if isAuthenticated}}
                                         <input type="text" class="form-control" id="money" name="money"
-                                            placeholder="400">
+                                            placeholder='>{{this.product.CurrentBidAmount}}'>
                                         <button type="submit" class="btn btn-danger m-0 rounded-right-button"
                                             formaction="/bidder/{{this.product.ItemID}}/{{authUser.UserID}}/bidProduct"
                                             value="SUBMIT">
-                                            <i class="fa fa-gavel" aria-hidden="true"> Bid </i>
+                                            <i class="fa fa-gavel" aria-hidden="true"> Bid Max Price </i>
                                         </button>
                                         {{else }}
                                         <button class="btn btn-danger m-0 rounded-right-button" disabled value="SUBMIT">
