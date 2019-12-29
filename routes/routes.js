@@ -112,26 +112,35 @@ router.get('/login',(req,res)=>{
 router.post('/login',async(req,res)=>{
     console.log(req.body);
     const user = await userModel.singleByUsername(req.body.username);
-    const bidTime = await userModel.countBid(req.body.username);
-
-    user.countBid = bidTime;
-
-    if(user === null)
-        throw new Error('Invalid username or password');
+    
+    if(user === null){
+        return res.render('login',{
+            layout: false,
+            title:"Log In",
+            style: "style.css",
+            err_message: 'No account exist'
+        }); 
+    }
 
     const authe = bcryptjs.compareSync(req.body.password, user.Password);
     
     console.log(authe);
 
+    const bidTime = await userModel.countBid(req.body.username);
+
+    user.countBid = bidTime;
+
     if(authe === false){
         return res.render('login',{
             layout: false,
             title:"Log In",
-            style: "style.css"
+            style: "style.css",
+            err_message: 'Wrong password or wrong username'
         });
     }
 
     delete user.Password;
+
     req.session.isAuthenticated = true;
     req.session.isAuthenticatedAdmin = false;
     req.session.authUser = user;
@@ -148,15 +157,22 @@ router.get('/loginAdmin',(req,res)=>{
     res.render('loginAdmin',{
         layout: false,
         title:"Log In",
-        style: "style.css"
+        style: "style.css",
     });
 })
 
 router.post('/loginAdmin',async(req,res)=>{
+
     const user = await adminModel.singleByAdmin(req.body.username);
     
-    if(user === null)
-        throw new Error('Invalid username or password');
+    if(user === null){
+        return res.render('login',{
+            layout: false,
+            title:"Log In",
+            style: "style.css",
+            err_message: 'No account exist'
+        }); 
+    }
 
     const authe = bcryptjs.compareSync(req.body.password, user.Password);
     
@@ -166,11 +182,13 @@ router.post('/loginAdmin',async(req,res)=>{
         return res.render('loginAdmin',{
             layout: false,
             title:"Log In",
-            style: "style.css"
+            style: "style.css",
+            err_message: 'Wrong password or wrong username'
         });
     }
 
     delete user.Password;
+
     req.session.isAuthenticated = true;
     req.session.isAuthenticatedAdmin = true;
     req.session.authUser = user;

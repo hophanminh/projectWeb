@@ -54,7 +54,7 @@
                 {{/if}}
             </ul>
         </div>
-        <a class="navbar-brand col" href="/">Auction</a>
+        <a class="navbar-brand col" href="/">Bid Web</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -67,7 +67,7 @@
                     </a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                    <a class="nav-link dropdown-toggle" href="/category" id="navbarDropdownMenuLink" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         Categories
                     </a>
@@ -75,7 +75,7 @@
                         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle"
                                 href="./listProduct.html">Christmas</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="./listProduct">Gifts</a></li>
+                                <li><a class="dropdown-item" href="/category">Gifts</a></li>
                                 <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle"
                                         href="./listProduct.html">Clothes</a>
                                     <ul class="dropdown-menu">
@@ -102,15 +102,16 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="./FAQ.html" class="nav-link"> FAQ</a>
+                    <a href="/FAQ" class="nav-link"> FAQ</a>
                 </li>
+                 <li class="nav-item">
+                    <a href="/category" class="nav-link"> Category</a>
+                </li>
+                {{#if isAuthenticatedAdmin}}
                 <li class="nav-item">
-                    <a class="nav-link" href="./listProduct.html">List Product</a>
+                    <a href="/admin" class="nav-link"> Management</a>
                 </li>
-                <li class="nav-item">
-                    <a href="./login.html" class="nav-link"> Log in</a>
-                </li>
-
+                {{/if}}
                 <li class="nav-item">
                     <form class="search" action="">
                         <input class="search" type="search">

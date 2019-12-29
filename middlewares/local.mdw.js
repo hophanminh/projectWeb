@@ -9,9 +9,11 @@ module.exports = function(app){
       if (typeof (req.session.isAuthenticated) === 'undefined') {
         req.session.isAuthenticated = false;
       }
+
       res.locals.isAuthenticated = req.session.isAuthenticated;
       res.locals.authUser = req.session.authUser;
-      app.locals.autheUser = req.session.authUser;
+      res.locals.isAuthenticatedAdmin = req.session.isAuthenticatedAdmin;
+      
       next();
     })
 }

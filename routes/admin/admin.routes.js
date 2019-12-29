@@ -7,7 +7,6 @@ const categoryModel = require('../../models/categories.model');
 const router = express.Router();
 
 router.get('/', async(req,res)=>{
-
     const [rowsSeller, rowsBidder, rowsCategory, numSeller, numBidder,numCategory] = await Promise.all([
             adminModel.allSeller(),
             adminModel.allBidder(),
@@ -17,16 +16,6 @@ router.get('/', async(req,res)=>{
             categoryModel.countCategory()            
         ]
     )
-    // const rowsSeller = await adminModel.allSeller();
-    // const rowsBidder = await adminModel.allBidder();
-    // let rowsCategory = await categoryModel.allCategory();
-    // const numSeller = await adminModel.countSeller();
-    // const numBidder = await adminModel.countBidder();
-    // const numCategory = await categoryModel.countCategory();
-
-    console.log(numSeller);
-
-    console.log(rowsCategory);
 
     for(i = 0; i< rowsCategory.length;i++)
     {
