@@ -111,10 +111,11 @@
                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                     Details
                                 </a>
-                                <a href="/product/{{ItemID}}" class="btn btn-outline-warning" role="button">
-                                    <i class="fa fa-eye" aria-hidden="true"></i>
-                                    Add to cart
-                                </a>
+                                <a class="btn btn-outline-danger" role="button" href="javascript: $('#like').submit();">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                    Later
+                                </a>    
+                                <form id="like" method ="POST" action="/user/watchList/{{ItemID}}"></form>
                             </div>
                         </div>
                     </div>

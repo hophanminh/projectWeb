@@ -45,6 +45,26 @@ module.exports={
         const result = db.load(sql);
         return result;
     },
+    countWatchList: async UserID => {
+        const sql = `
+        SELECT count(*) as total  FROM watchlist w join item i join user u join user seller join user bidder 
+        on w.ItemID = i.ItemID and w.UserID = u.UserID and i.SellerID = seller.UserID and i.BidderID = bidder.UserID
+        where u.UserID = ${UserID}
+        `
+        const rows = await db.load(sql);
+        return rows[0].total;
+    },
+    watchList: (UserID,offset) => {
+        const sql = `
+        SELECT i.*, seller.Fname as SellerName, bidder.Fname as BidderName  FROM watchlist w join item i join user u join user seller join user bidder 
+        on w.ItemID = i.ItemID and w.UserID = u.UserID and i.SellerID = seller.UserID and i.BidderID = bidder.UserID
+        where u.UserID = ${UserID}
+        limit ${config.paginate.limit} offset ${offset}
+        `
+        const rows=db.load(sql);
+        return rows;
+    },
+    addItemWatchList: entity => db.add('watchlist',entity),
 }
 
 
