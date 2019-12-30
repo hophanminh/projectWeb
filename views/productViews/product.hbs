@@ -55,18 +55,34 @@
             })
             return false;
         }
-        else {
-            if (!condition ) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'More point please',
-                    footer: 'you need more point to bid'
-                })
-
-                return false;
-            }   
-        };
+        if (!condition ) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'More point please',
+                footer: 'you need more point to bid'
+            })
+            return false;
+        }   
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Bid it!'
+            }).then((result) => {
+            if (result.value) {
+                Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+                ).then((result)=>{
+                    return result;
+                });
+            }
+        })
     return true;
     }
 

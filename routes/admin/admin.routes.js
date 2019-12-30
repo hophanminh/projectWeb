@@ -22,8 +22,8 @@ router.get('/', async(req,res)=>{
     for(i = 0; i< rowsCategory.length;i++)
     {
         if(rowsCategory[i].Total === 0)
-            rowsCategory[i].del = true;
-        else rowsCategory[i].del = false;
+            rowsCategory[i].isDel = true;
+        else rowsCategory[i].isDel = false;
     }
 
     console.log(rowsCategory);
@@ -156,12 +156,39 @@ router.post('/aprove/:UserID',async(req,res)=>{
     console.log(result);
     res.redirect('/admin');
 })
+
 router.post('/reject/:UserID',async(req,res)=>{
     console.log(req.params);
     const result = await adminModel.rejectBidder(req.params.UserID);
     console.log(result);
     res.redirect('/admin');
 })
+
+router.get('/category/:CatID',async(req,res)=>{
+
+    const rows = await categoryModel.singleCategory(req.params.CatID);
+
+    console.log('here');
+    console.log(rows);
+
+    res.render('adminViews/categoryDetail',{
+        category: rows[0],
+        title: 'Category Detail',
+        style: 'style.css'
+    });
+})
+router.post('/category/:CatID',async(req,res)=>{
+
+    const entity = req.body;
+    entity.CatID = req.params.CatID;
+    const rows = await categoryModel.changeCategoryName(entity);
+
+    console.log('here');
+    console.log(rows);
+
+    res.redirect('/admin');
+})
+
 router.get('/err', (req, res) => {
 
     throw new Error('error occured');

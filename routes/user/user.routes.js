@@ -91,6 +91,19 @@ router.post('/watchList/:ItemID',async (req,res)=>{
     console.log(result);
     res.redirect(req.headers.referer);
 })
+router.post('/watchList/:ItemID/delete',async (req,res)=>{
+    console.log('ID: ');
+    console.log(req.params.ItemID);
+    console.log(res.locals.authUser.UserID);
+
+    let entity = req.params;
+    entity.UserID = res.locals.authUser.UserID;
+    console.log(entity);
+
+    const result = await productModel.deleteItemWatchList(entity);
+    console.log(result);
+    res.redirect(req.headers.referer);
+})
 
 router.post('/changePass/:UserID',async(req,res)=>{
 

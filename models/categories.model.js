@@ -8,6 +8,12 @@ module.exports={
         group by c.CatName, c.CatID`
         return db.load(sql);
     },
+    singleCategory: id => db.load(`select * from category where CatID = ${id}`),
+    changeCategoryName: entity => {
+        const condition = {CatID: entity.CatID};
+        delete entity.CatID;
+        return db.modify('category',entity, condition);
+    },
     add: (entity) => db.add('category',entity),
     deleteCategory: (id) => db.delete('category',id),
     countCategory: ()=>db.load(`select count(*) as numCategory from category`),

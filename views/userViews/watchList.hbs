@@ -54,10 +54,11 @@
                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                     Details
                                 </a>
-                                <a href="/product/{{ItemID}}" class="btn btn-outline-warning" role="button">
-                                    <i class="fa fa-eye" aria-hidden="true"></i>
-                                    Add to cart
+                                <a class="btn btn-outline-danger" role="button" href="javascript: $('#formDelete').submit();">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                    Delete
                                 </a>
+                                <form id="formDelete" action="/user/watchList/{{ItemID}}/delete" method="POST"></form>
                             </div>
                         </div>
                     </div>

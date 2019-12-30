@@ -65,6 +65,10 @@ module.exports={
         return rows;
     },
     addItemWatchList: entity => db.add('watchlist',entity),
+    deleteItemWatchList: entity => {
+        const sql = `delete from watchlist where UserID = ${entity.UserID} and ItemID = ${entity.ItemID}`
+        return db.load(sql);
+    },
 }
 
 
