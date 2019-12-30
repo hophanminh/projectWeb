@@ -2,6 +2,7 @@ const exhbs = require('express-handlebars');
 const hbs_section = require('express-handlebars-sections')
 const path = require('path');
 const moment = require('moment')
+const config = require('../config/default.json');
 
 module.exports=function(app){
     app.engine('hbs',exhbs({
@@ -14,6 +15,21 @@ module.exports=function(app){
                 const now = moment().format();
                 const end = moment(end,'YYYY-MM-DD h:mm:ss')
                 const period = end - now;
+            },
+            recommendMoney: value => {
+                const newMoney = +value +1;
+                return newMoney; 
+            },
+            mask: word=>{
+                const length = config.maskedString.maskedLetter;
+                if (word.length <= length) {
+                    return word
+                } 
+                else {
+                    var masked = word.substring(0, word.length - length).replace(/[a-z\d]/gi,"*") + 
+                    word.substring(word.length - length, word.length)
+                    return masked;
+                }
             }
         }
     }));

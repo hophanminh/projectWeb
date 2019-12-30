@@ -7,13 +7,15 @@ const categoryModel = require('../../models/categories.model');
 const router = express.Router();
 
 router.get('/', async(req,res)=>{
-    const [rowsSeller, rowsBidder, rowsCategory, numSeller, numBidder,numCategory] = await Promise.all([
+    const [rowsSeller, rowsBidder, requestSeller, rowsCategory, numSeller, numBidder,numCategory, numRequest] = await Promise.all([
             adminModel.allSeller(),
             adminModel.allBidder(),
+            adminModel.requestSeller(),
             categoryModel.allCategory(),
             adminModel.countSeller(),
             adminModel.countBidder(),
-            categoryModel.countCategory()            
+            categoryModel.countCategory(),
+            adminModel.countRequest(),       
         ]
     )
 
@@ -28,16 +30,19 @@ router.get('/', async(req,res)=>{
 
     res.render('adminViews/Management',{
         seller: rowsSeller,
+        requestSeller,
         bidder: rowsBidder,
         category: rowsCategory,
+
         nBidder: numBidder[0],
         nSeller: numSeller[0],
         nCategory: numCategory[0],
+        nRequest: numRequest[0],
 
         emptySeller: rowsSeller.length === 0,
         emptyBidder: rowsBidder.length === 0,
         emptyCategory: rowsCategory.length === 0,
-
+        emptyRequest: requestSeller.length===0,
         title: 'Management',
         style: 'style.css'
     })
@@ -148,6 +153,12 @@ router.post('/deleteCategory/:CatId',async(req,res)=>{
 router.post('/aprove/:UserID',async(req,res)=>{
     console.log(req.params);
     const result = await adminModel.aproveBidder(req.params.UserID);
+    console.log(result);
+    res.redirect('/admin');
+})
+router.post('/reject/:UserID',async(req,res)=>{
+    console.log(req.params);
+    const result = await adminModel.rejectBidder(req.params.UserID);
     console.log(result);
     res.redirect('/admin');
 })

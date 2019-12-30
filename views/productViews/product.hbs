@@ -63,11 +63,16 @@
                     text: 'More point please',
                     footer: 'you need more point to bid'
                 })
+
                 return false;
             }   
         };
     return true;
     }
+
+</script>
+<script>
+
 </script>
 {{/section}}
 <div class="container">
@@ -145,6 +150,11 @@
                 <div class="card-body">
                     <div class=" card-title d-flex justify-content-between">
                         <h1 class="card-title">{{this.product.Title}}</h1>
+                        <a class="btn btn-outline-danger d-flex align-items-center" role="button" href="javascript: $('#like').submit();">
+                            <i class="fa fa-heart" aria-hidden="true"></i>
+                            Later
+                        </a>    
+                        <form id="like" method ="POST" action="/user/watchList/{{this.product.ItemID}}"></form>
                         <span class="h1" id="current">$ {{this.product.CurrentBidAmount}}
                         </span>
 
@@ -179,10 +189,10 @@
                             <i class="fa fa-arrow-down fa-2x text-dark"></i>
                         </a>
                         <br> Date: <strong>{{this.product.AuctionStart}}</strong> <br> Owner:
-                        <a href="#"> <strong> {{this.product.SellerName}} </strong> </a> <br> Point's Owner: <strong>12
+                        <a href="#"> <strong> {{mask this.product.SellerName}} </strong> </a> <br> Point's Owner: <strong>12
                         </strong>
                         <hr> Bidder's highest price:
-                        <a href="#"> <strong>{{this.product.BidderName}}</strong> </a> <br> Bidder's points:
+                        <a href="#"> <strong>{{mask this.product.BidderName}}</strong> </a> <br> Bidder's points:
                         <strong>2007</strong>
                     </p>
                     <hr>
@@ -217,7 +227,7 @@
                                                 {{#each this.history}}
                                                 <tr>
                                                     <th scope="row">*</th>
-                                                    <td>{{BidderName}}</td>
+                                                    <td>{{mask BidderName}}</td>
                                                     <td>${{BidAmount}}</td>
                                                     <td>{{time}}</td>
                                                 </tr>
@@ -231,7 +241,7 @@
 
                     </div>
                     <hr>
-                    <form method="POST" onsubmit="return isMoneyValid();">
+                    <form method="POST" id="formBid" onsubmit="return isMoneyValid();">
                         <p class="card-text">How much do you want to bid??</p>
                         <div class="input-group mb-3">
                             <div class="input-group">
@@ -242,7 +252,7 @@
                                         </div>
                                         {{#if isAuthenticated}}
                                         <input type="text" class="form-control" id="money" name="money"
-                                            placeholder='>{{this.product.CurrentBidAmount}}'>
+                                            placeholder='{{recommendMoney this.product.CurrentBidAmount}}'>
                                         <button type="submit" class="btn btn-danger m-0 rounded-right-button"
                                             formaction="/bidder/{{this.product.ItemID}}/{{authUser.UserID}}/bidProduct"
                                             value="SUBMIT">

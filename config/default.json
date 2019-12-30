@@ -18,6 +18,9 @@
     },
     "listHistory": {
         "people": 5
+    },
+    "maskedString": {
+        "maskedLetter": 3
     }
 
 }

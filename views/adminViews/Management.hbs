@@ -3,15 +3,20 @@
     <div class="row">
         <div class="col-3">
             <div class="list-group" id="list-tab" role="tablist">
-                <a class="list-group-item list-group-item-action d-flex justify-content-between" id="list-upgrade-list"
-                    data-toggle="list" href="#list-upgrade" role="tab" aria-controls="home">
-                    Approve Account
+                <a class="list-group-item list-group-item-action d-flex justify-content-between" id="list-bidder-list"
+                    data-toggle="list" href="#list-bidder" role="tab" aria-controls="home">
+                    Bidders
                     <span class="badge badge-warning badge-pill"> {{this.nBidder.numBidder}}</span>
                 </a>
                 <a class="list-group-item list-group-item-action d-flex justify-content-between" id="list-seller-list"
                     data-toggle="list" href="#list-seller" role="tab" aria-controls="profile">
-                    Seller
+                    Sellers
                     <span class="badge badge-success badge-pill"> {{this.nSeller.numSeller}}</span>
+                </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between" id="list-upgrade-list"
+                    data-toggle="list" href="#list-upgrade" role="tab" aria-controls="profile">
+                    Request Bidder to seller
+                    <span class="badge badge-success badge-pill"> {{this.nRequest.numRequest}}</span>
                 </a>
                 <a class="list-group-item list-group-item-action d-flex justify-content-between" id="list-report-list"
                     data-toggle="list" href="#list-report" role="tab" aria-controls="messages">
@@ -29,7 +34,7 @@
         </div>
         <div class="col-9">
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="list-upgrade" role="tabpanel" aria-labelledby="list-upgrade">
+                <div class="tab-pane fade show active" id="list-bidder" role="tabpanel" aria-labelledby="list-bidder">
                     {{#if this.emptyBidder}}
                     <div class="card-body">
                         <p class="card-text"> No data available</p>
@@ -45,7 +50,6 @@
                                 <th scope="col">Email</th>
                                 <th scope="col">Point</th>
                                 <th scope="col">Bidded Product</th>
-                                <th scope="col">Approve</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -56,16 +60,6 @@
                                 <td>{{Email}}</td>
                                 <td>{{Point}}</td>
                                 <td>34</td>
-                                <td>
-                                    <form method="POST">
-                                        <button type="submit" class="btn btn-success" formaction="/admin/aprove/{{UserID}}">
-                                        <i class="fa fa-check" aria-hidden="true"></i>
-                                        </button>
-                                    <button type="button" class="btn btn-danger">
-                                        <i class="fa fa-times" aria-hidden="true"></i>
-                                    </button>
-                                    </form>
-                                </td>
                             </tr>
                             {{/each}}
                         </tbody>
@@ -109,6 +103,50 @@
                     </table>
                     {{/if}}
                 </div>
+                <div class="tab-pane fade show" id="list-upgrade" role="tabpanel" aria-labelledby="list-upgrade">
+                    {{#if emptyRequest}}
+                    <div class="card-body">
+                        <p class="card-text"> No data available</p>
+                    </div>
+                    {{else}}
+                    <p class="h2 d-flex justify-content-center">Danh sách yêu cầu nâng cấp từ Bidder thành Seller</p>
+
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Full name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Point</th>
+                                <th scope="col">Bidded Product</th>
+                                <th scope="col">Approve</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each this.requestSeller}}
+                            <tr>
+                                <th scope="row">*</th>
+                                <td>{{Fname}}</td>
+                                <td>{{Email}}</td>
+                                <td>{{Point}}</td>
+                                <td>34</td>
+                                <td>
+                                    <form method="POST">
+                                        <button type="submit" class="btn btn-success" formaction="/admin/aprove/{{UserID}}">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                        </button>
+                                        <button type="submit" class="btn btn-danger" formaction="/admin/reject/{{UserID}}">
+                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                    {{/if}}
+                </div>
+                
                 <div class="tab-pane fade" id="list-report" role="tabpanel" aria-labelledby="list-report">
                     <p class="h2 d-flex justify-content-center">Report</p>
                     <table class="table table-hover">

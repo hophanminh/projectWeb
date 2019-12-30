@@ -6,6 +6,7 @@ const productModel = require('../../models/product.model');
 // const moment = require('moment');
 
 const router = express.Router();
+
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth:{
@@ -37,6 +38,7 @@ router.post('/:ItemId/:BidderID/bidProduct',async(req,res)=>{
                 console.log(error);
             else console.log('Email sent: ' +info.respone);
         })
+        console.log('come here');
     }
     else {
         entity = req.params;

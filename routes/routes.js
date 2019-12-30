@@ -83,7 +83,7 @@ router.post('/signUp',[
     entity.Password = hash;
     entity.Point = 0;
     entity.DoB = dob;
-
+    entity.Type = 0;
     console.log(entity);
 
     delete entity.dob;
