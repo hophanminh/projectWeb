@@ -1,0 +1,108 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 order-md-1 md-4">
+            <div class="row">
+                <img src="img/logo.jpg" class="rounded-circle my-4" id="avatar" sizes="50%">
+                <span id="username_profile" class="d-flex align-items-end">{{{this.user.Username}}}</span>
+            </div>
+            <ul class="list-group mb-2">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Merit point: <span class="badge badge-primary badge-pill">{{this.user.Point}}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Số lượt đã đấu giá: <span class="badge badge-primary badge-pill">{{authUser.countBid}}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Số lượt đấu giá thành công: <span
+                        class="badge badge-primary badge-pill">{{authUser.countBid}}</span>
+                </li>
+            </ul>
+            <div class="row">
+                <div class="col-4">
+                    <div class="list-group" id="list-tab" role="tablist">
+                        <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list"
+                            href="#list-home" role="tab" aria-controls="home">Home</a>
+                        <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list"
+                            href="#list-profile" role="tab" aria-controls="profile">Profile</a>
+                        <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list"
+                            href="#list-messages" role="tab" aria-controls="messages">Messages</a>
+                        <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list"
+                            href="#list-settings" role="tab" aria-controls="settings">Settings</a>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="list-home" role="tabpanel"
+                            aria-labelledby="list-home-list">...</div>
+                        <div class="tab-pane fade" id="list-profile" role="tabpanel"
+                            aria-labelledby="list-profile-list">...</div>
+                        <div class="tab-pane fade" id="list-messages" role="tabpanel"
+                            aria-labelledby="list-messages-list">...</div>
+                        <div class="tab-pane fade" id="list-settings" role="tabpanel"
+                            aria-labelledby="list-settings-list">...</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-4 order-md-2 mb-4">
+            <form class="needs-validation" novalidate method="POST">
+                <div class="mb-1 mt-5">
+                    <label for="username">Username</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="username" placeholder="Username"
+                            value="{{this.user.Username}}" readonly>
+                        <div class="invalid-feedback" style="width: 100%;">
+                            Your username is required.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-1">
+                    <label for="email">Email <span class="text-muted">(Optional)</span></label>
+                    <input type="email" class="form-control" id="email" placeholder="you@example.com"
+                        value="{{this.user.Email}}" readonly>
+                    <div class="invalid-feedback">
+                        Please enter a valid email address for shipping updates.
+                    </div>
+                </div>
+
+                <div class="mb-1">
+                    <label for="address">Street</label>
+                    <input type="text" class="form-control" id="address" placeholder="1234 Main St"
+                        value="{{this.user.Street}}" readonly>
+                    <div class="invalid-feedback">
+                        Please enter your shipping address.
+                    </div>
+                </div>
+                <div class="mb-1">
+                    <label for="address">District</label>
+                    <input type="text" class="form-control" id="address" placeholder="1234 Main St"
+                        value="{{this.user.District}}" readonly>
+                    <div class="invalid-feedback">
+                        Please enter your shipping address.
+                    </div>
+                </div>
+                <div class="mb-1">
+                    <label for="address">City</label>
+                    <input type="text" class="form-control" id="address" placeholder="1234 Main St"
+                        value="{{this.user.City}}" readonly>
+                    <div class="invalid-feedback">
+                        Please enter your shipping address.
+                    </div>
+                </div>
+
+                <div class="mb-1">
+                    <label for="phone-number">Phone number</label>
+                    <input type="text" class="form-control" id="address" value="{{this.user.PhoneNo}}" readonly>
+                    <div class="invalid-feedback">
+                        Please enter your contact number.
+                    </div>
+                </div>
+                <hr class="mb-4">
+
+                <a class="btn btn-primary btn-lg btn-block" role="button" href="/user/{{authUser.UserID}}/edit">Edit</a>
+            </form>
+        </div>
+    </div>
+</div>

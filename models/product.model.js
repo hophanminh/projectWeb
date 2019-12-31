@@ -69,6 +69,50 @@ module.exports={
         const sql = `delete from watchlist where UserID = ${entity.UserID} and ItemID = ${entity.ItemID}`
         return db.load(sql);
     },
+    countBidding: async UserID => {
+        const sql = `
+        select count(*) as total
+        from bids b join user u join user seller join user bidder join item i
+        on b.BidderID = u.UserID and b.ItemID = i.ItemID and i.SellerID = seller.UserID and i.BidderID = bidder.UserID
+        where WinStatus = 'No' and u.UserID = ${UserID}
+        `
+        const rows = await db.load(sql);
+        return rows[0].total;
+    },
+    biddingList: async (UserID,offset) => {
+        const sql = 
+        `
+        select distinct b.ItemID, i.*, seller.Fname as SellerName, bidder.Fname as BidderName
+        from bids b join user u join user seller join user bidder join item i
+        on b.BidderID = u.UserID and b.ItemID = i.ItemID and i.SellerID = seller.UserID and i.BidderID = bidder.UserID
+        where WinStatus = 'No' and u.UserID = ${UserID}
+        limit ${config.paginate.limit} offset ${offset}
+        `
+        const rows= await db.load(sql);
+        return rows;
+    },
+    countWon: async id =>{
+        const sql = `
+        select count(*) as total
+        from bids b join user u join user seller join user bidder join item i
+        on b.BidderID = u.UserID and b.ItemID = i.ItemID and i.SellerID = seller.UserID and i.BidderID = bidder.UserID
+        where WinStatus = 'Yes' and u.UserID = ${id}
+        `
+        const rows = await db.load(sql);
+        return rows[0].total;
+    },
+    wonList: async (UserID,offset) => {
+        const sql = 
+        `
+        select distinct b.ItemID, i.*, seller.Fname as SellerName, bidder.Fname as BidderName
+        from bids b join user u join user seller join user bidder join item i
+        on b.BidderID = u.UserID and b.ItemID = i.ItemID and i.SellerID = seller.UserID and i.BidderID = bidder.UserID
+        where WinStatus = 'Yes' and u.UserID = ${UserID}
+        limit ${config.paginate.limit} offset ${offset}
+        `
+        const rows = await db.load(sql);
+        return rows;
+    },
 }
 
 

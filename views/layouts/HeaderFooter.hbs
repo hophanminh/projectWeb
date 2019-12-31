@@ -38,6 +38,11 @@
                             Profile
                         </a>
                         <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/user/changePass">
+                            <i class="fa fa-sign-out" aria-hidden="true"></i>
+                            Change password
+                        </a>
+                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="javascript: $('#frmLogout').submit();">
                             <i class="fa fa-sign-out" aria-hidden="true"></i>
                             Logout
@@ -110,6 +115,12 @@
                 {{#if isAuthenticated}}
                 <li class="nav-item">
                     <a href="/user/watchList" class="nav-link"> Watch List</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/user/bidding" class="nav-link"> Bidding List</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/user/wonProduct" class="nav-link"> Won List</a>
                 </li>
                 {{/if}}
                 {{#if isAuthenticatedAdmin}}

@@ -47,17 +47,12 @@ router.post('/:ItemId/:BidderID/bidProduct',async(req,res)=>{
         if((+req.body.money +1) <= product[0].maxPrice)
             entity.CurrentBidAmount = +req.body.money + 1;
         else entity.CurrentBidAmount = +req.body.money;
-        // transporter.sendMail(mailOptions,function(error,info){
-        //     if(error)
-        //         console.log(error);
-        //     else console.log('Email sent: ' +info.respone);
-        // })
     }
     
     const result = await productModel.bid(entity);
 
     entity.BidTime = new Date();
-
+    entity.BidderID = req.params.BidderID;
     delete entity.maxPrice;
     const bidTime = await productModel.timeBid(entity);
 

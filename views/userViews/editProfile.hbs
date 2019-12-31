@@ -1,0 +1,104 @@
+{{#section 'css'}}
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+
+{{/section}}
+
+{{#section 'js'}}
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<script>
+    $('#dob').datetimepicker({
+        // format: 'd/m/Y H:i'
+        format: 'd/m/Y',
+        timepicker: false,
+        mask: true,
+    });
+</script>
+{{/section}}
+
+<div class="container">
+    <div id="logreg-forms">
+        {{#if errors}}
+        <p class="alert alert-danger">
+            {{#each errors}}
+            {{this.msg}} <br>
+            {{/each}}
+        </p>
+        {{/if}}
+        <div class="d-flex justify-content-center">
+            <p class="h1">Please fill information</p>
+        </div>
+        <form method="POST" class="form-signup">
+            <div class="h5"> Account</div>
+            <div class="form-row mb-2">
+                <div class="col">
+                    <label for="Username">User name</label>
+                    <input class="form-control" type="text" id="Username" name="Username" value='{{this.user.Username}}'>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="Email">Email</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="Email" name="Email" placeholder="Email"
+                            value='{{this.user.Email}}'>
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">@gmail.com</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="PhoneNo">Phone number</label>
+                    <input type="text" class="form-control" id="PhoneNo" name="PhoneNo" placeholder="739-247-6882"
+                        value='{{this.user.PhoneNo}}'>
+                </div>
+            </div>
+            <div class="h5">Information</div>
+            <div class="form-row mb-2">
+                <div class="form-group col-md-6">
+                    <label for="Fname">First name</label>
+                    <input type="text" class="form-control" id="Fname" name="Fname" placeholder="John"
+                        value='{{this.user.Fname}}'>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="Lname">Last name</label>
+                    <input type="text" class="form-control" id="Lname" name="Lname" placeholder="Willson"
+                        value='{{this.user.Lname}}'>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="dob">Date of Birth: </label>
+                    <input type="text" class="form-control" id="dob" name="dob" value='{{this.user.dob}}'>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-4">
+                    <label for="Street">Street</label>
+                    <input type="text" class="form-control" id="Street" name="Street" placeholder="1234 Main St"
+                        value='{{this.user.Street}}'>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="District">District</label>
+                    <input type="text" class="form-control" id="District" name="District" placeholder="Q5"
+                        value='{{this.user.District}}'>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="City">City</label>
+                    <input type="text" class="form-control" id="City" name="City" placeholder="HCM"
+                        value='{{this.user.City}}'>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="gridCheck" />
+                    <label class="form-check-label" for="gridCheck">
+                        Check me out
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-outline-success" formaction="/user/{{authUser.UserID}}/edit">Save</button>
+        </form>
+    </div>
+</div>

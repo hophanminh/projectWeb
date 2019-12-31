@@ -30,7 +30,14 @@ module.exports=function(app){
                     word.substring(word.length - length, word.length)
                     return masked;
                 }
-            }
+            },
+            if_equal: function(value1, value2, opts){
+                if(value1 == value2)
+                    return opts.fn(this);
+                else
+                    return opts.inverse(this);
+            },
+            
         }
     }));
     app.set('view engine','hbs');  
