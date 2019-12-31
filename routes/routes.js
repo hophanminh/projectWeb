@@ -7,10 +7,20 @@ const adminModel = require('../models/admin.model');
 const router = express.Router();
 
 router.get('/',(req,res)=>{
-    res.render('home',{
-        title:"Home",
-        style: "style.css"
-    });
+    if(res.locals.isAuthenticatedAdmin == true){
+        res.render('home',{
+            layout: 'adminLayout.hbs',
+            title:"Home",
+            style: "style.css"
+        });
+    }
+    else {
+        res.render('home',{
+            title:"Home",
+            style: "style.css"
+        });
+    }
+        
 })
 
 router.get('/FAQ',(req,res)=>{
@@ -35,7 +45,6 @@ router.get('/signUp',(req,res)=>{
     req.session.errors = null;
     req.session.saveForm = null;
 })
-
 
 router.post('/signUp',[
     check('Username','Username is already exist')
@@ -140,9 +149,11 @@ router.post('/login',async(req,res)=>{
     }
 
     delete user.Password;
-
     req.session.isAuthenticated = true;
     req.session.isAuthenticatedAdmin = false;
+    if(user.Type >= 1)
+        req.session.isAuthenticatedSeller = true;
+    else  req.session.isAuthenticatedSeller = false;
     req.session.authUser = user;
 
     console.log(user);
@@ -215,6 +226,7 @@ router.get('/forgetPass',(req,res)=>{
         style: "home.css"
     })
 })
+
 router.post('/forgetPass',async (req,res)=>{
     console.log(req.body);
     const check = await userModel.singleByEmail(req.body.Email);
@@ -254,6 +266,7 @@ router.get('/payment',(req,res)=>{
         style: 'style.css',
     })
 })
+
 router.get('/contact',(req,res)=>{
     res.render('contact',{
         title: 'contact',

@@ -37,42 +37,7 @@
 </script>
 {{/section}} --}}
 
-<div class="container-fluid">
-    <div>
-        <p class="h3 d-flex justify-content-center">Product</p>
-    </div>
-    <div class="form-row align-items-center  d-flex justify-content-end">
-        Sort
-        <div class="col-auto my-1">
-            <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
-            <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                <option value="0" selected>All</option>
-                <option value="1">Most bid</option>
-                <option value="2">Near expired</option>
-                <option value="3">Most point</option>
-            </select>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-3">
-            <div class="card shadow">
-                <h4 class="card-header">
-                    Categories
-                </h4>
-                <div class="list-group list-group-flush">
-                    {{#each lcCategory}}
-                    <a href="/category/{{CatID}}/product"
-                        class="list-group-item list-group-item-action {{#if isActive}} active{{/if}}">
-                        {{CatName}}
-                        {{#if Total}}
-                        <span class="badge badge-danger float-right">{{Total}}</span>
-                        {{/if}}
-                    </a>
-                    {{/each}}
-                </div>
-            </div>
-        </div>
-        <div class="col-9">
+
             {{#if this.empty}}
             <div class="card-body">
                 <p class="card-text">
@@ -151,6 +116,3 @@
                 </ul>
             </nav>
             {{/if}}
-        </div>
-    </div>
-</div>

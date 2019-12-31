@@ -29,6 +29,7 @@ router.get('/', async(req,res)=>{
     console.log(rowsCategory);
 
     res.render('adminViews/Management',{
+        layout: 'adminLayout.hbs',
         seller: rowsSeller,
         requestSeller,
         bidder: rowsBidder,
@@ -56,6 +57,7 @@ router.get('/seller/:id',async(req,res)=>{
     rowsSeller[0].DoB = dob;
 
     res.render('adminViews/sellerDetail',{
+        layout: 'adminLayout.hbs',
         seller: rowsSeller[0],
         empty: rowsSeller.length === 0,
         title: 'Seller',
@@ -91,6 +93,7 @@ router.get('/sellerDetail/:id',async(req,res)=>{
     const rows = await adminModel.sellerDetail(req.params.id);
     console.log(rows);
     res.render('adminViews/sellerDetail',{
+        layout: 'adminLayout.hbs',
         seller: rows,
         title: 'Seller Detail',
         style: 'management.css',
@@ -100,10 +103,9 @@ router.get('/sellerDetail/:id',async(req,res)=>{
     })
 })
 
-
-//Add admin mai mot lam
 router.get('/addAdmin',(req,res)=>{
     res.render('adminViews/addAdmin',{
+        layout: 'adminLayout.hbs',
         title: 'Add Admin',
         style: 'style.css'
     })
@@ -127,6 +129,7 @@ router.post('/addAdmin',async(req,res)=>{
 
 router.get('/addCategory',(req,res)=>{
     res.render('adminViews/addCategory',{
+        layout: 'adminLayout.hbs',
         title: 'Add Category',
         style: 'style.css',
     })
@@ -172,11 +175,13 @@ router.get('/category/:CatID',async(req,res)=>{
     console.log(rows);
 
     res.render('adminViews/categoryDetail',{
+        layout: 'adminLayout.hbs',
         category: rows[0],
         title: 'Category Detail',
         style: 'style.css'
     });
 })
+
 router.post('/category/:CatID',async(req,res)=>{
 
     const entity = req.body;

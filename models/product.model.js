@@ -113,6 +113,10 @@ module.exports={
         const rows = await db.load(sql);
         return rows;
     },
+    deleteItemSellList: entity =>{
+        const sql = `delete from item where ItemID = ${entity.ItemID} and SellerID = ${entity.SellerID} `
+        return db.load(sql);
+    }
 }
 
 
