@@ -5,6 +5,7 @@ const fs = require('fs.extra');
 
 const productModel = require('../../models/product.model');
 const categoryModel = require('../../models/categories.model');
+const userModal = require('../../models/user.model');
 const config = require('../../config/default.json');
 
 const router = express.Router();
@@ -69,6 +70,58 @@ router.post('/addItem/:UserID',upload.array('img',6), async (req, res) => {
 
     const result = await productModel.add(entity);
     res.redirect('/seller/addItem');
+})
+
+router.get('/sellList',async (req,res)=>{
+
+    const SellerID = res.locals.authUser.UserID;
+
+    const limit = config.paginate.limit;
+    const page = req.query.page || 1;
+    const offset = (page-1)*limit;
+
+    const total = await userModal.countSellList(SellerID);
+    const rows = await userModal.sellList(SellerID,offset);
+
+    let nPage = Math.floor(total/limit);
+    if(total%limit > 0) nPage++;
+
+    const page_number = [];
+    for(i=1;i<=nPage;i++){
+        page_number.push({
+            value: i,
+            current: i=== +page,
+        })
+    };
+
+    let page_prev = +page-1;
+    if(page_prev < 1) page_prev = 1;
+
+    let page_next = +page +1;
+    if(page_next > nPage) page_next = nPage;
+
+    res.render('userViews/sellList',{
+        products: rows,
+        empty: rows.length === 0,
+        page_number,
+        page_prev,
+        page_next,
+        min: +page === 1,
+        max: +page === nPage,
+        title: 'Sell list',
+        style: 'style.css',
+    })
+})
+
+router.post('/sellList/:ItemID/delete',async (req,res)=>{
+
+    const entity = req.params;
+    entity.SellerID = res.locals.authUser.UserID;
+
+    console.log(entity);
+    const result = await productModel.deleteItemSellList(entity);
+    
+    res.redirect(req.headers.referer);
 })
 
 router.get('/err', (req, res) => {

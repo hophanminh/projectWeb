@@ -13,6 +13,13 @@
                     {{#each this.products}}
                     <div class="col-sm-4 mb-3">
                         <div class="card h-100">
+                            {{#if holdPrice}}
+                            <div class="card-header bg-success">
+                                <p class="h5 text-warning">
+                                    Holding Price
+                                </p>
+                            </div>
+                            {{/if}}
                             <img src="/img/{{ItemID}}/1.jpg" alt="{{ProName}}" title="{{ProName}}" class="card-img-top">
                             <div class="card-body">
                                 <h6 class="card-title">{{Title}}</h6>
@@ -39,11 +46,6 @@
                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                     Details
                                 </a>
-                                <a class="btn btn-outline-danger" role="button" href="javascript: $('#formDelete').submit();">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                    Delete
-                                </a>
-                                <form id="formDelete" action="/user/watchList/{{ItemID}}/delete" method="POST"></form>
                             </div>
                         </div>
                     </div>

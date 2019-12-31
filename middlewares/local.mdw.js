@@ -14,6 +14,7 @@ module.exports = function(app){
       res.locals.isAuthenticated = req.session.isAuthenticated;
       res.locals.authUser = req.session.authUser;
       res.locals.isAuthenticatedAdmin = req.session.isAuthenticatedAdmin;
+      res.locals.isAuthenticatedSeller = req.session.isAuthenticatedSeller;
       
       next();
     })

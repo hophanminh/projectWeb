@@ -240,7 +240,7 @@ router.get('/bidding',async(req,res)=>{
 
 
 
-    res.render('userViews/bidding',{
+    res.render('userViews/biddingList',{
         products: rows,
         empty: rows.length === 0,
         page_number,
@@ -252,7 +252,7 @@ router.get('/bidding',async(req,res)=>{
         style: 'style.css',
     })
 })
-router.get('/wonProduct',async(req,res)=>{
+router.get('/wonList',async(req,res)=>{
 
     
     const UserID = res.locals.authUser.UserID;
