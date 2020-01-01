@@ -21,13 +21,13 @@ module.exports=function(app){
                 return newMoney; 
             },
             mask: word=>{
-                const length = config.maskedString.maskedLetter;
-                if (word.length <= length) {
+                const lengthStr = config.maskedString.maskedLetter;
+                if (word.length <= lengthStr) {
                     return word
                 } 
                 else {
-                    var masked = word.substring(0, word.length - length).replace(/[a-z\d]/gi,"*") + 
-                    word.substring(word.length - length, word.length)
+                    var masked = word.substring(0, word.length - lengthStr).replace(/[a-z\d]/gi,"*") + 
+                    word.substring(word.length - lengthStr, word.length)
                     return masked;
                 }
             },

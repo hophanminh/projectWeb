@@ -1,0 +1,103 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 order-md-1 md-4">
+            <div class="row">
+                <img src="/img/logo.jpg" class="rounded-circle my-4" id="avatar" sizes="50%">
+                <span id="username_profile" class="d-flex align-items-end">{{{ mask this.user.Username}}}</span>
+            </div>
+            <ul class="list-group mb-2">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Merit point: <span class="badge badge-primary badge-pill">{{this.user.Point}}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Số lượt đã đấu giá: <span class="badge badge-primary badge-pill">{{this.bidTime}}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Số lượt đấu giá thành công: <span
+                        class="badge badge-primary badge-pill">{{this.wonTime}}</span>
+                </li>
+            </ul>
+                {{#if isAuthenticated}}
+            <div class="row">
+                <div class="col-4">
+                    <a href="/user/{{authUser.UserID}}/review/{{this.user.UserID}}">Review</a>
+                </div>
+            </div>
+                {{/if}}
+            <div class="row">
+                <div id="accordion">
+                    <div class="card">
+                        <div class="card-header" id="historyBid">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse"
+                                    data-target="#collapseHistory" aria-expanded="true"
+                                    aria-controls="collapseHistory">
+                                    Feed Back
+                                </button>
+                            </h5>
+                        </div>
+
+                        <div id="collapseHistory" class="collapse show" aria-labelledby="historyBid"
+                            data-parent="#accordion">
+
+                            <div class="card-body">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Rate</th>
+                                            <th scope="col">Feed Back</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each this.feedback}}
+                                        <tr>
+                                            <th scope="row">*</th>
+                                            <td>{{mask FBerName}}</td>
+                                            <td>{{Rating}}*</td>
+                                            <td>{{Comment}}</td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 order-md-2 mb-4">
+            <form>
+                <div class="mb-1 mt-5">
+                    <label for="username">Username</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="username" placeholder="Username"
+                            value="{{ mask this.user.Username}}" readonly>
+                    </div>
+                </div>
+                <div class="mb-1">
+                    <label for="address">Street</label>
+                    <input type="text" class="form-control" id="address" placeholder="1234 Main St"
+                        value="{{this.user.Street}}" readonly>
+                </div>
+                <div class="mb-1">
+                    <label for="address">District</label>
+                    <input type="text" class="form-control" id="address" placeholder="1234 Main St"
+                        value="{{this.user.District}}" readonly>
+                </div>
+                <div class="mb-1">
+                    <label for="address">City</label>
+                    <input type="text" class="form-control" id="address" placeholder="1234 Main St"
+                        value="{{this.user.City}}" readonly>
+                </div>
+
+                <div class="mb-1">
+                    <label for="phone-number">Phone number</label>
+                    <input type="text" class="form-control" id="address" value="{{ mask this.user.PhoneNo}}" readonly>
+                </div>
+                <hr class="mb-4">
+            </form>
+        </div>
+    </div>
+</div>

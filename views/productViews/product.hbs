@@ -196,20 +196,20 @@
                     </span>
 
                     <p class="card-text mb-3">
-                        Points: <span class="h1 text-info"> {{this.product.Condition}} </span>
-
-                        <a href="#">
+                        Contidtion: <span class="h1 text-info"> {{this.product.Condition}} </span>
+                        {{!-- <a href="#">
                             <i class="fa fa-arrow-up fa-2x text-success"></i>
                         </a>
                         <a href="#">
                             <i class="fa fa-arrow-down fa-2x text-dark"></i>
-                        </a>
-                        <br> Date: <strong>{{this.product.AuctionStart}}</strong> <br> Owner:
-                        <a href="#"> <strong> {{mask this.product.SellerName}} </strong> </a> <br> Point's Owner: <strong>12
+                        </a> --}}
+                        <br> Date: <strong>{{this.product.AuctionStart}}</strong> <br> 
+                        Owner:
+                        <a href="/guess/{{this.product.SellerID}}"> <strong> {{mask this.product.SellerName}} </strong> </a> <br> Point's Owner: <strong>{{this.product.SellerPoint}}
                         </strong>
                         <hr> Bidder's highest price:
-                        <a href="#"> <strong>{{mask this.product.BidderName}}</strong> </a> <br> Bidder's points:
-                        <strong>2007</strong>
+                        <a href="/guess/{{this.product.BidderID}}"> <strong>{{mask this.product.BidderName}}</strong> </a> <br> Bidder's points:
+                        <strong>{{this.product.BidderPoint}}</strong>
                     </p>
                     <hr>
                     <div>

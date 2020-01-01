@@ -303,6 +303,26 @@ router.get('/wonList',async(req,res)=>{
     })
 })
 
+router.get('/:UserID/review/:id',async(req,res)=>{
+    const UserID = req.params.id;
+    const User = await userModal.singleByID(UserID);
+
+    res.render('userViews/feedback',{
+        user: User[0],
+        title: 'Feed back',
+        style: 'style.css',
+    })
+})
+router.post('/:UserID/review/:id',async(req,res)=>{
+   const entity = req.body;
+    console.log(entity);
+    const date = Date.now();
+    entity.Date = moment(date).format('YYYY-MM-DD');
+    const result = await userModal.addFeedBack(entity);
+    console.log(result);
+    res.redirect('/');
+})
+
 router.get('/err', (req, res) => {
 
     throw new Error('error occured');

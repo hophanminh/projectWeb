@@ -9,6 +9,12 @@ module.exports={
             return null;
         return rows[0];
     },
+    singleByID: async ID => {
+        const rows = await db.load(`select * from user where UserID = '${ID}'`);
+        if(rows.length === 0) 
+            return null;
+        return rows;
+    },
     singleByEmail: async Email => {
         const rows = await db.load(`select * from user where Email = '${Email}'`);
         console.log(rows);
@@ -24,6 +30,12 @@ module.exports={
     },
     countBid: async Username => {
         const rows = await db.load(`SELECT count(*) as total FROM user u join bids b on u.UserID = b.BidderID where u.Username = '${Username}'`);
+        if(rows.length === 0)
+            return 0;
+        return rows[0].total;
+    },
+    countBidID: async id => {
+        const rows = await db.load(`SELECT count(*) as total FROM user u join bids b on u.UserID = b.BidderID where u.UserID = '${id}'`);
         if(rows.length === 0)
             return 0;
         return rows[0].total;
@@ -59,4 +71,19 @@ module.exports={
         `
         return db.load(sql);
     },
+    guessProfile: id => {
+        const sql = `select UserID, Username, Point, Street, District, City, PhoneNo from user where UserID = ${id}`;
+        return db.load(sql);
+    },
+    addFeedBack: entity => db.add('feedback',entity),
+    getFeedback: id =>{
+        const sql=`
+        SELECT fb.*, uF.Fname as FBerName
+        FROM feedback fb
+        join user uF on uF.UserID = fb.User1ID
+        where User2ID = ${id}
+        `
+        return db.load(sql);
+    },
+    
 }

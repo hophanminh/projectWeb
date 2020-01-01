@@ -13,7 +13,7 @@ module.exports={
     add: (entity) => db.add('item',entity),
     single: (id) => {
         const sql = `
-        SELECT *, u1.Fname SellerName, u2.Fname BidderName
+        SELECT *, u1.Fname SellerName, u2.Fname BidderName, u2.Point BidderPoint, u1.Point SellerPoint
         FROM item i join user u1 join user u2
         on i.SellerID = u1.UserID and i.BidderID = u2.UserID
         where i.ItemID = '${id}'
@@ -56,7 +56,7 @@ module.exports={
     },
     watchList: (UserID,offset) => {
         const sql = `
-        SELECT i.*, seller.Fname as SellerName, bidder.Fname as BidderName  FROM watchlist w join item i join user u join user seller join user bidder 
+        SELECT distinct i.ItemID, i.*, seller.Fname as SellerName, bidder.Fname as BidderName  FROM watchlist w join item i join user u join user seller join user bidder 
         on w.ItemID = i.ItemID and w.UserID = u.UserID and i.SellerID = seller.UserID and i.BidderID = bidder.UserID
         where u.UserID = ${UserID}
         limit ${config.paginate.limit} offset ${offset}

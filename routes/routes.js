@@ -4,6 +4,7 @@ const moment = require('moment');
 const {check, validationResult} = require('express-validator');
 const userModel = require('../models/user.model');
 const adminModel = require('../models/admin.model');
+const productModel = require('../models/product.model');
 const router = express.Router();
 
 router.get('/',(req,res)=>{
@@ -110,6 +111,26 @@ router.post('/signUp',[
         });
 })
 
+router.get('/guess/:UserID',async (req,res)=>{
+    const UserID = req.params.UserID;
+    console.log(UserID);
+
+    const rows = await userModel.guessProfile(UserID);
+    const bidTime = await userModel.countBidID(UserID);
+    const wonTime = await productModel.countWon(UserID);
+    const feedback = await userModel.getFeedback(UserID);
+    console.log(feedback);
+
+    res.render('guessViews/Profile',{
+        user: rows[0],
+        bidTime,
+        wonTime,
+        feedback,
+        title: 'Profile',
+        style: 'style.css'
+    })
+})
+
 router.get('/login',(req,res)=>{
     res.render('login',{
         layout: false,
@@ -158,7 +179,6 @@ router.post('/login',async(req,res)=>{
 
     console.log(user);
 
-    // const url = req.query.retUrl || '/';
     const url = req.query.retUrl || '/';
     res.redirect(url);
     
