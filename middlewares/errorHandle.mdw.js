@@ -8,6 +8,10 @@ module.exports = function(app){
     app.use((err, req, res, next) => {
         // logic
         console.error(err.stack);
-        res.status(500).send('Some thing went wrong, please return');
+        res.render('error',{
+            title: 'Error Unhandle',
+            style: 'style.css'
+        });
+        //res.status(500).send('Some thing went wrong, please return');
     })
 }

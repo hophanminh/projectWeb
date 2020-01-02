@@ -1,8 +1,6 @@
 {{#section 'css'}}
 <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
 {{/section}}
 
 {{#section 'js'}}
@@ -16,105 +14,113 @@
         mask: true,
     });
 </script>
+
 {{/section}}
 
-<div class="container" >
-    <div id = "logreg-forms">
-    {{#if errors}}
-    <p class="alert alert-danger">
-    {{#each errors}}
-    {{this.msg}} <br>
-    {{/each}}
-    </p>
-    {{/if}}
-    <div class="d-flex justify-content-center">
-    <p class="h1">Please fill information</p>
+<div class="container">
+    <div id="logreg-forms">
+        {{#if errors}}
+        <p class="alert alert-danger">
+            {{#each errors}}
+            {{this.msg}} <br>
+            {{/each}}
+        </p>
+        {{/if}}
+        <div class="d-flex justify-content-center" id='form'>
+            <p class="h1">Please fill information</p>
+        </div>
+        <form method="POST" class="form-signup">
+            <div class="h5"> Account</div>
+            <div class="form-row mb-2">
+                <div class="col">
+                    <label for="Username">User name</label>
+                    <input class="form-control" type="text" id="Username" name="Username" value='{{saveForm.Username}}'>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="Email">Email</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="Email" name="Email" placeholder="Email"
+                            value='{{saveForm.Email}}'>
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">@gmail.com</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="PhoneNo">Phone number</label>
+                    <input type="text" class="form-control" id="PhoneNo" name="PhoneNo" placeholder="739-247-6882"
+                        value='{{saveForm.PhoneNo}}'>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="pass_raw">Password</label>
+                    <input type="password" class="form-control" id="pass_raw" name="pass_raw" placeholder="Password" />
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="pass_rawC">Confirm Password</label>
+                    <input type="password" class="form-control" id="pass_rawC" name="pass_rawC"
+                        placeholder="Password" />
+                </div>
+            </div>
+            <div class="h5">Information</div>
+            <div class="form-row mb-2">
+                <div class="form-group col-md-6">
+                    <label for="Fname">First name</label>
+                    <input type="text" class="form-control" id="Fname" name="Fname" placeholder="John"
+                        value='{{saveForm.Fname}}'>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="Lname">Last name</label>
+                    <input type="text" class="form-control" id="Lname" name="Lname" placeholder="Willson"
+                        value='{{saveForm.Lname}}'>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="dob">Date of Birth: </label>
+                    <input type="text" class="form-control" id="dob" name="dob" value='{{saveForm.DoB}}'>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="Sex">Sex: </label> <br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="Sex" id="Sex" value="Male">
+                        <label class="form-check-label" for="inlineRadio1">Male</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="Sex" id="Sex" value="Female">
+                        <label class="form-check-label" for="Sex">Female</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-4">
+                    <label for="Street">Street</label>
+                    <input type="text" class="form-control" id="Street" name="Street" placeholder="1234 Main St"
+                        value='{{saveForm.Street}}'>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="District">District</label>
+                    <input type="text" class="form-control" id="District" name="District" placeholder="Q5"
+                        value='{{saveForm.District}}'>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="City">City</label>
+                    <input type="text" class="form-control" id="City" name="City" placeholder="HCM"
+                        value='{{saveForm.City}}'>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="gridCheck" />
+                    <label class="form-check-label" for="gridCheck">
+                        Check me out
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-outline-success" formaction="/signUp">Submit</button>
+        </form>
     </div>
-    <form method="POST" class="form-signup">
-    <div class="h5"> Account</div>
-    <div class="form-row mb-2">
-    <div class="col">
-    <label for="Username">User name</label>
-    <input class="form-control" type="text" id="Username" name="Username" value='{{saveForm.Username}}'>
-    </div>
-    </div>
-    <div class="form-row">
-    <div class="form-group col-md-6">
-    <label for="Email">Email</label>
-    <div class="input-group">
-    <input type="text" class="form-control" id="Email" name="Email" placeholder="Email" value='{{saveForm.Email}}'>
-    <div class="input-group-prepend">
-    <div class="input-group-text">@gmail.com</div>
-    </div>
-    </div>
-    </div>
-    <div class="form-group col-md-6">
-    <label for="PhoneNo">Phone number</label>
-    <input type="text" class="form-control" id="PhoneNo" name="PhoneNo" placeholder="739-247-6882" value='{{saveForm.PhoneNo}}'>
-    </div>
-    </div>
-    <div class="form-row">
-    <div class="form-group col-md-6">
-    <label for="pass_raw">Password</label>
-    <input type="password" class="form-control" id="pass_raw" name="pass_raw" placeholder="Password" />
-    </div>
-    <div class="form-group col-md-6">
-    <label for="pass_rawC">Confirm Password</label>
-    <input type="password" class="form-control" id="pass_rawC" name="pass_rawC" placeholder="Password" />
-    </div>
-    </div>
-    <div class="h5">Information</div>
-    <div class="form-row mb-2">
-    <div class="form-group col-md-6">
-    <label for="Fname">First name</label>
-    <input type="text" class="form-control" id="Fname" name="Fname" placeholder="John" value='{{saveForm.Fname}}'>
-    </div>
-    <div class="form-group col-md-6">
-    <label for="Lname">Last name</label>
-    <input type="text" class="form-control" id="Lname" name="Lname" placeholder="Willson" value='{{saveForm.Lname}}'>
-    </div>
-    </div>
-    <div class="form-row">
-    <div class="form-group col-md-6">
-    <label for="dob">Date of Birth: </label>
-    <input type="text" class="form-control" id="dob" name="dob" value='{{saveForm.DoB}}'>
-    </div>
-    <div class="form-group col-md-6">
-    <label for="Sex">Sex: </label> <br>
-    <div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="Sex" id="Sex" value="Male">
-    <label class="form-check-label" for="inlineRadio1">Male</label>
-    </div>
-    <div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="Sex" id="Sex" value="Female">
-    <label class="form-check-label" for="Sex">Female</label>
-    </div>
-    </div>
-    </div>
-    <div class="form-row">
-    <div class="form-group col-4">
-    <label for="Street">Street</label>
-    <input type="text" class="form-control" id="Street" name="Street" placeholder="1234 Main St" value='{{saveForm.Street}}'>
-    </div>
-    <div class="form-group col-md-4">
-    <label for="District">District</label>
-    <input type="text" class="form-control" id="District" name="District" placeholder="Q5" value='{{saveForm.District}}'>
-    </div>
-    <div class="form-group col-md-4">
-    <label for="City">City</label>
-    <input type="text" class="form-control" id="City" name="City" placeholder="HCM" value='{{saveForm.City}}'>
-    </div>
-    </div>
-    <div class="form-group">
-    <div class="form-check">
-    <input class="form-check-input" type="checkbox" id="gridCheck" />
-    <label class="form-check-label" for="gridCheck">
-    Check me out
-    </label>
-    </div>
-    </div>
-          {{!-- <div class="g-recaptcha form-group" data-sitekey="6LcJm8sUAAAAAPi9iQ_2nkdS0-AioxdTp2cdcjZK"></div>--}}
-
-    <button type="submit" class="btn btn-outline-success" formaction="/signUp">Submit</button>
-    </form></div>
 </div>

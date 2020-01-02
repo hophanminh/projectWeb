@@ -46,6 +46,7 @@ module.exports={
         return rows;
     },
     getIDByEmail: value => db.load(`select * from user where Email = '${value}'`),
+    getIDByPhone: value => db.load(`select * from user where PhoneNo = '${value}'`),
     modifyProfile: entity =>{
         const condition = {UserID: entity.UserID};
         delete entity.UserID;
