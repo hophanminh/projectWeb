@@ -6,8 +6,7 @@ const userModel = require('../models/user.model');
 const adminModel = require('../models/admin.model');
 const productModel = require('../models/product.model');
 const router = express.Router();
-// const bodyParser = require('body-parser');
-// const request = require('request');
+
 
 router.get('/',(req,res)=>{
     if(res.locals.isAuthenticatedAdmin == true){
@@ -96,8 +95,8 @@ router.post('/signUp',[
         req.session.errors = errors;
         req.session.saveForm = req.body;
         res.redirect('/signUp');
-    }
-    console.log(req.body);
+    }else{
+        console.log(req.body);
     const N = 10;
     const hash = bcryptjs.hashSync(req.body.pass_raw,N);
     const dob = moment(req.body.dob,'DD/MM/YYYY').format('YYYY-MM-DD');
@@ -118,6 +117,8 @@ router.post('/signUp',[
     const result = await userModel.register(entity);
     
     res.redirect('/login');
+    }
+    
 })
 
 router.get('/guess/:UserID',async (req,res)=>{
