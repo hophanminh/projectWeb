@@ -10,8 +10,6 @@ const router = express.Router();
 
 router.get('/',async(req,res)=>{
     const rows = await userModal.getIDByUsername(res.locals.authUser.Username);
-    const feedback = await userModal.getFeedback(res.locals.authUser.UserID);
-
     console.log(rows);
 
     const dob = moment(rows[0].DoB,'YYYY-MM-DD').format('DD/MM/YYYY');
@@ -19,7 +17,6 @@ router.get('/',async(req,res)=>{
 
     res.render('userViews/Profile',{
         user: rows[0],
-        feedback,
         empty: rows.length === 0,
         title: 'Profile',
         style: 'style.css',
@@ -128,7 +125,7 @@ router.get('/watchList',async(req,res)=>{
     let page_next = +page +1;
     if(page_next > nPage) page_next = nPage;
 
-    res.render('productViews/listProduct',{
+    res.render('userViews/watchList',{
         products: rows,
         empty: rows.length === 0,
         page_number,
@@ -163,7 +160,6 @@ router.post('/watchList/:ItemID',async (req,res)=>{
     console.log(result);
     res.redirect(req.headers.referer);
 })
-
 router.post('/watchList/:ItemID/delete',async (req,res)=>{
     console.log('ID: ');
     console.log(req.params.ItemID);
@@ -244,7 +240,7 @@ router.get('/bidding',async(req,res)=>{
 
 
 
-    res.render('productViews/listProduct',{
+    res.render('userViews/biddingList',{
         products: rows,
         empty: rows.length === 0,
         page_number,
@@ -256,7 +252,6 @@ router.get('/bidding',async(req,res)=>{
         style: 'style.css',
     })
 })
-
 router.get('/wonList',async(req,res)=>{
 
     
@@ -295,7 +290,7 @@ router.get('/wonList',async(req,res)=>{
     let page_next = +page +1;
     if(page_next > nPage) page_next = nPage;
 
-    res.render('productViews/listProduct',{
+    res.render('userViews/wonList',{
         products: rows,
         empty: rows.length === 0,
         page_number,
@@ -318,7 +313,6 @@ router.get('/:UserID/review/:id',async(req,res)=>{
         style: 'style.css',
     })
 })
-
 router.post('/:UserID/review/:id',async(req,res)=>{
    const entity = req.body;
     console.log(entity);
@@ -327,11 +321,6 @@ router.post('/:UserID/review/:id',async(req,res)=>{
     const result = await userModal.addFeedBack(entity);
     console.log(result);
     res.redirect('/');
-})
-
-router.post('/sellerRequired/:UserID',async(req,res)=>{
-    const result =await userModal.sellerRequired(req.params.UserID);
-    res.redirect('/user');
 })
 
 router.get('/err', (req, res) => {

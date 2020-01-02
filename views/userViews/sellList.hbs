@@ -1,43 +1,6 @@
-{{#section 'çss'}}
-<style>
-
-</style>
-{{/section}}
-{{!-- {{#section 'js'}}
-<script>// Update the count down every 1 second
-    var countDownDate = new Date();
-
-    var x = setInterval(function () {
-
-        // Get today's date and time
-        var now = new Date().getTime();
-
-        // Find the distance between now and the count down date
-        var distance = countDownDate - now;
-
-        // Time calculations for days, hours, minutes and seconds
-        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        int id = this.products.ItemID;
-        // Display the result in the element with id="demo"
-        document.getElementsByClassName(`day`).innerHTML = days + " day";
-        document.getElementsByClassName(`hour`).innerHTML = hours + " hour";
-        document.getElementsByClassName(`min`).innerHTML = minutes + " min";
-        document.getElementsByClassName(`sec`).innerHTML = seconds + " sec";
-
-        // If the count down is finished, write some text
-        if (distance < 0) {
-            clearInterval(x);
-            document.getElementById("demo").innerHTML = "EXPIRED";
-        }
-    }, 1000);
-</script>
-{{/section}} --}}
-
-
+<div class="container">
+    <div class="row">
+        <div class="col">
             {{#if this.empty}}
             <div class="card-body">
                 <p class="card-text">
@@ -45,21 +8,6 @@
                 </p>
             </div>
             {{else}}
-            <div class="form-row align-items-center  d-flex justify-content-end">
-                    Sort
-                    <div class="col-auto my-1">
-                        <form method="POST">
-                            <label class="mr-sm-2 sr-only" for="sortRe">Preference</label>
-                            <select class="custom-select mr-sm-2" id="sortRe" name="sortRe" onchange="this.form.submit()">
-                                
-                                <option value="0">All</option>
-                                <option value="1">Most bid</option>
-                                <option value="2">Near expired</option>
-                                <option value="3">Most point</option>
-                            </select>
-                        </form>
-                    </div>
-                </div>
             <div class="card-body">
                 <div class="row">
                     {{#each this.products}}
@@ -70,8 +18,8 @@
                                 <h6 class="card-title">{{Title}}</h6>
                                 <h5 class="card-title text-danger">{{CurrentBidAmount}}</h5>
                                 <p class="card-text">{{{TinyDes}}}</p>
-                                <p>Seller: {{mask SellerName}}</p>
-                                <a href="#">Bidder with highest price: {{ mask BidderName}}</a>
+                                <p>Seller: {{SellerName}}</p>
+                                <a href="#">Bidder with highest price: {{BidderName}}</a>
                                 <p>Start Date: {{AuctionStart}}</p>
                                 <span class="d-flex justify-content-end" id="countdown">
                                     <div class="card bg-danger text-white">
@@ -91,17 +39,11 @@
                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                     Details
                                 </a>
-                                <a class="btn btn-outline-danger" role="button" href="javascript: $('#like').submit();">
-                                    <i class="fa fa-heart" aria-hidden="true"></i>
-                                    Later
+                                <a class="btn btn-outline-danger" role="button" href="javascript: $('#formDelete').submit();">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                    Delete
                                 </a>
-                                {{#if_equal SellerID authUser.UserID}}
-                                <a class="btn btn-outline-danger d-flex align-items-center" role="button" href="/seller/modifyItem/{{this.product.ItemID}}">
-                                    <i class="fa fa-heart" aria-hidden="true"></i>
-                                    Update
-                                </a> 
-                                {{/if_equal}}    
-                                <form id="like" method ="POST" action="/user/watchList/{{ItemID}}"></form>
+                                <form id="formDelete" action="/seller/sellList/{{ItemID}}/delete" method="POST"></form>
                             </div>
                         </div>
                     </div>
@@ -117,7 +59,7 @@
                     <li class="page-item"><a class="page-link" href="?page={{page_prev}}">Previous</a></li>
                     {{/if}}
 
-                    {{#each this.page_numbers}}
+                    {{#each this.page_number}}
                     {{#if current}}
                     <li class="page-item active">
                         <a class="page-link" href="?page={{value}}">{{value}}</a>
@@ -137,3 +79,5 @@
                 </ul>
             </nav>
             {{/if}}
+
+<script src='/js/listProduct.js'></script>
