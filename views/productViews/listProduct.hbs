@@ -51,7 +51,6 @@
                         <form method="POST">
                             <label class="mr-sm-2 sr-only" for="sortRe">Preference</label>
                             <select class="custom-select mr-sm-2" id="sortRe" name="sortRe" onchange="this.form.submit()">
-                                
                                 <option value="0">All</option>
                                 <option value="1">Most bid</option>
                                 <option value="2">Near expired</option>
@@ -63,8 +62,17 @@
             <div class="card-body">
                 <div class="row">
                     {{#each this.products}}
+                    
                     <div class="col-sm-4 mb-3">
+                        
                         <div class="card h-100">
+                        {{#if holdPrice}}
+                        <div class="card-header bg-success">
+                            <p class="h5 text-warning">
+                                Holding Price
+                            </p>
+                        </div>
+                        {{/if}}
                             <img src="/img/{{ItemID}}/1.jpg" alt="{{ProName}}" title="{{ProName}}" class="card-img-top">
                             <div class="card-body">
                                 <h6 class="card-title">{{Title}}</h6>

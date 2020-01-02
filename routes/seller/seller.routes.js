@@ -63,7 +63,7 @@ router.post('/addItem/:UserID',upload.array('img',6), async (req, res) => {
         AuctionEnd: moment(endDate).format('YYYY-MM-DD h:mm:ss'), // Auto: Done
         SellerID: req.params.UserID, // auto
         ShipPrice: 10,
-        BidderID: 3, //Auto
+        BidderID: null, //Auto
         AccountType: 'Mastercard',
         AccountNo: 'JEMO',
     }
@@ -86,6 +86,47 @@ router.get('/sellList',async (req,res)=>{
     let nPage = Math.floor(total/limit);
     if(total%limit > 0) nPage++;
 
+    const page_numbers = [];
+    for(i=1;i<=nPage;i++){
+        page_numbers.push({
+            value: i,
+            current: i=== +page,
+        })
+    };
+
+    let page_prev = +page-1;
+    if(page_prev < 1) page_prev = 1;
+
+    let page_next = +page +1;
+    if(page_next > nPage) page_next = nPage;
+
+    res.render('productViews/listProduct',{
+        products: rows,
+        empty: rows.length === 0,
+        page_numbers,
+        page_prev,
+        page_next,
+        min: +page === 1,
+        max: +page === nPage,
+        title: 'Sell list',
+        style: 'style.css',
+    })
+})
+
+router.get('/soldList',async(req,res)=>{
+
+    const SellerID = res.locals.authUser.UserID;
+
+    const limit = config.paginate.limit;
+    const page = req.query.page || 1;
+    const offset = (page-1)*limit;
+
+    const total = await userModal.countSoldList(SellerID);
+    const rows = await userModal.soldList(SellerID,offset);
+
+    let nPage = Math.floor(total/limit);
+    if(total%limit > 0) nPage++;
+
     const page_number = [];
     for(i=1;i<=nPage;i++){
         page_number.push({
@@ -100,7 +141,7 @@ router.get('/sellList',async (req,res)=>{
     let page_next = +page +1;
     if(page_next > nPage) page_next = nPage;
 
-    res.render('userViews/sellList',{
+    res.render('productViews/listProduct',{
         products: rows,
         empty: rows.length === 0,
         page_number,
@@ -108,7 +149,7 @@ router.get('/sellList',async (req,res)=>{
         page_next,
         min: +page === 1,
         max: +page === nPage,
-        title: 'Sell list',
+        title: 'Sold list',
         style: 'style.css',
     })
 })
