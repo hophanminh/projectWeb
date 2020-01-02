@@ -102,7 +102,13 @@
                                 <a class="btn btn-outline-danger" role="button" href="javascript: $('#like').submit();">
                                     <i class="fa fa-heart" aria-hidden="true"></i>
                                     Later
-                                </a>    
+                                </a>
+                                {{#if_equal SellerID authUser.UserID}}
+                                <a class="btn btn-outline-danger d-flex align-items-center" role="button" href="/seller/modifyItem/{{this.product.ItemID}}">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                    Update
+                                </a> 
+                                {{/if_equal}}    
                                 <form id="like" method ="POST" action="/user/watchList/{{ItemID}}"></form>
                             </div>
                         </div>

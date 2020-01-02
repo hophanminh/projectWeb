@@ -67,13 +67,13 @@
 
 <div class="container">
     <div class="h1 text-center">
-        Add item
+        Modify item
     </div>
     <form method="POST" class="needs-validation" novalidate>
         <div class="form-row">
             <div class="col mb-3">
                 <label for="Title">Title</label>
-                <input type="text" class="form-control" id="Title" name="Title" placeholder="iPhone" required>
+                <input type="text" class="form-control" id="Title" name="Title" placeholder="iPhone" value={{this.product.Title}} required>
                 <div class="valid-feedback">
                     Looks good!
                 </div>
@@ -94,7 +94,7 @@
                     <option value="Excellent">Excellent</option>
                     <option value="Good">Good</option>
                     <option value="Fair">Fair</option>
-                    <option value="Poor" selected>Poor</option>
+                    <option value="Poor">Poor</option>
                 </select>
                 <div class="valid-feedback">
                     Looks good!
@@ -107,7 +107,7 @@
                         <span class="input-group-text" id="Currency">$</span>
                     </div>
                     {{!-- <input type="text" class="form-control is-invalid" id="StartBidAmount" name="StartBidAmount" required> --}}
-                    <input type="text" class="form-control" id="StartBidAmount" name="StartBidAmount" required>
+                    <input type="text" class="form-control" id="StartBidAmount" name="StartBidAmount" value='{{this.product.StartBidAmount}}' required>
                     <div class="invalid-feedback">
                         Required start bid amount
                     </div>
@@ -119,7 +119,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="Currency">Point</span>
                     </div>
-                    <input type="text" class="form-control" id="MinPoint" name="MinPoint" required>
+                    <input type="text" class="form-control" id="MinPoint" name="MinPoint" value={{this.product.MinPoint}} required>
                     <div class="invalid-feedback">
                         Required point to bid
                     </div>
@@ -129,14 +129,26 @@
         <div class="form-row mb-3">
             <div class="col">
                 <label for="txtTinyDes">Short description</label>
-                <textarea class="form-control" id="txtTinyDes" name="TinyDes" placeholder="Short description"
-                    required></textarea>
+                <textarea class="form-control" id="txtTinyDes" name="TinyDes"
+                    required>
+                    {{{this.product.TinyDes}}}
+                </textarea>
             </div>
         </div>
         <div class="form mb-3">
             <label for="txtFullDes">Full description</label> <br>
-            <textarea class="form-control" id="txtFullDes" name="FullDes" placeholder="Full description"
-                required></textarea>
+            <textarea class="form-control" id="txtFullDes" name="FullDes"
+                required>
+            {{{this.product.FullDes}}}
+            </textarea>
+        </div>
+        <div class="card">
+            <h4 class="card-header">
+                Upload
+            </h4>
+            <div class="card-body">
+                    <input id="img" name="img" type="file" multiple>
+            </div>
         </div>
         <div class="form-group mb-3">
             <div class="form-check">
@@ -149,6 +161,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-outline-success" type="submit" formaction='/seller/addItem/{{authUser.UserID}}'>Submitform</button>
+        <button class="btn btn-outline-success" type="submit" formaction='/seller/modifyItem/{{this.product.ItemID}}'>Submit
+            form</button>
     </form>
 </div>

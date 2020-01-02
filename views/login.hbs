@@ -30,6 +30,8 @@
       color: #aaa;
     }
   </style>
+    {{!--<script src="https://www.google.com/recaptcha/api.js" async defer></script>--}}
+
 </head>
 
 <body>
@@ -45,7 +47,7 @@
         </div>
         {{/if}}
 
-        <form method="POST">
+        <form method="POST" id="loginForm">
           <div class="form-group">
             <div class="input-group">
               <input class="form-control form-control-lg border-right-0 border" placeholder="User name" type="text"
@@ -68,6 +70,7 @@
               </span>
             </div>
           </div>
+      {{!--<div class="g-recaptcha form-group" data-sitekey="6LcJm8sUAAAAAPi9iQ_2nkdS0-AioxdTp2cdcjZK"></div>--}}
       <div class="my-3">
 				<a href="/forgetPass" class="text-dark d-flex justify-content-around">
 					Forget password???
@@ -108,6 +111,9 @@
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+  
 </body>
 
 </html>

@@ -116,7 +116,12 @@ module.exports={
     deleteItemSellList: entity =>{
         const sql = `delete from item where ItemID = ${entity.ItemID} and SellerID = ${entity.SellerID} `
         return db.load(sql);
-    }
+    },
+    modifyItem: entity=>{
+        const condition=  {ItemID: entity.ItemID};
+        delete entity.ItemID;
+        return db.modify('item',entity,condition)
+    },
 }
 
 

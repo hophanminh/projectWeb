@@ -16,7 +16,7 @@ app.use(session({
 
 app.use(express.json());
 app.use(express.urlencoded({
-    extended: true
+    extended: false
   }));
 app.use(express.static('public'));
 

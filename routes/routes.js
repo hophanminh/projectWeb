@@ -6,6 +6,8 @@ const userModel = require('../models/user.model');
 const adminModel = require('../models/admin.model');
 const productModel = require('../models/product.model');
 const router = express.Router();
+const bodyParser = require('body-parser');
+const request = require('request');
 
 router.get('/',(req,res)=>{
     if(res.locals.isAuthenticatedAdmin == true){
@@ -78,6 +80,24 @@ router.post('/signUp',[
         else return value;
     })
     ],async(req,res)=>{
+
+    //     if(req.body['g-recaptcha-response'] === undefined || req.body['g-recaptcha-response'] === '' || req.body['g-recaptcha-response'] === null) {
+    //         return res.json({"responseCode" : 1,"responseDesc" : "Please select captcha"});
+    //       }
+    
+    //       var secretKey = "6LcJm8sUAAAAAAMeVu9_0crjuplytePx61d1vOcy";
+    //       var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
+    //       request(verificationUrl,function(error,response,body) {
+    //     body = JSON.parse(body);
+    //     // Success will be true or false depending upon captcha validation.
+    //     if(body.success !== undefined && !body.success) {
+    //       return res.json({"responseCode" : 1,"responseDesc" : "Failed captcha verification"});
+    //     }
+    //     res.json({"responseCode" : 0,"responseDesc" : "Sucess"});
+    //     next();
+    //   });
+    
+
     var errors = validationResult(req).array();
     if(errors.length > 0){
         req.session.errors = errors;
@@ -140,6 +160,24 @@ router.get('/login',(req,res)=>{
 })
 
 router.post('/login',async(req,res)=>{
+
+//     if(req.body['g-recaptcha-response'] === undefined || req.body['g-recaptcha-response'] === '' || req.body['g-recaptcha-response'] === null) {
+//         return res.json({"responseCode" : 1,"responseDesc" : "Please select captcha"});
+//       }
+
+//       var secretKey = "6LcJm8sUAAAAAAMeVu9_0crjuplytePx61d1vOcy";
+//       var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
+//       request(verificationUrl,function(error,response,body) {
+//     body = JSON.parse(body);
+//     // Success will be true or false depending upon captcha validation.
+//     if(body.success !== undefined && !body.success) {
+//       return res.json({"responseCode" : 1,"responseDesc" : "Failed captcha verification"});
+//     }
+//     res.json({"responseCode" : 0,"responseDesc" : "Sucess"});
+//     next();
+//   });
+
+  // If successful
     console.log(req.body);
     const user = await userModel.singleByUsername(req.body.username);
     
@@ -185,7 +223,7 @@ router.post('/login',async(req,res)=>{
 })
 
 router.get('/loginAdmin',(req,res)=>{
-    res.render('loginAdmin',{
+    res.render('login',{
         layout: false,
         title:"Log In",
         style: "style.css",
@@ -236,7 +274,7 @@ router.post('/logout',(req,res)=>{
     req.session.isAuthenticated = false;
     req.session.isAuthenticatedAdmin=false;
     req.session.authUser = null;
-    res.redirect(req.headers.referer);
+    res.redirect('/');
     
 });
 
