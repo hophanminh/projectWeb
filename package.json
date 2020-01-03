@@ -35,7 +35,9 @@
     "nodemailer": "^6.4.2",
     "nodemon": "^2.0.2",
     "numeral": "^2.0.6",
+    "path": "^0.12.7",
     "request": "^2.88.0",
-    "require": "^2.4.20"
+    "require": "^2.4.20",
+    "util": "^0.12.1"
   }
 }

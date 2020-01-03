@@ -88,7 +88,17 @@
 
 </script>
 <script>
-
+function showPic(x){
+  var list = [
+            `./img/${this.product.ItemID}/1.jpg`,
+            `./img/${this.product.ItemID}/2.jpg`,
+            `./img/${this.product.ItemID}/3.jpg`,
+            `./img/${this.product.ItemID}/4.jpg`,
+            `./img/${this.product.ItemID}/5.jpg`,
+            `./img/${this.product.ItemID}/6.jpg`,
+              ]
+  document.getElementById("show").src=list[x];
+}
 </script>
 {{/section}}
 <div class="container">
@@ -120,11 +130,11 @@
 
                                 <div class="col-4">
                                     <a href="#" onclick="showPic(1)"><img class="card-img-top"
-                                            src="/img/{{this.product.ItemID}}/3.jpg" alt="Card image cap"></a>
+                                            src="/img/{{this.product.ItemID}}/3.jpg" alt="pic 1"></a>
                                 </div>
                                 <div class="col-4">
                                     <a href="#" onclick="showPic(2)"><img class="card-img-top"
-                                            src="/img/{{this.product.ItemID}}/4.jpg" alt="Card image cap"></a>
+                                            src="/img/{{this.product.ItemID}}/4.jpg" alt="pic 2"></a>
                                 </div>
                             </div>
                         </div>
@@ -135,18 +145,18 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <a href="#" onclick="showPic(3)"><img class="card-img-top"
-                                        src="/img/{{this.product.ItemID}}/5.jpg" alt="Card image cap"></a>
+                                        src="/img/{{this.product.ItemID}}/5.jpg" alt="pic 3"></a>
                                 </div>
 
                                 <div class="col-md-4">
                                     <a href="#" onclick="showPic(4)"><img class="card-img-top"
-                                        src="/img/{{this.product.ItemID}}/6.jpg" alt="Card image cap"></a>
+                                        src="/img/{{this.product.ItemID}}/6.jpg" alt="pic 4"></a>
                                 </div>
 
                                 <div class="col-md-4">
                                     <a href="#" onclick="showPic(5)">
                                         <img class="card-img-top" 
-                                        src="/img/{{this.product.ItemID}}/7.jpg" alt="Card image cap"></a>
+                                        src="/img/{{this.product.ItemID}}/7.jpg" alt="pic 5"></a>
                                 </div>
                             </div>
                         </div>

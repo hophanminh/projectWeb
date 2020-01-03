@@ -2,14 +2,15 @@ const express = require('express');
 const moment = require('moment');
 const multer = require('multer');
 const fs = require('fs.extra');
-
+const path = require('path');
 const productModel = require('../../models/product.model');
 const categoryModel = require('../../models/categories.model');
 const userModal = require('../../models/user.model');
 const config = require('../../config/default.json');
-
+const util = require('util');
 const router = express.Router();
 const time = Date.now();
+const rename = util.promisify(fs.rename);
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -39,8 +40,8 @@ router.get('/addItem', async (req, res) => {
     })
 })
 
-// router.post('/addItem/:UserID',upload.single('img'),async (req,res)=>{    
-router.post('/addItem/:UserID', async (req, res) => {
+router.post('/addItem/:UserID',upload.array('img',7),async (req,res)=>{    
+// router.post('/addItem/:UserID', async (req, res) => {
     console.log(req.body);
     let startDate = new Date();
     Date.prototype.addDays = function (days) {
@@ -72,6 +73,17 @@ router.post('/addItem/:UserID', async (req, res) => {
     console.log(entity);
     const result = await productModel.add(entity);
     console.log(result);
+    console.log('file');
+    console.log(req.files);
+    await rename(req.files[0].destination,`./public/img/${result.insertId}`);
+
+    var productImg = [];
+    for(i=0;i<req.files.length;i++){
+        var newURL = `./public/img/${result.insertId}/${i+1}` + path.extname(req.files[i].originalname);
+        await rename(`./public/img/${result.insertId}/${req.files[i].filename}`,newURL);
+        productImg.push(newURL.replace('./public/',''));
+    }
+    //await productModel.addImg(result.insertID,productImg);
     res.redirect('/seller/addItem');
 })
 

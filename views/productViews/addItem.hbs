@@ -69,7 +69,7 @@
     <div class="h1 text-center">
         Add item
     </div>
-    <form method="POST" class="needs-validation" novalidate>
+    <form method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
         <div class="form-row">
             <div class="col mb-3">
                 <label for="Title">Title</label>
@@ -137,6 +137,18 @@
             <label for="txtFullDes">Full description</label> <br>
             <textarea class="form-control" id="txtFullDes" name="FullDes" placeholder="Full description"
                 required></textarea>
+        </div>
+        <div class="card">
+            <h4 class="card-header">
+                Upload
+            </h4>
+            <div class="card-body">
+                <div class="form-group">
+                    <div class="file-loading">
+                        <input id="img" name="img" type="file" multiple>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="form-group mb-3">
             <div class="form-check">
