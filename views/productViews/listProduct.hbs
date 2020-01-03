@@ -65,13 +65,20 @@
                     {{#each this.products}}
                     <div class="col-sm-4 mb-3">
                         <div class="card h-100">
+                            {{#if holdPrice}}
+                            <div class="card-header bg-success">
+                                <p class="h5 text-warning">
+                                    Holding Price
+                                </p>
+                            </div>
+                            {{/if}}
                             <img src="/img/{{ItemID}}/1.jpg" alt="{{ProName}}" title="{{ProName}}" class="card-img-top">
                             <div class="card-body">
                                 <h6 class="card-title">{{Title}}</h6>
                                 <h5 class="card-title text-danger">{{CurrentBidAmount}}</h5>
                                 <p class="card-text">{{{TinyDes}}}</p>
                                 <p>Seller: {{mask SellerName}}</p>
-                                <a href="#">Bidder with highest price: {{ mask BidderName}}</a>
+                                Bidder with highest price: <a href="#">{{mask BidderName}}</a>
                                 <p>Start Date: {{AuctionStart}}</p>
                                 <span class="d-flex justify-content-end" id="countdown">
                                     <div class="card bg-danger text-white">
@@ -96,7 +103,7 @@
                                     Later
                                 </a>
                                 {{#if_equal SellerID authUser.UserID}}
-                                <a class="btn btn-outline-danger d-flex align-items-center" role="button" href="/seller/modifyItem/{{this.product.ItemID}}">
+                                <a class="btn btn-outline-danger d-flex align-items-center" role="button" href="/seller/modifyItem/{{ItemID}}">
                                     <i class="fa fa-heart" aria-hidden="true"></i>
                                     Update
                                 </a> 

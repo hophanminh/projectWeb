@@ -45,8 +45,15 @@ module.exports={
         console.log(rows);
         return rows;
     },
+    validGetIDByUsername: async (value,id) => {
+        const rows=  await db.load(`select * from user where Username = '${value}' and UserID=${id}`);
+        console.log(rows);
+        return rows;
+    },
     getIDByEmail: value => db.load(`select * from user where Email = '${value}'`),
+    validGetIDByEmail: (value,id) => db.load(`select * from user where Email = '${value}' and UserID = ${id}`),
     getIDByPhone: value => db.load(`select * from user where PhoneNo = '${value}'`),
+    validGetIDByPhone: (value,id) => db.load(`select * from user where PhoneNo = '${value}' and UserID = ${id}`),
     modifyProfile: entity =>{
         const condition = {UserID: entity.UserID};
         delete entity.UserID;
@@ -54,20 +61,39 @@ module.exports={
     },
     countSellList: async id => {
         const sql = `
+        SELECT count(*) as total 
+        from item i join user seller on i.SellerID = seller.UserID
+        left join user bidder on i.BidderID = bidder.UserID
+        where i.SellerID = ${id} and Status='No'
+        `
+        const rows = await db.load(sql);
+        return rows[0].total;
+    },
+    countSoldList: async id => {
+        const sql = `
         SELECT count(*) as total
         from item i join user seller join user bidder
         on i.SellerID = seller.UserID and i.BidderID = bidder.UserID
-        where i.SellerID = ${id}
-        `
+        where i.SellerID = ${id} and Status = 'Yes'`
         const rows = await db.load(sql);
         return rows[0].total;
     },
     sellList: (id, offset) => {
         const sql = `
         SELECT i.*, seller.Fname SellerName, bidder.Fname as BidderName 
+        from item i join user seller on i.SellerID = seller.UserID
+        left join user bidder on i.BidderID = bidder.UserID
+        where i.SellerID = ${id} and Status='No'
+        limit ${config.paginate.limit} offset ${offset}
+        `
+        return db.load(sql);
+    },
+    soldList: (id, offset) => {
+        const sql = `
+        SELECT i.*, seller.Fname SellerName, bidder.Fname as BidderName 
         from item i join user seller join user bidder
         on i.SellerID = seller.UserID and i.BidderID = bidder.UserID
-        where i.SellerID = ${id}
+        where i.SellerID = ${id} and Status='Yes'
         limit ${config.paginate.limit} offset ${offset}
         `
         return db.load(sql);
@@ -86,5 +112,9 @@ module.exports={
         `
         return db.load(sql);
     },
+    sellerRequired: id =>{
+        const sql=`update user set request = 1 where UserID = ${id}`;
+        return db.load(sql);
+    }
     
 }

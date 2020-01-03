@@ -71,7 +71,7 @@ module.exports={
     },
     countBidding: async UserID => {
         const sql = `
-        select count(*) as total
+        select count(distinct b.ItemID) as total
         from bids b join user u join user seller join user bidder join item i
         on b.BidderID = u.UserID and b.ItemID = i.ItemID and i.SellerID = seller.UserID and i.BidderID = bidder.UserID
         where WinStatus = 'No' and u.UserID = ${UserID}
@@ -93,7 +93,7 @@ module.exports={
     },
     countWon: async id =>{
         const sql = `
-        select count(*) as total
+        select count(distinct b.ItemID) as total
         from bids b join user u join user seller join user bidder join item i
         on b.BidderID = u.UserID and b.ItemID = i.ItemID and i.SellerID = seller.UserID and i.BidderID = bidder.UserID
         where WinStatus = 'Yes' and u.UserID = ${id}

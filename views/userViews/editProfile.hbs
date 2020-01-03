@@ -19,13 +19,6 @@
 
 <div class="container">
     <div id="logreg-forms">
-        {{#if errors}}
-        <p class="alert alert-danger">
-            {{#each errors}}
-            {{this.msg}} <br>
-            {{/each}}
-        </p>
-        {{/if}}
         <div class="d-flex justify-content-center">
             <p class="h1">Please fill information</p>
         </div>
@@ -34,7 +27,7 @@
             <div class="form-row mb-2">
                 <div class="col">
                     <label for="Username">User name</label>
-                    <input class="form-control" type="text" id="Username" name="Username" value='{{this.user.Username}}'>
+                    <input class="form-control" type="text" id="Username" name="Username" value='{{this.user.Username}}' readonly>
                 </div>
             </div>
             <div class="form-row">
@@ -42,7 +35,7 @@
                     <label for="Email">Email</label>
                     <div class="input-group">
                         <input type="text" class="form-control" id="Email" name="Email" placeholder="Email"
-                            value='{{this.user.Email}}'>
+                            value='{{this.user.Email}}' readonly>
                         <div class="input-group-prepend">
                             <div class="input-group-text">@gmail.com</div>
                         </div>
@@ -51,7 +44,7 @@
                 <div class="form-group col-md-6">
                     <label for="PhoneNo">Phone number</label>
                     <input type="text" class="form-control" id="PhoneNo" name="PhoneNo" placeholder="739-247-6882"
-                        value='{{this.user.PhoneNo}}'>
+                        value='{{this.user.PhoneNo}}' readonly>
                 </div>
             </div>
             <div class="h5">Information</div>

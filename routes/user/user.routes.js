@@ -10,6 +10,8 @@ const router = express.Router();
 
 router.get('/',async(req,res)=>{
     const rows = await userModal.getIDByUsername(res.locals.authUser.Username);
+    const feedback = await userModal.getFeedback(res.locals.authUser.UserID);
+
     console.log(rows);
 
     const dob = moment(rows[0].DoB,'YYYY-MM-DD').format('DD/MM/YYYY');
@@ -17,6 +19,7 @@ router.get('/',async(req,res)=>{
 
     res.render('userViews/Profile',{
         user: rows[0],
+        feedback,
         empty: rows.length === 0,
         title: 'Profile',
         style: 'style.css',
@@ -42,50 +45,21 @@ router.get('/:UserID/edit',async(req,res)=>{
     })
 })
 
-router.post('/:UserID/edit',[
-    check('Username','Username is already exist')
-    .not().isEmpty()
-    .isLength({min: 6}).withMessage("Username has at least 6 characters")
-    .custom(async value =>{
-        return id = await userModel.getIDByUsername(value).then(result =>{
-            if(result.length>0){
-                return Promise.reject('Username is already exist');
-            }
-        })
-    }),
-    check('Email','email is already exist')
-    .isEmail()
-    .normalizeEmail()
-    .custom(async value =>{
-        return email = await userModel.getIDByEmail(value).then(result => {
-            if(result.length > 0){
-                return Promise.reject('Email is already exist');
-            }
-        })
-    }),
-    ],async(req,res)=>{
-
-    var errors = validationResult(req).array();
-
-    if(errors.length > 0){
-        req.session.errors = errors;
+router.post('/:UserID/edit',async(req,res)=>{
+        const dob = moment(req.body.dob,'DD/MM/YYYY').format('YYYY-MM-DD');
+    
+        const entity = req.body;
+        entity.DoB = dob;
+        entity.UserID = req.params.UserID;
+        console.log(entity);
+    
+        delete entity.dob;
+        
+        console.log('profile edit');
+        console.log(entity);
+        const result = await userModal.modifyProfile(entity);
+        
         res.redirect('/user');
-    }
-
-    const dob = moment(req.body.dob,'DD/MM/YYYY').format('YYYY-MM-DD');
-    
-    const entity = req.body;
-    entity.DoB = dob;
-    entity.UserID = req.params.UserID;
-    console.log(entity);
-
-    delete entity.dob;
-    
-    console.log('profile edit');
-    console.log(entity);
-    const result = await userModal.modifyProfile(entity);
-    
-    res.redirect('/');
 })
 
 router.get('/watchList',async(req,res)=>{
@@ -103,6 +77,12 @@ router.get('/watchList',async(req,res)=>{
     console.log(rows);
     console.log(total);
 
+    for(i=0;i<rows.length;i++){
+        if(rows[i].BidderID == UserID)
+            rows[i].holdPrice = true;
+        else rows[i].holdPrice = false;
+    }
+
     // const [total, rows] = await Promise.all([
     //     productModel.countWatchList(UserID),
     //     productModel.watchList(UserID),
@@ -111,9 +91,9 @@ router.get('/watchList',async(req,res)=>{
     let nPage = Math.floor(total/limit);
     if(total%limit > 0) nPage++;
 
-    const page_number = [];
+    const page_numbers = [];
     for(i=1;i<=nPage;i++){
-        page_number.push({
+        page_numbers.push({
             value: i,
             current: i=== +page,
         })
@@ -125,10 +105,10 @@ router.get('/watchList',async(req,res)=>{
     let page_next = +page +1;
     if(page_next > nPage) page_next = nPage;
 
-    res.render('userViews/watchList',{
+    res.render('productViews/listProduct',{
         products: rows,
         empty: rows.length === 0,
-        page_number,
+        page_numbers,
         page_prev,
         page_next,
         min: +page ===1,
@@ -224,9 +204,9 @@ router.get('/bidding',async(req,res)=>{
     let nPage = Math.floor(total/limit);
     if(total%limit > 0) nPage++;
 
-    const page_number = [];
+    const page_numbers = [];
     for(i=1;i<=nPage;i++){
-        page_number.push({
+        page_numbers.push({
             value: i,
             current: i=== +page,
         })
@@ -240,10 +220,10 @@ router.get('/bidding',async(req,res)=>{
 
 
 
-    res.render('userViews/biddingList',{
+    res.render('productViews/listProduct',{
         products: rows,
         empty: rows.length === 0,
-        page_number,
+        page_numbers,
         page_prev,
         page_next,
         min: +page ===1,
@@ -276,9 +256,9 @@ router.get('/wonList',async(req,res)=>{
     let nPage = Math.floor(total/limit);
     if(total%limit > 0) nPage++;
 
-    const page_number = [];
+    const page_numbers = [];
     for(i=1;i<=nPage;i++){
-        page_number.push({
+        page_numbers.push({
             value: i,
             current: i=== +page,
         })
@@ -290,10 +270,10 @@ router.get('/wonList',async(req,res)=>{
     let page_next = +page +1;
     if(page_next > nPage) page_next = nPage;
 
-    res.render('userViews/wonList',{
+    res.render('productViews/listProduct',{
         products: rows,
         empty: rows.length === 0,
-        page_number,
+        page_numbers,
         page_prev,
         page_next,
         min: +page ===1,
@@ -321,6 +301,11 @@ router.post('/:UserID/review/:id',async(req,res)=>{
     const result = await userModal.addFeedBack(entity);
     console.log(result);
     res.redirect('/');
+})
+
+router.post('/sellerRequired/:UserID',async(req,res)=>{
+    const result =await userModal.sellerRequired(req.params.UserID);
+    res.redirect('/user');
 })
 
 router.get('/err', (req, res) => {
