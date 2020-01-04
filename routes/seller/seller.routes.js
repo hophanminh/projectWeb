@@ -144,7 +144,7 @@ router.get('/sellList',async (req,res)=>{
     let page_next = +page +1;
     if(page_next > nPage) page_next = nPage;
 
-    res.render('productViews/listProduct',{
+    res.render('userViews/sellList',{
         products: rows,
         empty: rows.length === 0,
         page_numbers,

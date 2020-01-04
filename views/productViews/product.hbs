@@ -2,37 +2,37 @@
 {{/section}}
 {{#section 'js'}}
 <script>// Update the count down every 1 second
-    //var countDownDate = moment(this.product.AuctionEnd,'YYYY-MM-DD').format('DD/MM/YYYY');
+    timedown({{this.product.AuctionEnd}},'time')
+   function timedown(ti,id){
+    // Set the date we're counting down to
+    var countDownDate = new Date(ti).getTime();
 
-    var countDownDate = new Date();
-    var x = setInterval(function () {
+    // Update the count down every 1 second
+    var x = setInterval(function() {
 
-        // Get today's date and time
-        var now = new Date().getTime();
-        //now = moment(now,'YYYY-MM-DD').format('DD/MM/YYYY');// Find the distance between now and the count down date
-        var distance = countDownDate - now;
-
-        // Time calculations for days, hours, minutes and seconds
-        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        int id = this.products.ItemID;
-        // Display the result in the element with id="demo"
-        document.getElementById(`day`).innerHTML = days + " day";
-        document.getElementById(`hour`).innerHTML = hours + " hour";
-        document.getElementById(`min`).innerHTML = minutes + " min";
-        document.getElementById(`sec`).innerHTML = seconds + " sec";
-
-        // If the count down is finished, write some text
-        if (distance < 0) {
-            clearInterval(x);
-            document.getElementById("demo").innerHTML = "EXPIRED";
-        }
-    }, 1000);
-
-
+    // Get todays date and time
+    var now = new Date().getTime();
+    
+    // Find the distance between now an the count down date
+    var distance = countDownDate - now;
+    
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+    // Output the result in an element with id="demo"
+    document.getElementById(id).innerHTML = (days!=0 ? days + "d " : '') + (hours!= 0 ? hours + "h " : '')
+    + (minutes != 0 ? minutes + "m " : '') + seconds + "s ";
+    
+    // If the count down is over, write some text 
+    if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("time").innerHTML = "EXPIRED";
+    }
+}, 1000);
+}
 </script>
 
 <script>
@@ -192,17 +192,7 @@ function showPic(x){
                     <script>
 
                     </script>
-                    <span class="d-flex justify-content-end">
-                        <div class="card bg-danger text-white">
-                            <h3 class="card-title text-center">
-                                <div class="d-flex flex-wrap justify-content-center mt-2">
-                                    <a><span class="badge day" id="day"></span></a> :
-                                    <a><span class="badge hours" id="hour"></span></a> :
-                                    <a><span class="badge min" id="min"></span></a> :
-                                    <a><span class="badge sec" id="sec"></span></a>
-                                </div>
-                            </h3>
-                        </div>
+                    <span class="d-flex justify-content-end" id="time">
                     </span>
 
                     <p class="card-text mb-3">

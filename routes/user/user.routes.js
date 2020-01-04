@@ -105,13 +105,13 @@ router.get('/watchList',async(req,res)=>{
     let page_next = +page +1;
     if(page_next > nPage) page_next = nPage;
 
-    res.render('productViews/listProduct',{
+    res.render('userViews/watchList',{
         products: rows,
         empty: rows.length === 0,
         page_numbers,
         page_prev,
         page_next,
-        min: +page ===1,
+        min: +page === 1,
         max: +page === nPage,
         title: 'Watch list',
         style: 'style.css',
@@ -140,6 +140,7 @@ router.post('/watchList/:ItemID',async (req,res)=>{
     console.log(result);
     res.redirect(req.headers.referer);
 })
+
 router.post('/watchList/:ItemID/delete',async (req,res)=>{
     console.log('ID: ');
     console.log(req.params.ItemID);

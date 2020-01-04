@@ -13,15 +13,22 @@
                     {{#each this.products}}
                     <div class="col-sm-4 mb-3">
                         <div class="card h-100">
+                            {{#if holdPrice}}
+                            <div class="card-header bg-success">
+                                <p class="h5 text-warning">
+                                    Holding Price
+                                </p>
+                            </div>
+                            {{/if}}
                             <img src="/img/{{ItemID}}/1.jpg" alt="{{ProName}}" title="{{ProName}}" class="card-img-top">
                             <div class="card-body">
                                 <h6 class="card-title">{{Title}}</h6>
                                 <h5 class="card-title text-danger">{{CurrentBidAmount}}</h5>
                                 <p class="card-text">{{{TinyDes}}}</p>
-                                <p>Seller: {{SellerName}}</p>
-                                <a href="#">Bidder with highest price: {{BidderName}}</a>
+                                <p>Seller: {{mask SellerName}}</p>
+                                <a href="#">Bidder with highest price: {{mask BidderName}}</a>
                                 <p>Start Date: {{AuctionStart}}</p>
-                                <span class="d-flex justify-content-end" id="countdown">
+                                <span class="d-flex justify-content-end" id='countdown{{ItemID}}'>
                                     <div class="card bg-danger text-white">
                                         <h5 class="card-title text-center">
                                             <div class="d-flex flex-wrap justify-content-center mt-2">
@@ -59,7 +66,7 @@
                     <li class="page-item"><a class="page-link" href="?page={{page_prev}}">Previous</a></li>
                     {{/if}}
 
-                    {{#each this.page_number}}
+                    {{#each this.page_numbers}}
                     {{#if current}}
                     <li class="page-item active">
                         <a class="page-link" href="?page={{value}}">{{value}}</a>
