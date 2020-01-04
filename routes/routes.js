@@ -6,7 +6,7 @@ const userModel = require('../models/user.model');
 const adminModel = require('../models/admin.model');
 const productModel = require('../models/product.model');
 const router = express.Router();
-
+const config = require('../config/default.json');
 
 router.get('/',(req,res)=>{
     if(res.locals.isAuthenticatedAdmin == true){
@@ -23,6 +23,47 @@ router.get('/',(req,res)=>{
         });
     }
         
+})
+
+router.post('/search',async (req,res)=>{
+    const limit = config.paginate.limit;
+    const page = req.query.page || 1;
+    const offset = (page-1)*limit;
+    
+    const total = await productModel.countSearchList(req.body.search);
+    const rows = await productModel.searchList(req.body.search,offset);
+
+    console.log(rows);
+    console.log(total);
+
+    let nPage = Math.floor(total/limit);
+    if(total%limit > 0) nPage++;
+
+    const page_numbers = [];
+    for(i=1;i<=nPage;i++){
+        page_numbers.push({
+            value: i,
+            current: i=== +page,
+        })
+    };
+
+    let page_prev = +page-1;
+    if(page_prev < 1) page_prev = 1;
+
+    let page_next = +page +1;
+    if(page_next > nPage) page_next = nPage;
+
+    res.render('productViews/listProduct',{
+        products: rows,
+        empty: rows.length === 0,
+        page_numbers,
+        page_prev,
+        page_next,
+        min: +page === 1,
+        max: +page === nPage,
+        title: 'Search List',
+        style: 'style.css',
+    })
 })
 
 router.get('/FAQ',(req,res)=>{

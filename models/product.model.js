@@ -122,6 +122,34 @@ module.exports={
         delete entity.ItemID;
         return db.modify('item',entity,condition)
     },
+    countSearchList: async (str) => {
+        const sql = `
+        SELECT count(*) as total
+        FROM item i
+        join user seller join user bidder
+        on seller.UserID = i.ItemID and bidder.UserID = i.BidderID
+        WHERE 
+        MATCH(Title, FullDes, TinyDes)
+        AGAINST("${str}" IN BOOLEAN MODE)
+        `
+        const rows = await db.load(sql);
+        console.log('Count Search:');
+        console.log(rows);
+        return rows[0].total;
+    },
+    searchList: (str,offset) => {
+        const sql = `
+        SELECT *, seller.Fname as SellerName, bidder.Fname as BidderName
+        FROM item i
+        join user seller join user bidder
+        on seller.UserID = i.ItemID and bidder.UserID = i.BidderID
+        WHERE 
+        MATCH(Title, FullDes, TinyDes)
+        AGAINST("${str}" IN BOOLEAN MODE)
+        limit ${config.paginate.limit} offset ${offset}
+        `
+        return db.load(sql);
+    }
 }
 
 
