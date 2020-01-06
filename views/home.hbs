@@ -54,14 +54,19 @@
 
             <div class="container text-center my-3">
                 <h2>Highest Bid Price</h2>
-                <div class="row mx-auto my-auto">
+                {{#if this.emptyHeight}}
+                <div>
+                    No data found
+                </div>
+                {{else}}
+                <div class="row mx-auto my-auto h-100">
                     <div id="highestBidPrice" class="carousel slide w-100 " data-ride="carousel">
                         <div class="carousel-inner w-100 vv-3" role="listbox">
                             {{#each this.highestPrice}}
                             <div class="carousel-item {{#if isActive}} active {{/if}}">
                                 <div class="col-4">
                                     <img src="/img/{{ItemID}}/1.jpg" alt="{{ProName}}" title="{{ProName}}" class="card-img-top">
-                            <div class="card-body">
+                                <div class="card-body">
                                 <h6 class="card-title">{{Title}}</h6>
                                 <h5 class="card-title text-danger">{{CurrentBidAmount}}</h5>
                                 <p class="card-text">{{{TinyDes}}}</p>
@@ -69,7 +74,8 @@
                                 <a href="/guess/{{SellerID}}"> {{mask SellerName}} </a>
                                 </p>
                                 Bidder with highest price: <a href="/guess/{{BidderID}}">{{mask BidderName}}</a>
-                                <p>Start Date: {{AuctionStart}}</p>
+                                <p>Start Date: {{formatDate AuctionStart}}</p>
+                                <p>End Date: {{formatDate AuctionEnd}}</p>
                                 <span class="d-flex justify-content-end" id="countdown">
                                     <div class="card bg-danger text-white">
                                         <h5 class="card-title text-center">
@@ -82,6 +88,23 @@
                                         </h5>
                                     </div>
                                 </span>
+                            </div>
+                            <div class="card-footer text-center">
+                                <a href="/product/{{ItemID}}" class="btn btn-outline-success" role="button">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                    Details
+                                </a>
+                                <a class="btn btn-outline-danger" role="button" href="javascript: $('#like').submit();">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                    Later
+                                </a>
+                                {{#if_equal SellerID authUser.UserID}}
+                                <a class="btn btn-outline-danger d-flex align-items-center" role="button" href="/seller/modifyItem/{{ItemID}}">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                    Update
+                                </a> 
+                                {{/if_equal}}    
+                                <form id="like" method ="POST" action="/user/watchList/{{ItemID}}"></form>
                             </div>
                                 </div>
                             </div>
@@ -97,8 +120,150 @@
                     </div>
                 </div>
             </div>
+                {{/if}}
+            </div>
+            <div class="container text-center my-3">
+                <h2>Near Expire</h2>
+                {{#if this.emptyExpire}}
+                <div>
+                    No data found
+                </div>
+                {{else}}
+                <div class="row mx-auto my-auto">
+                    <div id="topExpire" class="carousel slide w-100 " data-ride="carousel">
+                        <div class="carousel-inner w-100 vv-3" role="listbox">
+                            {{#each this.topExpire}}
+                            <div class="carousel-item {{#if isActive}} active {{/if}}">
+                                <div class="col-4">
+                                    <img src="/img/{{ItemID}}/1.jpg" alt="{{ProName}}" title="{{ProName}}" class="card-img-top">
+                            <div class="card-body">
+                                <h6 class="card-title">{{Title}}</h6>
+                                <h5 class="card-title text-danger">{{CurrentBidAmount}}</h5>
+                                <p class="card-text">{{{TinyDes}}}</p>
+                                <p>Seller:
+                                <a href="/guess/{{SellerID}}"> {{mask SellerName}} </a>
+                                </p>
+                                Bidder with highest price: <a href="/guess/{{BidderID}}">{{mask BidderName}}</a>
+                                <p>Start Date: {{formatDate AuctionStart}}</p>
+                                <p>End Date: {{formatDate AuctionEnd}}</p>
+                                <span class="d-flex justify-content-end" id="countdown">
+                                    <div class="card bg-danger text-white">
+                                        <h5 class="card-title text-center">
+                                            <div class="d-flex flex-wrap justify-content-center mt-2">
+                                                <a><span class="badge day" id="day"></span></a> :
+                                                <a><span class="badge hours" id="hour"></span></a> :
+                                                <a><span class="badge min" id="min"></span></a> :
+                                                <a><span class="badge sec" id="sec"></span></a>
+                                            </div>
+                                        </h5>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="card-footer text-center">
+                                <a href="/product/{{ItemID}}" class="btn btn-outline-success" role="button">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                    Details
+                                </a>
+                                <a class="btn btn-outline-danger" role="button" href="javascript: $('#like').submit();">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                    Later
+                                </a>
+                                {{#if_equal SellerID authUser.UserID}}
+                                <a class="btn btn-outline-danger d-flex align-items-center" role="button" href="/seller/modifyItem/{{ItemID}}">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                    Update
+                                </a> 
+                                {{/if_equal}}    
+                                <form id="like" method ="POST" action="/user/watchList/{{ItemID}}"></form>
+                            </div>
+                                </div>
+                            </div>
+                            {{/each}}
+                        <a class="carousel-control-prev" href="#topExpire" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#topExpire" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {{/if}}
         </div>
+        <div class="container text-center my-3">
+                <h2>Most bid</h2>
+                {{#if this.emptyMostBid}}
+                <div>
+                    No data found
+                </div>
+                {{else}}
+                <div class="row mx-auto my-auto">
+                    <div id="topMostBid" class="carousel slide w-100 " data-ride="carousel">
+                        <div class="carousel-inner w-100 vv-3" role="listbox">
+                            {{#each this.mostBid}}
+                            <div class="carousel-item {{#if isActive}} active {{/if}}">
+                                <div class="col-4">
+                                    <img src="/img/{{ItemID}}/1.jpg" alt="{{ProName}}" title="{{ProName}}" class="card-img-top">
+                            <div class="card-body">
+                                <h6 class="card-title">{{Title}}</h6>
+                                <h5 class="card-title text-danger">{{CurrentBidAmount}}</h5>
+                                <p class="card-text">{{{TinyDes}}}</p>
+                                <p>Seller:
+                                <a href="/guess/{{SellerID}}"> {{mask SellerName}} </a>
+                                </p>
+                                Bidder with highest price: <a href="/guess/{{BidderID}}">{{mask BidderName}}</a>
+                                <p>Start Date: {{formatDate AuctionStart}}</p>
+                                <p>End Date: {{formatDate AuctionEnd}}</p>
+                                <span class="d-flex justify-content-end" id="countdown">
+                                    <div class="card bg-danger text-white">
+                                        <h5 class="card-title text-center">
+                                            <div class="d-flex flex-wrap justify-content-center mt-2">
+                                                <a><span class="badge day" id="day"></span></a> :
+                                                <a><span class="badge hours" id="hour"></span></a> :
+                                                <a><span class="badge min" id="min"></span></a> :
+                                                <a><span class="badge sec" id="sec"></span></a>
+                                            </div>
+                                        </h5>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="card-footer text-center">
+                                <a href="/product/{{ItemID}}" class="btn btn-outline-success" role="button">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                    Details
+                                </a>
+                                <a class="btn btn-outline-danger" role="button" href="javascript: $('#like').submit();">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                    Later
+                                </a>
+                                {{#if_equal SellerID authUser.UserID}}
+                                <a class="btn btn-outline-danger d-flex align-items-center" role="button" href="/seller/modifyItem/{{ItemID}}">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                    Update
+                                </a> 
+                                {{/if_equal}}    
+                                <form id="like" method ="POST" action="/user/watchList/{{ItemID}}"></form>
+                            </div>
+                                </div>
+                            </div>
+                            {{/each}}
+                        <a class="carousel-control-prev" href="#topMostBid" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#topMostBid" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {{/if}}
         <!-- Grid column -->
 
     </div>
+</div>
+</div>
 </div>

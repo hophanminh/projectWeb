@@ -13,8 +13,9 @@ router.get('/:ItemId',async (req,res)=>{
     const bid = await productModel.countBid(id);
     const history = await productModel.bidHistory(id);
 
-    start = moment(product[0].AuctionStart).format('LL');
-    product[0].AuctionStart = start;
+    const date = new Date(product[0].AuctionEnd);
+    const timeleft = moment(date - Date.now()).format('HH:mm:ss');
+
 
     for(i=0;i<history.length;i++){
         const time = moment(history[i].BidTime).format('LLL');
@@ -29,6 +30,7 @@ router.get('/:ItemId',async (req,res)=>{
         product: product[0],
         bid,
         history,
+        timeleft,
         empty: product.length === 0,
         title: 'Product',
         style: 'style.css',

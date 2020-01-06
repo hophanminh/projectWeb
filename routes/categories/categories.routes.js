@@ -1,7 +1,7 @@
 const express = require('express');
 const config = require('../../config/default.json');
 const categoryModal = require('../../models/categories.model');
-
+const moment = require('moment')
 const router = express.Router();
 
 router.get('/',async(req,res)=>{
@@ -33,6 +33,12 @@ router.get('/:CatID/product',async(req,res)=>{
         categoryModal.countAllByCat(CatID),
         categoryModal.pageAllByCat(CatID,offset)
     ])
+
+    for(i=0;i<rows.length;i++){
+        const date = new Date(rows[i].AuctionEnd);
+        let timeleft = moment(date - Date.now()).format('HH:mm:ss');
+        rows[i].time = timeleft;
+    }
 
     let nPage = Math.floor(total/limit);
     if (total%limit > 0) nPage++;

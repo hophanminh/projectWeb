@@ -58,7 +58,7 @@ module.exports={
         const sql = `
         SELECT distinct i.ItemID, i.*, seller.Fname as SellerName, bidder.Fname as BidderName  FROM watchlist w join item i join user u join user seller join user bidder 
         on w.ItemID = i.ItemID and w.UserID = u.UserID and i.SellerID = seller.UserID and i.BidderID = bidder.UserID
-        where u.UserID = ${UserID}
+        where u.UserID = ${UserID} and i.Status = 'No'
         limit ${config.paginate.limit} offset ${offset}
         `
         const rows=db.load(sql);
@@ -162,13 +162,28 @@ module.exports={
         `
         return db.load(sql);
     },
-    topMostBid: ()=>{
+    topExpire: ()=>{
         const sql = `
         SELECT i.*, seller.Fname as SellerName, bidder.Fname as BidderName
         from item i
         join user seller join user bidder
         on seller.UserID = i.SellerID and bidder.UserID = i.BidderID
-        order by (CurrentBidAmount) desc
+        where i.AuctionEnd > NOW()
+        order by i.AuctionEnd asc
+        limit ${config.topLimit.topLimit}
+        `
+        return db.load(sql);
+    },
+    topMostBid: ()=>{
+        const sql = `
+        SELECT i.*, seller.Fname as SellerName, bidder.Fname as BidderName, count(b.ItemID) as SoLuotBid
+        from item i
+        join user seller join user bidder
+        on seller.UserID = i.SellerID and bidder.UserID = i.BidderID
+        join bids b on b.ItemID = i.ItemID
+        where i.Status = 'No'
+        group by i.ItemID, i.Title
+        order by SoLuotBid desc
         limit ${config.topLimit.topLimit}
         `
         return db.load(sql);
@@ -176,7 +191,14 @@ module.exports={
     updateStatusDB: (id)=>{
         const sql=`update item set Status = 'Yes' where ItemID = ${id}`;
         return db.load(sql);
-    }
+    },
+    updateStatusBidDB: (id)=>{
+        const sql=`update bids set WinStatus = 'Yes' where ItemID = ${id}`;
+        return db.load(sql);
+    },
+    
+    
+
 }
 
 

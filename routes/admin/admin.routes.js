@@ -3,11 +3,11 @@ const moment = require('moment');
 const bcryptjs = require('bcryptjs');
 const adminModel = require('../../models/admin.model');
 const categoryModel = require('../../models/categories.model');
-
+const userModel = require('../../models/product.model');
 const router = express.Router();
 
 router.get('/', async(req,res)=>{
-    const [rowsSeller, rowsBidder, requestSeller, rowsCategory, numSeller, numBidder,numCategory, numRequest] = await Promise.all([
+    const [rowsSeller, rowsBidder, requestSeller, rowsCategory, numSeller, numBidder,numCategory, numRequest, countProductSell] = await Promise.all([
             adminModel.allSeller(),
             adminModel.allBidder(),
             adminModel.requestSeller(),
@@ -15,7 +15,7 @@ router.get('/', async(req,res)=>{
             adminModel.countSeller(),
             adminModel.countBidder(),
             categoryModel.countCategory(),
-            adminModel.countRequest(),       
+            adminModel.countRequest(),   
         ]
     )
 

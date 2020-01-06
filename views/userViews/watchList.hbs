@@ -29,7 +29,9 @@
                                 <a href="/guess/{{SellerID}}"> {{mask SellerName}} </a>
                                 </p>
                                 Bidder with highest price: <a href="/guess/{{BidderID}}">{{mask BidderName}}</a>
-                                <p>Start Date: {{AuctionStart}}</p>
+                                <p>Start Date: {{formatDate AuctionStart}}</p>
+                                <p>End Date: {{formatDate AuctionEnd}}</p>
+                                <p>Time left: {{time}}</p>
                                 <span class="d-flex justify-content-end" id='countdown{{ItemID}}'>
                                     <div class="card bg-danger text-white">
                                         <h5 class="card-title text-center">
@@ -48,11 +50,11 @@
                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                     Details
                                 </a>
-                                <a class="btn btn-outline-danger" role="button" href="javascript: $('#formDelete').submit();">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                    Delete
-                                </a>
-                                <form id="formDelete" action="/user/watchList/{{ItemID}}/delete" method="POST"></form>
+                                <form id="like" method ="POST">
+                                <button class='btn btn-outline-danger mt-1' formaction="/user/watchList/{{ItemID}}/delete">
+                                <i class="fa fa-trash" aria-hidden="true">Delete</i>
+                                </button>
+                                </form>
                             </div>
                         </div>
                     </div>

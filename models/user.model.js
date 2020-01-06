@@ -115,6 +115,15 @@ module.exports={
     sellerRequired: id =>{
         const sql=`update user set request = 1 where UserID = ${id}`;
         return db.load(sql);
-    }
-    
+    }, 
+    countProductSell: async(id) =>{
+        const sql = `
+        SELECT count(*) as total 
+        from item i join user seller on i.SellerID = seller.UserID
+        left join user bidder on i.BidderID = bidder.UserID
+        where i.SellerID = ${id}
+        `
+        const rows = await db.load(sql);
+        return rows[0].total;
+    },
 }

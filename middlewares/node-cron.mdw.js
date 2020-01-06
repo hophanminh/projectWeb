@@ -8,11 +8,12 @@ module.exports = function(app){
     new cron.schedule('*/5 * * * * *', async() => {
         const  rows = await productModal.all();
         for(i=0;i<rows.length;i++){
-            if(rows[i].AuctionEnd < Date.now() && rows[i].Status != 'Yes'){
+            if(rows[i].AuctionEnd < Date.now()&& rows[i].Status != 'Yes'){
                 console.log('update' + rows[i].ItemID);
                 let result = await productModal.updateStatusDB(rows[i].ItemID);
+                let result2 = await productModal.updateStatusBidDB(rows[i].ItemID);
             }
         }
-        console.log('running a task every second');
+        console.log('running a task every 5 seconds');
       })
 }

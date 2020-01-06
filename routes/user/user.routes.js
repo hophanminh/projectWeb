@@ -66,13 +66,12 @@ router.get('/watchList',async(req,res)=>{
 
     const UserID = res.locals.authUser.UserID;
 
-    
     const limit = config.paginate.limit;
     const page = req.query.page || 1;
     const offset = (page-1)*limit;
     
     const total = await productModel.countWatchList(UserID);
-    const rows = await productModel.watchList(UserID,offset);
+    let rows = await productModel.watchList(UserID,offset);
 
     console.log(rows);
     console.log(total);
@@ -81,13 +80,12 @@ router.get('/watchList',async(req,res)=>{
         if(rows[i].BidderID == UserID)
             rows[i].holdPrice = true;
         else rows[i].holdPrice = false;
+        const date = new Date(rows[i].AuctionEnd);
+        let timeleft = moment(date - Date.now()).format('HH:mm:ss');
+        rows[i].time = timeleft;
     }
 
-    // const [total, rows] = await Promise.all([
-    //     productModel.countWatchList(UserID),
-    //     productModel.watchList(UserID),
-    // ]);
-
+   
     let nPage = Math.floor(total/limit);
     if(total%limit > 0) nPage++;
 
@@ -192,12 +190,10 @@ router.get('/bidding',async(req,res)=>{
         if(rows[i].BidderID == UserID)
             rows[i].holdPrice = true;
         else rows[i].holdPrice = false;
+        const date = new Date(rows[i].AuctionEnd);
+        let timeleft = moment(date - Date.now()).format('HH:mm:ss');
+        rows[i].time = timeleft;
     }
-
-    // const [total, rows] = await Promise.all([
-    //     productModel.countWatchList(UserID),
-    //     productModel.watchList(UserID),
-    // ]);
 
     console.log('here');
     console.log(rows);

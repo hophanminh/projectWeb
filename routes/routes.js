@@ -18,16 +18,52 @@ router.get('/',async(req,res)=>{
     }
     else {
         const highestPrice = await productModel.topHighestPrice();
+        const topExpire = await productModel.topExpire();
+        const mostBid = await productModel.topMostBid();
+        console.log('heightest')
+        console.log(highestPrice);
+        console.log('expire')
+        console.log(topExpire);
+        console.log('most bid')
+        console.log(mostBid);
+        if(highestPrice.length!=0){
+            for(i=0;i< config.topLimit.topLimit;i++){
+                if(i === 0){
+                    highestPrice[i].isActive = true;
+                }
+                else {
+                    highestPrice[i].isActive = false;
+                }
 
-        for(i=0;i<highestPrice.length;i++){
-            if(i === 0){
-                highestPrice[i].isActive = true;
-            }
-            else highestPrice[i].isActive = false;
-        }
+        }}
+        if(topExpire.length!=0){
+            for(i=0;i< config.topLimit.topLimit;i++){
+                if(i === 0){
+                    topExpire[i].isActive = true;
+                }
+                else {
+                    topExpire[i].isActive = false;
+                }
+
+        }}
+        if(mostBid.length!=0){
+            for(i=0;i< config.topLimit.topLimit;i++){
+                if(i === 0){
+                    mostBid[i].isActive = true;
+                }
+                else {
+                    mostBid[i].isActive = false;
+                }
+
+        }}
         console.log(highestPrice);
         res.render('home',{
             highestPrice,
+            topExpire,
+            mostBid,
+            emptyHeight: highestPrice.length === 0,
+            emptyMostBid: mostBid.length === 0,
+            emptyExpire: topExpire.length === 0,
             title:"Home",
             style: "style.css"
         });
@@ -289,7 +325,7 @@ router.post('/loginAdmin',async(req,res)=>{
 
     // const url = req.query.retUrl || '/';
     const url = req.query.retUrl || '/';
-    res.redirect(url);
+    res.redirect('/admin');
     
 })
 

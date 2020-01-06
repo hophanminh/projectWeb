@@ -81,36 +81,25 @@
                                 <a href="/guess/{{SellerID}}"> {{mask SellerName}} </a>
                                 </p>
                                 Bidder with highest price: <a href="/guess/{{BidderID}}">{{mask BidderName}}</a>
-                                <p>Start Date: {{AuctionStart}}</p>
-                                <span class="d-flex justify-content-end" id="countdown">
-                                    <div class="card bg-danger text-white">
-                                        <h5 class="card-title text-center">
-                                            <div class="d-flex flex-wrap justify-content-center mt-2">
-                                                <a><span class="badge day" id="day"></span></a> :
-                                                <a><span class="badge hours" id="hour"></span></a> :
-                                                <a><span class="badge min" id="min"></span></a> :
-                                                <a><span class="badge sec" id="sec"></span></a>
-                                            </div>
-                                        </h5>
-                                    </div>
-                                </span>
+                                <p>Start Date: {{formatDate AuctionStart}}</p>
+                                <p>End Date: {{formatDate AuctionEnd}}</p>
+                                <p>Time left: {{time}}</p>
                             </div>
                             <div class="card-footer text-center">
                                 <a href="/product/{{ItemID}}" class="btn btn-outline-success" role="button">
-                                    <i class="fa fa-eye" aria-hidden="true"></i>
-                                    Details
+                                    <i class="fa fa-eye" aria-hidden="true">Details</i>
                                 </a>
-                                <a class="btn btn-outline-danger" role="button" href="javascript: $('#like').submit();">
-                                    <i class="fa fa-heart" aria-hidden="true"></i>
-                                    Later
-                                </a>
+                                <form id="like" method ="POST">
+                                <button class='btn btn-outline-danger mt-1' formaction="/user/watchList/{{ItemID}}">
+                                <i class="fa fa-heart" aria-hidden="true">Later</i>
+                                </button>
+                                </form>
                                 {{#if_equal SellerID authUser.UserID}}
                                 <a class="btn btn-outline-danger d-flex align-items-center" role="button" href="/seller/modifyItem/{{ItemID}}">
                                     <i class="fa fa-heart" aria-hidden="true"></i>
                                     Update
                                 </a> 
                                 {{/if_equal}}    
-                                <form id="like" method ="POST" action="/user/watchList/{{ItemID}}"></form>
                             </div>
                         </div>
                     </div>

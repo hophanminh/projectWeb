@@ -176,14 +176,16 @@ function showPic(x){
                 <div class="card-body">
                     <div class=" card-title d-flex justify-content-between">
                         <h1 class="card-title">{{this.product.Title}}</h1>
+                        <span class="h1" id="current">$ {{this.product.CurrentBidAmount}}
+                        </span>
+
+                    </div>
+                    <div class="card-title d-flex justify-content-between">
                         <a class="btn btn-outline-danger d-flex align-items-center" role="button" href="javascript: $('#like').submit();">
                             <i class="fa fa-heart" aria-hidden="true"></i>
                             Later
                         </a>       
                         <form id="like" method ="POST" action="/user/watchList/{{this.product.ItemID}}"></form>
-                        <span class="h1" id="current">$ {{this.product.CurrentBidAmount}}
-                        </span>
-
                     </div>
                     <br>
                     <p class="card-text">
@@ -203,7 +205,9 @@ function showPic(x){
                         <a href="#">
                             <i class="fa fa-arrow-down fa-2x text-dark"></i>
                         </a> --}}
-                        <br> Date: <strong>{{this.product.AuctionStart}}</strong> <br> 
+                        <br>Start Date: <strong>{{formatDate this.product.AuctionStart}}</strong> <br> 
+                        <br>End Date: <strong>{{formatDate this.product.AuctionEnd}}</strong> <br> 
+                        <br>Time left: <strong>{{this.timeleft}}</strong> <br>
                         Owner:
                         <a href="/guess/{{this.product.SellerID}}"> <strong> {{mask this.product.SellerName}} </strong> </a> <br> Point's Owner: <strong>{{this.product.SellerPoint}}
                         </strong>

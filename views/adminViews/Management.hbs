@@ -18,13 +18,6 @@
                     Request Bidder to seller
                     <span class="badge badge-success badge-pill"> {{this.nRequest.numRequest}}</span>
                 </a>
-                <a class="list-group-item list-group-item-action d-flex justify-content-between" id="list-report-list"
-                    data-toggle="list" href="#list-report" role="tab" aria-controls="messages">
-                    Report issues
-                    <span class="badge badge-danger badge-pill">
-                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> 4
-                    </span>
-                </a>
                 <a class="list-group-item list-group-item-action d-flex justify-content-between" id="list-categories-list" data-toggle="list"
                     href="#list-categories" role="tab" aria-controls="settings">
                     Categories
@@ -59,7 +52,7 @@
                                 <td>{{Fname}}</td>
                                 <td>{{Email}}</td>
                                 <td>{{Point}}</td>
-                                <td>34</td>
+                                <td>{{total}}</td>
                             </tr>
                             {{/each}}
                         </tbody>
@@ -93,7 +86,7 @@
                                 <td>{{UserID}} </td>
                                 <td>{{Username}}</td>
                                 <td>{{Point}}</td>
-                                <td>32</td>
+                                <td>{{total}}</td>
                                 <td>
                                 <a class="btn btn-outline-warning" role = "button" href="/admin/seller/{{UserID}}">Detail</a>
                                 </td>
@@ -145,73 +138,6 @@
                         </tbody>
                     </table>
                     {{/if}}
-                </div>
-                
-                <div class="tab-pane fade" id="list-report" role="tabpanel" aria-labelledby="list-report">
-                    <p class="h2 d-flex justify-content-center">Report</p>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Full name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Points</th>
-                                <th scope="col">Report</th>
-                                <th scope="col">Mark Solved</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Sarah Schmidt</td>
-                                <td>sarahschmidt@gmail.com</td>
-                                <td>60</td>
-                                <td>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur, numquam!
-                                    Dolore culpa mollitia dolor reprehenderit repellat voluptatem aperiam perspiciatis,
-                                    tenetur ipsam, accusantium deserunt dolorem voluptatum eum aliquam maiores, odio
-                                    corrupti!
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-outline-success">
-                                        <i class="fa fa-check" aria-hidden="true"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Gavin Keeling</td>
-                                <td>gavinkeeling@gmail.com</td>
-                                <td>20</td>
-                                <td>
-                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nihil quaerat cupiditate
-                                    exercitationem minima, voluptas, quam, eius ullam omnis sequi deleniti vitae magni
-                                    saepe accusamus qui voluptates totam. Tempora, illum asperiores.
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-outline-success">
-                                        <i class="fa fa-check" aria-hidden="true"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Kyra Collins</td>
-                                <td>kyracollins@gmail.com</td>
-                                <td>0</td>
-                                <td>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi ullam
-                                    reprehenderit facere ad, ipsam et expedita maxime illo dolorem vitae molestias ab
-                                    cumque beatae! Reiciendis voluptatem quibusdam in aut culpa.
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-outline-success">
-                                        <i class="fa fa-check" aria-hidden="true"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
                 <div class="tab-pane fade" id="list-categories" role="tabpanel" aria-labelledby="list-categories">
                     {{#if this.emptyCategory}}
