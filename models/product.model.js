@@ -152,7 +152,7 @@ module.exports={
     },
     topHighestPrice: ()=>{
         const sql = `
-        SELECT i.*, seller.Fname as SellerName, bidder.Fname as BidderName
+        SELECT distinct i.ItemID, i.*, seller.Fname as SellerName, bidder.Fname as BidderName
         from item i
         join user seller join user bidder
         on seller.UserID = i.SellerID and bidder.UserID = i.BidderID
@@ -164,7 +164,7 @@ module.exports={
     },
     topExpire: ()=>{
         const sql = `
-        SELECT i.*, seller.Fname as SellerName, bidder.Fname as BidderName
+        SELECT distinct i.ItemID, i.*, seller.Fname as SellerName, bidder.Fname as BidderName
         from item i
         join user seller join user bidder
         on seller.UserID = i.SellerID and bidder.UserID = i.BidderID
@@ -176,7 +176,7 @@ module.exports={
     },
     topMostBid: ()=>{
         const sql = `
-        SELECT i.*, seller.Fname as SellerName, bidder.Fname as BidderName, count(b.ItemID) as SoLuotBid
+        SELECT distinct i.ItemID, i.*, seller.Fname as SellerName, bidder.Fname as BidderName, count(b.ItemID) as SoLuotBid
         from item i
         join user seller join user bidder
         on seller.UserID = i.SellerID and bidder.UserID = i.BidderID

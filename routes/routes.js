@@ -27,7 +27,7 @@ router.get('/',async(req,res)=>{
         console.log('most bid')
         console.log(mostBid);
         if(highestPrice.length!=0){
-            for(i=0;i< config.topLimit.topLimit;i++){
+            for(i=0;i< highestPrice.length;i++){
                 if(i === 0){
                     highestPrice[i].isActive = true;
                 }
@@ -37,7 +37,7 @@ router.get('/',async(req,res)=>{
 
         }}
         if(topExpire.length!=0){
-            for(i=0;i< config.topLimit.topLimit;i++){
+            for(i=0;i< topExpire.length;i++){
                 if(i === 0){
                     topExpire[i].isActive = true;
                 }
@@ -46,8 +46,8 @@ router.get('/',async(req,res)=>{
                 }
 
         }}
-        if(mostBid.length!=0){
-            for(i=0;i< config.topLimit.topLimit;i++){
+        if(mostBid.length != 0){
+            for(i=0;i< mostBid.length;i++){
                 if(i === 0){
                     mostBid[i].isActive = true;
                 }
