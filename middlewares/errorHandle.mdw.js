@@ -7,6 +7,7 @@ module.exports = function(app){
     })
     app.use((err, req, res, next) => {
         // logic
+        console.log('error: ');
         console.error(err.stack);
         res.render('error',{
             title: 'Error Unhandle',

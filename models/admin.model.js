@@ -26,7 +26,17 @@ module.exports = {
     },
     countBidder: ()=> db.load('select count(*) as numBidder from user'),
     
-    requestSeller: () =>db.load('select * from user where Type = 0 and request = 1'),
+    requestSeller: () =>{
+        const sql = `
+        SELECT u.*, count(b.BidderID) as total
+        from User u 
+        left join bids b
+        on u.UserID = b.BidderID
+        where u.Type = 0 and u.request = 1
+        group by u.UserID
+        `
+        return db.load(sql);
+    },
     countRequest: () => db.load('select count(*) as numRequest from user where Type = 0 and request = 1'),
     
 

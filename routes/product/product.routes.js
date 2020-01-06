@@ -12,7 +12,8 @@ router.get('/:ItemId',async (req,res)=>{
     const product = await productModel.single(id);
     const bid = await productModel.countBid(id);
     const history = await productModel.bidHistory(id);
-
+    const CatID = await productModel.getCatByID(id);
+    const realativeProducts = await productModel.relativeProducts(CatID[0].CatID);
     const date = new Date(product[0].AuctionEnd);
     const timeleft = moment(date - Date.now()).format('HH:mm:ss');
 
@@ -23,14 +24,14 @@ router.get('/:ItemId',async (req,res)=>{
 
         history[i].time = time;
     }
-
-    console.log(history);
-    
+    console.log(realativeProducts);
     res.render('productViews/product',{
         product: product[0],
         bid,
         history,
         timeleft,
+        realativeProducts,
+        emptyRelativeProducts: realativeProducts.length === 0,
         empty: product.length === 0,
         title: 'Product',
         style: 'style.css',

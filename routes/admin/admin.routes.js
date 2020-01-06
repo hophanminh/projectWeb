@@ -7,7 +7,7 @@ const userModel = require('../../models/product.model');
 const router = express.Router();
 
 router.get('/', async(req,res)=>{
-    const [rowsSeller, rowsBidder, requestSeller, rowsCategory, numSeller, numBidder,numCategory, numRequest, countProductSell] = await Promise.all([
+    const [rowsSeller, rowsBidder, requestSeller, rowsCategory, numSeller, numBidder,numCategory, numRequest] = await Promise.all([
             adminModel.allSeller(),
             adminModel.allBidder(),
             adminModel.requestSeller(),
@@ -25,8 +25,6 @@ router.get('/', async(req,res)=>{
             rowsCategory[i].isDel = true;
         else rowsCategory[i].isDel = false;
     }
-
-    console.log(rowsCategory);
 
     res.render('adminViews/Management',{
         layout: 'adminLayout.hbs',
@@ -67,10 +65,7 @@ router.get('/seller/:id',async(req,res)=>{
 
 router.post('/deleteSeller',async(req,res)=>{
     
-    console.log(req.body);
-
     const result = await adminModel.deleteSeller(req.body.UserID);
-    console.log(result);
     res.redirect('/admin');
 })
 
@@ -83,15 +78,13 @@ router.post('/modifySeller',async (req,res)=>{
     delete entity.dob_raw;
     delete entity.nPS;
     
-    console.log(entity);
-
     const result = await adminModel.modifySeller(entity);
     res.redirect('/admin');
 })
 
 router.get('/sellerDetail/:id',async(req,res)=>{
     const rows = await adminModel.sellerDetail(req.params.id);
-    console.log(rows);
+    
     res.render('adminViews/sellerDetail',{
         layout: 'adminLayout.hbs',
         seller: rows,
@@ -112,7 +105,6 @@ router.get('/addAdmin',(req,res)=>{
 })
 
 router.post('/addAdmin',async(req,res)=>{
-    console.log(req.body);
     const N = 10;
     const hash = bcryptjs.hashSync(req.body.pass_raw,N);
 
@@ -122,7 +114,6 @@ router.post('/addAdmin',async(req,res)=>{
     delete entity.pass_rawC;
     delete entity.pass_raw;
 
-    console.log(entity);
     const result = await adminModel.addAdmin(entity);
     res.redirect('/');
 })
@@ -135,44 +126,29 @@ router.get('/addCategory',(req,res)=>{
     })
 })
 
-router.post('/addCategory',async (req,res)=>{
-    
-    console.log(req.body);
-
+router.post('/addCategory',async (req,res)=>{  
     const result = await categoryModel.add(req.body);
-    
-    console.log(result);
-    
+        
     res.redirect('/admin');
 })
 
 router.post('/deleteCategory/:CatId',async(req,res)=>{
-    console.log(req.params);
     const result = await categoryModel.deleteCategory(req.params);
-    console.log(result);
     res.redirect('/admin');
 })
 
 router.post('/aprove/:UserID',async(req,res)=>{
-    console.log(req.params);
     const result = await adminModel.aproveBidder(req.params.UserID);
-    console.log(result);
     res.redirect('/admin');
 })
 
 router.post('/reject/:UserID',async(req,res)=>{
-    console.log(req.params);
     const result = await adminModel.rejectBidder(req.params.UserID);
-    console.log(result);
     res.redirect('/admin');
 })
 
 router.get('/category/:CatID',async(req,res)=>{
-
     const rows = await categoryModel.singleCategory(req.params.CatID);
-
-    console.log('here');
-    console.log(rows);
 
     res.render('adminViews/categoryDetail',{
         layout: 'adminLayout.hbs',
@@ -187,9 +163,6 @@ router.post('/category/:CatID',async(req,res)=>{
     const entity = req.body;
     entity.CatID = req.params.CatID;
     const rows = await categoryModel.changeCategoryName(entity);
-
-    console.log('here');
-    console.log(rows);
 
     res.redirect('/admin');
 })

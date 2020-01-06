@@ -30,8 +30,6 @@ router.get('/addItem', async (req, res) => {
 
     const category = await categoryModel.allCategory();
 
-    console.log(category);
-
     res.render('productViews/addItem', {
         category,
         title: 'Add Item',
@@ -40,8 +38,6 @@ router.get('/addItem', async (req, res) => {
 })
 
 router.post('/addItem/:UserID',upload.array('img',7),async (req,res)=>{    
-// router.post('/addItem/:UserID', async (req, res) => {
-    console.log(req.body);
     let startDate = new Date();
     Date.prototype.addDays = function (days) {
         var date = new Date(this.valueOf());
@@ -69,11 +65,7 @@ router.post('/addItem/:UserID',upload.array('img',7),async (req,res)=>{
         AccountNo: 'JEMO',
     }
 
-    console.log(entity);
     const result = await productModel.add(entity);
-    console.log(result);
-    console.log('file');
-    console.log(req.files);
     await rename(req.files[0].destination,`./public/img/${result.insertId}`);
 
     var productImg = [];
@@ -82,7 +74,6 @@ router.post('/addItem/:UserID',upload.array('img',7),async (req,res)=>{
         await rename(`./public/img/${result.insertId}/${req.files[i].filename}`,newURL);
         productImg.push(newURL.replace('./public/',''));
     }
-    //await productModel.addImg(result.insertID,productImg);
     res.redirect('/seller/addItem');
 })
 
@@ -90,7 +81,6 @@ router.get('/modifyItem/:ItemID', async (req, res) => {
     const rows = await productModel.single(req.params.ItemID);
     const category = await categoryModel.allCategory();
 
-    console.log(rows);
     res.render('productViews/modifyInfoItem',{
         product: rows[0],
         category,
@@ -110,7 +100,6 @@ router.post('/modifyItem/:ItemID',async (req, res) => {
         StartBidAmount: req.body.StartBidAmount,
     }
     entity.ItemID = req.params.ItemID;
-    console.log(entity);
     const result = await productModel.modifyItem(entity);
     res.redirect('/seller/sellList');
 })
@@ -161,7 +150,6 @@ router.post('/sellList/:ItemID/delete',async (req,res)=>{
     const entity = req.params;
     entity.SellerID = res.locals.authUser.UserID;
 
-    console.log(entity);
     const result = await productModel.deleteItemSellList(entity);
     
     res.redirect(req.headers.referer);

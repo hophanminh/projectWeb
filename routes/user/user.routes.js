@@ -12,8 +12,6 @@ router.get('/',async(req,res)=>{
     const rows = await userModal.getIDByUsername(res.locals.authUser.Username);
     const feedback = await userModal.getFeedback(res.locals.authUser.UserID);
 
-    console.log(rows);
-
     const dob = moment(rows[0].DoB,'YYYY-MM-DD').format('DD/MM/YYYY');
     rows[0].dob = dob;
 
@@ -28,10 +26,7 @@ router.get('/',async(req,res)=>{
 })
 
 router.get('/:UserID/edit',async(req,res)=>{
-
     const rows = await userModal.getIDByUsername(res.locals.authUser.Username);
-
-    console.log(rows);
 
     const dob = moment(rows[0].DoB,'YYYY-MM-DD').format('DD/MM/YYYY');
     rows[0].dob = dob;
@@ -51,12 +46,9 @@ router.post('/:UserID/edit',async(req,res)=>{
         const entity = req.body;
         entity.DoB = dob;
         entity.UserID = req.params.UserID;
-        console.log(entity);
     
         delete entity.dob;
         
-        console.log('profile edit');
-        console.log(entity);
         const result = await userModal.modifyProfile(entity);
         
         res.redirect('/user');
@@ -72,9 +64,6 @@ router.get('/watchList',async(req,res)=>{
     
     const total = await productModel.countWatchList(UserID);
     let rows = await productModel.watchList(UserID,offset);
-
-    console.log(rows);
-    console.log(total);
 
     for(i=0;i<rows.length;i++){
         if(rows[i].BidderID == UserID)
@@ -126,30 +115,19 @@ router.get('/changePass',(req,res)=>{
 })
 
 router.post('/watchList/:ItemID',async (req,res)=>{
-    console.log('ID: ');
-    console.log(req.params.ItemID);
-    console.log(res.locals.authUser.UserID);
-
     let entity = req.params;
     entity.UserID = res.locals.authUser.UserID;
-    console.log(entity);
 
     const result = await productModel.addItemWatchList(entity);
-    console.log(result);
     res.redirect(req.headers.referer);
 })
 
 router.post('/watchList/:ItemID/delete',async (req,res)=>{
-    console.log('ID: ');
-    console.log(req.params.ItemID);
-    console.log(res.locals.authUser.UserID);
 
     let entity = req.params;
     entity.UserID = res.locals.authUser.UserID;
-    console.log(entity);
 
     const result = await productModel.deleteItemWatchList(entity);
-    console.log(result);
     res.redirect(req.headers.referer);
 })
 
@@ -165,26 +143,19 @@ router.post('/changePass/:UserID',async(req,res)=>{
 
     delete entity.password_raw;
 
-    console.log(entity);
     const result = await userModal.changePass(entity);
     res.redirect('/login');
 })
 
 router.get('/bidding',async(req,res)=>{
-
-    
     const UserID = res.locals.authUser.UserID;
 
-    
     const limit = config.paginate.limit;
     const page = req.query.page || 1;
     const offset = (page-1)*limit;
     
     const total = await productModel.countBidding(UserID);
     const rows = await productModel.biddingList(UserID,offset);
-
-    console.log(rows);
-    console.log(total);
 
     for(i=0;i<rows.length;i++){
         if(rows[i].BidderID == UserID)
@@ -194,9 +165,6 @@ router.get('/bidding',async(req,res)=>{
         let timeleft = moment(date - Date.now()).format('HH:mm:ss');
         rows[i].time = timeleft;
     }
-
-    console.log('here');
-    console.log(rows);
 
     let nPage = Math.floor(total/limit);
     if(total%limit > 0) nPage++;
@@ -242,14 +210,6 @@ router.get('/wonList',async(req,res)=>{
     const total = await productModel.countWon(UserID);
     const rows = await productModel.wonList(UserID,offset);
 
-    console.log(rows);
-    console.log(total);
-
-    // const [total, rows] = await Promise.all([
-    //     productModel.countWatchList(UserID),
-    //     productModel.watchList(UserID),
-    // ]);
-
     let nPage = Math.floor(total/limit);
     if(total%limit > 0) nPage++;
 
@@ -292,11 +252,9 @@ router.get('/:UserID/review/:id',async(req,res)=>{
 })
 router.post('/:UserID/review/:id',async(req,res)=>{
    const entity = req.body;
-    console.log(entity);
     const date = Date.now();
     entity.Date = moment(date).format('YYYY-MM-DD');
     const result = await userModal.addFeedBack(entity);
-    console.log(result);
     res.redirect('/');
 })
 

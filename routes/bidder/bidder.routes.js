@@ -17,13 +17,11 @@ const transporter = nodemailer.createTransport({
 const mailOptions = {
     from: 'sinsofhuman@gmail.com',
     to: 'phanminh1999@gmail.com',
-    subject: 'Testing',
-    text: 'Greate'
+    subject: 'Bid success',
+    text: 'Bid success'
 };
 
 router.post('/:ItemId/:BidderID/bidProduct',async(req,res)=>{
-    console.log(req.body);
-    console.log(req.params.ItemId);
     const id = req.params.ItemId;
 
     const product = await productModel.single(id);
@@ -38,11 +36,9 @@ router.post('/:ItemId/:BidderID/bidProduct',async(req,res)=>{
                 console.log(error);
             else console.log('Email sent: ' +info.respone);
         })
-        console.log('come here');
     }
     else {
         entity = req.params;
-        console.log(entity);
         delete entity.BidderID;
         if((+req.body.money +1) <= product[0].maxPrice)
             entity.CurrentBidAmount = +req.body.money + 1;

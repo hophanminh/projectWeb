@@ -20,12 +20,7 @@ router.get('/',async(req,res)=>{
         const highestPrice = await productModel.topHighestPrice();
         const topExpire = await productModel.topExpire();
         const mostBid = await productModel.topMostBid();
-        console.log('heightest')
-        console.log(highestPrice);
-        console.log('expire')
-        console.log(topExpire);
-        console.log('most bid')
-        console.log(mostBid);
+
         if(highestPrice.length!=0){
             for(i=0;i< highestPrice.length;i++){
                 if(i === 0){
@@ -56,7 +51,6 @@ router.get('/',async(req,res)=>{
                 }
 
         }}
-        console.log(highestPrice);
         res.render('home',{
             highestPrice,
             topExpire,
@@ -78,9 +72,6 @@ router.post('/search',async (req,res)=>{
     
     const total = await productModel.countSearchList(req.body.search);
     const rows = await productModel.searchList(req.body.search,offset);
-
-    console.log(rows);
-    console.log(total);
 
     let nPage = Math.floor(total/limit);
     if(total%limit > 0) nPage++;
@@ -237,7 +228,6 @@ router.get('/login',(req,res)=>{
 })
 
 router.post('/login',async(req,res)=>{
-    console.log(req.body);
     const user = await userModel.singleByUsername(req.body.username);
     
     if(user === null){
@@ -251,8 +241,6 @@ router.post('/login',async(req,res)=>{
 
     const authe = bcryptjs.compareSync(req.body.password, user.Password);
     
-    console.log(authe);
-
     const bidTime = await userModel.countBid(req.body.username);
 
     user.countBid = bidTime;
@@ -273,8 +261,6 @@ router.post('/login',async(req,res)=>{
         req.session.isAuthenticatedSeller = true;
     else  req.session.isAuthenticatedSeller = false;
     req.session.authUser = user;
-
-    console.log(user);
 
     const url = req.query.retUrl || '/';
     res.redirect('/');
@@ -304,8 +290,6 @@ router.post('/loginAdmin',async(req,res)=>{
 
     const authe = bcryptjs.compareSync(req.body.password, user.Password);
     
-    console.log(authe);
-
     if(authe === false){
         return res.render('loginAdmin',{
             layout: false,
@@ -321,10 +305,6 @@ router.post('/loginAdmin',async(req,res)=>{
     req.session.isAuthenticatedAdmin = true;
     req.session.authUser = user;
 
-    console.log(user);
-
-    // const url = req.query.retUrl || '/';
-    const url = req.query.retUrl || '/';
     res.redirect('/admin');
     
 })
@@ -345,13 +325,9 @@ router.get('/forgetPass',(req,res)=>{
 })
 
 router.post('/forgetPass',async (req,res)=>{
-    console.log(req.body);
     const check = await userModel.singleByEmail(req.body.Email);
-    console.log(check);
     if(check === false)
         throw new Error('Invalid username or password');
-
-    console.log(check);
 
     const N = 10;
     const hash = bcryptjs.hashSync(check.PhoneNo,N);
@@ -371,7 +347,6 @@ router.post('/forgetPass',async (req,res)=>{
 
     const entity = check
     entity.Password = hash;
-    console.log(entity);
     const result = await userModel.changePass(entity);
 
     res.redirect('/login');
@@ -397,6 +372,5 @@ router.get('/error',(req,res)=>{
         style: 'style.css'
     })
 })
-
 
 module.exports = router;

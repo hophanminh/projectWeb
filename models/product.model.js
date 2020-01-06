@@ -74,7 +74,7 @@ module.exports={
         select count(distinct b.ItemID) as total
         from bids b join user u join user seller join user bidder join item i
         on b.BidderID = u.UserID and b.ItemID = i.ItemID and i.SellerID = seller.UserID and i.BidderID = bidder.UserID
-        where WinStatus = 'No' and u.UserID = ${UserID} and i.Status = 'No'
+        where WinStatus = 'No' and u.UserID = ${UserID} and b.WinStatus = 'No'
         `
         const rows = await db.load(sql);
         return rows[0].total;
@@ -85,7 +85,7 @@ module.exports={
         select distinct b.ItemID, i.*, seller.Fname as SellerName, bidder.Fname as BidderName
         from bids b join user u join user seller join user bidder join item i
         on b.BidderID = u.UserID and b.ItemID = i.ItemID and i.SellerID = seller.UserID and i.BidderID = bidder.UserID
-        where WinStatus = 'No' and u.UserID = ${UserID} and i.Status = 'No'
+        where WinStatus = 'No' and u.UserID = ${UserID} and b.WinStatus = 'No'
         limit ${config.paginate.limit} offset ${offset}
         `
         const rows= await db.load(sql);
@@ -96,7 +96,7 @@ module.exports={
         select count(distinct b.ItemID) as total
         from bids b join user u join user seller join user bidder join item i
         on b.BidderID = u.UserID and b.ItemID = i.ItemID and i.SellerID = seller.UserID and i.BidderID = bidder.UserID
-        where WinStatus = 'Yes' and u.UserID = ${id} and i.Status = 'Yes'
+        where WinStatus = 'Yes' and u.UserID = ${id} and b.WinStatus = 'Yes'
         `
         const rows = await db.load(sql);
         return rows[0].total;
@@ -107,7 +107,7 @@ module.exports={
         select distinct b.ItemID, i.*, seller.Fname as SellerName, bidder.Fname as BidderName
         from bids b join user u join user seller join user bidder join item i
         on b.BidderID = u.UserID and b.ItemID = i.ItemID and i.SellerID = seller.UserID and i.BidderID = bidder.UserID
-        where WinStatus = 'Yes' and u.UserID = ${UserID} and i.Status = 'Yes'
+        where WinStatus = 'Yes' and u.UserID = ${UserID} and b.WinStatus = 'Yes'
         limit ${config.paginate.limit} offset ${offset}
         `
         const rows = await db.load(sql);
@@ -176,12 +176,12 @@ module.exports={
     },
     topMostBid: ()=>{
         const sql = `
-        SELECT distinct i.ItemID, i.*, seller.Fname as SellerName, bidder.Fname as BidderName, count(b.ItemID) as SoLuotBid
+        SELECT i.*, seller.Fname as SellerName, bidder.Fname as BidderName, count(b.ItemID) as SoLuotBid
         from item i
         join user seller join user bidder
         on seller.UserID = i.SellerID and bidder.UserID = i.BidderID
         join bids b on b.ItemID = i.ItemID
-        where i.Status = 'No'
+        where b.WinStatus = 'No'
         group by i.ItemID, i.Title
         order by SoLuotBid desc
         limit ${config.topLimit.topLimit}
@@ -196,7 +196,19 @@ module.exports={
         const sql=`update bids set WinStatus = 'Yes' where ItemID = ${id}`;
         return db.load(sql);
     },
-    
+    getCatByID: id=> db.load(`select CatID from item where ItemID = ${id}`),
+    relativeProducts: (CatID) =>{
+        const sql = `
+        select i.*, seller.Fname as SellerName, bidder.Fname as BidderName
+        from item i 
+        join user seller join user bidder
+        on seller.UserID = i.SellerID and bidder.UserID = i.BidderID
+        where i.CatID = ${CatID} and i.Status = 'No'
+        order by i.AuctionEnd asc
+        limit ${config.relativeLimit.relativeLimit}
+        `
+        return db.load(sql);
+    }
     
 
 }

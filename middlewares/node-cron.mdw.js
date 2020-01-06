@@ -14,6 +14,5 @@ module.exports = function(app){
                 let result2 = await productModal.updateStatusBidDB(rows[i].ItemID);
             }
         }
-        console.log('running a task every 5 seconds');
       })
 }
