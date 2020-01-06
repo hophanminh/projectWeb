@@ -155,10 +155,10 @@ module.exports={
         SELECT i.*, seller.Fname as SellerName, bidder.Fname as BidderName
         from item i
         join user seller join user bidder
-        on seller.UserID = i.ItemID and bidder.UserID = i.BidderID
-        order by (CurrentBidAmount) desc
+        on seller.UserID = i.SellerID and bidder.UserID = i.BidderID
         where i.Status = 'No'
-        limit ${config.numLimitHomePage.limitHomePage}
+        order by (i.CurrentBidAmount) desc
+        limit ${config.topLimit.topLimit}
         `
         return db.load(sql);
     },
@@ -167,9 +167,9 @@ module.exports={
         SELECT i.*, seller.Fname as SellerName, bidder.Fname as BidderName
         from item i
         join user seller join user bidder
-        on seller.UserID = i.ItemID and bidder.UserID = i.BidderID
+        on seller.UserID = i.SellerID and bidder.UserID = i.BidderID
         order by (CurrentBidAmount) desc
-        limit ${config.numLimitHomePage.limitHomePage}
+        limit ${config.topLimit.topLimit}
         `
         return db.load(sql);
     },

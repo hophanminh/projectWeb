@@ -8,7 +8,7 @@ const productModel = require('../models/product.model');
 const router = express.Router();
 const config = require('../config/default.json');
 
-router.get('/',(req,res)=>{
+router.get('/',async(req,res)=>{
     if(res.locals.isAuthenticatedAdmin == true){
         res.render('home',{
             layout: 'adminLayout.hbs',
@@ -17,7 +17,17 @@ router.get('/',(req,res)=>{
         });
     }
     else {
+        const highestPrice = await productModel.topHighestPrice();
+
+        for(i=0;i<highestPrice.length;i++){
+            if(i === 0){
+                highestPrice[i].isActive = true;
+            }
+            else highestPrice[i].isActive = false;
+        }
+        console.log(highestPrice);
         res.render('home',{
+            highestPrice,
             title:"Home",
             style: "style.css"
         });
