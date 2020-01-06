@@ -21,6 +21,9 @@
     },
     "maskedString": {
         "maskedLetter": 3
+    },
+    "topLimit":{
+        "topLimit": 5
     }
 
 }
