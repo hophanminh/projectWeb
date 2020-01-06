@@ -11,7 +11,6 @@ const util = require('util');
 const router = express.Router();
 const time = Date.now();
 const rename = util.promisify(fs.rename);
-
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         const dir = `./public/img/` + time;

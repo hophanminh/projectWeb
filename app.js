@@ -2,7 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const morgan = require('morgan');
 const config = require('./config/default.json');
-
+const cron = require('node-cron');
 require('express-async-errors');
 
 const app = express();
@@ -23,7 +23,7 @@ app.use(express.static('public'));
 //Local
 require('./middlewares/local.mdw')(app);
 require('./middlewares/session.mdw')(app);
-
+require('./middlewares/node-cron.mdw')(app);
 require('./middlewares/engine.mdw')(app);
 require('./middlewares/routes.mdw')(app);
 
