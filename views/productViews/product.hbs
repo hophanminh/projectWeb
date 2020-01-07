@@ -1,40 +1,46 @@
 {{#section 'css'}}
+  <style>
+   .carousel-inner.vv-3 .carousel-item.active,
+.carousel-inner.vv-3 .carousel-item-next,
+.carousel-inner.vv-3 .carousel-item-prev {
+  display: flex;
+}
+
+.carousel-inner.vv-3 .carousel-item-right.active,
+.carousel-inner.vv-3 .carousel-item-next {
+  transform: translateX(17%);
+}
+
+.carousel-inner.vv-3 .carousel-item-left.active,
+.carousel-inner.vv-3 .carousel-item-prev {
+  transform: translateX(-17%);
+}
+
+.carousel-inner.vv-3 .carousel-item-right,
+.carousel-inner.vv-3 .carousel-item-left {
+  transform: translateX(0);
+}
+   </style>
 {{/section}}
 {{#section 'js'}}
-<script>// Update the count down every 1 second
-    timedown({{this.product.AuctionEnd}},'time')
-   function timedown(ti,id){
-    // Set the date we're counting down to
-    var countDownDate = new Date(ti).getTime();
+<script>
+    $('#relativeProduct').each(function () {
+  var next = $(this).next();
+  if (!next.length) {
+    next = $(this).siblings(':first');
+  }
+  next.children(':first-child').clone().appendTo($(this));
 
-    // Update the count down every 1 second
-    var x = setInterval(function() {
-
-    // Get todays date and time
-    var now = new Date().getTime();
-    
-    // Find the distance between now an the count down date
-    var distance = countDownDate - now;
-    
-    // Time calculations for days, hours, minutes and seconds
-    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    
-    // Output the result in an element with id="demo"
-    document.getElementById(id).innerHTML = (days!=0 ? days + "d " : '') + (hours!= 0 ? hours + "h " : '')
-    + (minutes != 0 ? minutes + "m " : '') + seconds + "s ";
-    
-    // If the count down is over, write some text 
-    if (distance < 0) {
-        clearInterval(x);
-        document.getElementById("time").innerHTML = "EXPIRED";
+  for (var i = 0; i < 4; i++) {
+    next = next.next();
+    if (!next.length) {
+      next = $(this).siblings(':first');
     }
-}, 1000);
-}
-</script>
 
+    next.children(':first-child').clone().appendTo($(this));
+  }
+});
+</script>
 <script>
     function isMoneyValid() {
         const money = $("#money").val();
@@ -298,7 +304,7 @@ function showPic(x){
     <div class="mt-10">
         <div class="container text-center my-3">
                 <h2>Relative Product</h2>
-                {{#if this.emptyRealativeProducts}}
+                {{#if this.emptyRelativeProducts}}
                 <div>
                     No data found
                 </div>
@@ -306,7 +312,7 @@ function showPic(x){
                 <div class="row mx-auto my-auto h-100">
                     <div id="relativeProduct" class="carousel slide w-100 " data-ride="carousel">
                         <div class="carousel-inner w-100 vv-3" role="listbox">
-                            {{#each this.realativeProducts}}
+                            {{#each this.relativeProducts}}
                             <div class="carousel-item {{#if isActive}} active {{/if}}">
                                 <div class="col-4">
                                     <img src="/img/{{ItemID}}/1.jpg" alt="{{ProName}}" title="{{ProName}}" class="card-img-top">

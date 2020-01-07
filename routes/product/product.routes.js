@@ -13,10 +13,20 @@ router.get('/:ItemId',async (req,res)=>{
     const bid = await productModel.countBid(id);
     const history = await productModel.bidHistory(id);
     const CatID = await productModel.getCatByID(id);
-    const realativeProducts = await productModel.relativeProducts(CatID[0].CatID);
+    const relativeProducts = await productModel.relativeProducts(CatID[0].CatID);
     const date = new Date(product[0].AuctionEnd);
     const timeleft = moment(date - Date.now()).format('HH:mm:ss');
 
+    if(relativeProducts.length!=0){
+        for(i = 0 ;i < relativeProducts.length;i++){
+            if(i === 0){
+                relativeProducts[i].isActive = true;
+            }
+            else {
+                relativeProducts[i].isActive = false;
+            }
+
+    }}
 
     for(i=0;i<history.length;i++){
         const time = moment(history[i].BidTime).format('LLL');
@@ -24,14 +34,14 @@ router.get('/:ItemId',async (req,res)=>{
 
         history[i].time = time;
     }
-    console.log(realativeProducts);
+    console.log(relativeProducts);
     res.render('productViews/product',{
         product: product[0],
         bid,
         history,
         timeleft,
-        realativeProducts,
-        emptyRelativeProducts: realativeProducts.length === 0,
+        relativeProducts,
+        emptyRelativeProducts: relativeProducts.length === 0,
         empty: product.length === 0,
         title: 'Product',
         style: 'style.css',
