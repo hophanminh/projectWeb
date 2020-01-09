@@ -14,11 +14,17 @@ const transporter = nodemailer.createTransport({
         pass: 'Phanminh195'
     }
 });
-const mailOptions = {
+const bidderMail = {
     from: 'sinsofhuman@gmail.com',
     to: 'phanminh1999@gmail.com',
     subject: 'Bid success',
     text: 'Bid success'
+};
+const sellerMail = {
+    from: 'sinsofhuman@gmail.com',
+    to: 'phanminh1999@gmail.com',
+    subject: 'Bid success',
+    text: 'some one bid success'
 };
 
 router.post('/:ItemId/:BidderID/bidProduct',async(req,res)=>{
@@ -31,7 +37,12 @@ router.post('/:ItemId/:BidderID/bidProduct',async(req,res)=>{
         entity = req.params;
         entity.CurrentBidAmount = +product[0].maxPrice + 1;
         entity.maxPrice = req.body.money;
-        transporter.sendMail(mailOptions,function(error,info){
+        transporter.sendMail(bidderMail,function(error,info){
+            if(error)
+                console.log(error);
+            else console.log('Email sent: ' +info.respone);
+        })
+        transporter.sendMail(sellerMail,function(error,info){
             if(error)
                 console.log(error);
             else console.log('Email sent: ' +info.respone);
