@@ -7,6 +7,11 @@ const adminModel = require('../models/admin.model');
 const productModel = require('../models/product.model');
 const router = express.Router();
 const config = require('../config/default.json');
+const bodyParser = require('body-parser');
+const request = require('request');
+
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({extended : false}));
 
 router.get('/',async(req,res)=>{
     if(res.locals.isAuthenticatedAdmin == true){
@@ -228,6 +233,24 @@ router.get('/login',(req,res)=>{
 })
 
 router.post('/login',async(req,res)=>{
+    // g-recaptcha-response is the key that browser will generate upon form submit.
+    // if its blank or null means user has not selected the captcha, so return the error.
+    if (req.body['g-recaptcha-response'] === undefined || req.body['g-recaptcha-response'] === '' || req.body['g-recaptcha-response'] === null) {
+        return res.json({ "responseCode": 1, "responseDesc": "Please select captcha" });
+    }
+    // Put your secret key here.
+    var secretKey = "6LcJm8sUAAAAAAMeVu9_0crjuplytePx61d1vOcy";
+    // req.connection.remoteAddress will provide IP address of connected user.
+    var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
+    // Hitting GET request to the URL, Google will respond with success or error scenario.
+    request(verificationUrl, function (error, response, body) {
+        body = JSON.parse(body);
+        // Success will be true or false depending upon captcha validation.
+        if (body.success !== undefined && !body.success) {
+            return res.json({ "responseCode": 1, "responseDesc": "Failed captcha verification" });
+        }
+    });
+
     const user = await userModel.singleByUsername(req.body.username);
     
     if(user === null){
